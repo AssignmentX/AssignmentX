@@ -13,7 +13,7 @@ import javax.swing.BorderFactory;
 public class ChessGameFrame extends JFrame implements ActionListener 
 {
    private JButton buttons[]; // array of buttons to hide portions
-   private JPanel squares[];
+   //private JPanel squares[];
    private ChessBoardPanel chessBoard;
    private final String names[] = { "North", "South", 
       "East", "West"};
@@ -24,33 +24,16 @@ public class ChessGameFrame extends JFrame implements ActionListener
    {
       super(s);
 
-      int numSquares = 64;
-
       layout = new BorderLayout( 5, 5 ); // 5 pixel gaps
       setLayout( layout ); // set frame layout
 
+      // these buttons are placeholders
       buttons = new JButton[ names.length ]; // set size of array
-      squares = new JPanel[numSquares];
 
       chessBoard = new ChessBoardPanel(); // create a panel for the chess board
-      chessBoard.setBackground(Color.WHITE); // set background to white
-      chessBoard.setLayout(new GridLayout(8, 8, 4, 4));
-      chessBoard.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
-      
-
-      for(int i = 0; i < 8; i++) {
-        for(int j = 0; j < 8; j++) {
-            squares[i] = new JPanel();
-            if((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0))
-                squares[i].setBackground(Color.GRAY);
-            chessBoard.add(squares[i]);
-        }
-      }
-        
-
       add( chessBoard, BorderLayout.CENTER ); // add chess board to center
 
-      //create JButtons and register listeners for them
+      // buttons are being used as placeholders
       for ( int count = 0; count < names.length; count++ ) 
       {
          buttons[ count ] = new JButton( names[ count ] );

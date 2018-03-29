@@ -7,7 +7,7 @@ public class ChessGame {
         ChessGameFrame frame = new ChessGameFrame("Chess - Assignment X"); 
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.setBackground( Color.WHITE );     // set frame background color
-        frame.setSize( 1200, 800 );             // set frame size
+        frame.setSize( 900, 900 );             // set frame size
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
     }
