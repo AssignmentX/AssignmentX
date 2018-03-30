@@ -7,9 +7,22 @@ import javax.swing.BorderFactory;
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
 public class ChessSquarePanel extends JPanel {
+    private String piece;
+    private String player;
     public ChessSquarePanel() {
         super();
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
+        //piece = new String("");
+        //player = new String("");
+    }
+
+    public void setPiece(String piece, String player) {
+        this.piece = piece;
+        this.player = player;
+    }
+
+    public String getPiece() {
+        return piece;
     }
 
     public void paintComponent( Graphics g ) {

@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JFrame implements serializable
