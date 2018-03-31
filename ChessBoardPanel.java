@@ -20,7 +20,7 @@ public class ChessBoardPanel extends JPanel {
         // initialize checkered squares
         for(int i = 0; i < 8; i++) {
             for(int j = 0; j < 8; j++) {
-                squares[i*8 + j] = new ChessSquarePanel();
+                squares[i*8 + j] = new ChessSquarePanel(this);
                 if((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0))
                     squares[i*8 + j].setBackground(Color.GRAY);
                 add(squares[i*8 + j]);

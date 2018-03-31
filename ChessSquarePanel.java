@@ -23,17 +23,17 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     private JLabel pieceLabel;
     private String image;
     private JLayeredPane overlay;
+    private ChessBoardPanel parent;
 
-    public ChessSquarePanel() {
+    public ChessSquarePanel(ChessBoardPanel parent) {
         super();
+        this.parent = parent;
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         addMouseListener(this);
         overlay = new JLayeredPane();
         overlay.setLayout(new OverlayLayout(overlay));
         overlay.setBackground(new Color(0, 255, 0, 125));
         add(overlay);
-        //overlay.setSize(getWidth(), getHeight());
-        //add(overlay);
     }
 
     public void setPiece(String piece, String player, int pos) {

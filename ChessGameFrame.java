@@ -30,6 +30,7 @@ public class ChessGameFrame extends JFrame {
 
       textArea = new JTextArea(0, 10);
       textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
+      textArea.setEditable(false);
       add(textArea, BorderLayout.EAST); // add text area to east side
 
       chessBoard = new ChessBoardPanel(); // create a panel for the chess board
