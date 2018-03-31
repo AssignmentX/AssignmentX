@@ -35,7 +35,7 @@ public class ChessBoardPanel extends JPanel {
         squares[5].setPiece("bishop", "white");
         squares[6].setPiece("knight", "white");
         squares[7].setPiece("rook", "white");
-        for(int i = 8; i < 15; i++) {
+        for(int i = 8; i < 16; i++) {
             squares[i].setPiece("pawn", "white");
         }
 
