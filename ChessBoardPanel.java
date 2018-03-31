@@ -27,29 +27,32 @@ public class ChessBoardPanel extends JPanel {
             }
         }
         // initialize white pieces
-        squares[0].setPiece("rook", "white");
-        squares[1].setPiece("knight", "white");
-        squares[2].setPiece("bishop", "white");
-        squares[3].setPiece("queen", "white");
-        squares[4].setPiece("king", "white");
-        squares[5].setPiece("bishop", "white");
-        squares[6].setPiece("knight", "white");
-        squares[7].setPiece("rook", "white");
+        squares[0].setPiece("rook", "white", 0);
+        squares[1].setPiece("knight", "white", 1);
+        squares[2].setPiece("bishop", "white", 2);
+        squares[3].setPiece("queen", "white", 3);
+        squares[4].setPiece("king", "white", 4);
+        squares[5].setPiece("bishop", "white", 5);
+        squares[6].setPiece("knight", "white", 6);
+        squares[7].setPiece("rook", "white", 7);
         for(int i = 8; i < 16; i++) {
-            squares[i].setPiece("pawn", "white");
+            squares[i].setPiece("pawn", "white", i);
         }
-
+        // initialize empty pieces
+        for(int i = 17; i < 56; i++) {
+            squares[i].setPiece(null, null, i);
+        }
         // initialize black pieces
-        squares[56].setPiece("rook", "black");
-        squares[57].setPiece("knight", "black");
-        squares[58].setPiece("bishop", "black");
-        squares[59].setPiece("queen", "black");
-        squares[60].setPiece("king", "black");
-        squares[61].setPiece("bishop", "black");
-        squares[62].setPiece("knight", "black");
-        squares[63].setPiece("rook", "black");
+        squares[56].setPiece("rook", "black", 56);
+        squares[57].setPiece("knight", "black", 57);
+        squares[58].setPiece("bishop", "black", 58);
+        squares[59].setPiece("queen", "black", 59);
+        squares[60].setPiece("king", "black", 60);
+        squares[61].setPiece("bishop", "black", 61);
+        squares[62].setPiece("knight", "black", 62);
+        squares[63].setPiece("rook", "black", 63);
         for(int i = 48; i < 56; i++) {
-            squares[i].setPiece("pawn", "black");
+            squares[i].setPiece("pawn", "black", i);
         }
 
     }
