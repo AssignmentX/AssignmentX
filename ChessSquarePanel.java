@@ -29,7 +29,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         super();
         this.parent = parent; // keep track of chessboardpanel as parent
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
-        addMouseListener(this);
+        addMouseListener(this); // adds mouse listener to panel 
+        // overlay is used to highlight the panel
         overlay = new JLayeredPane();
         overlay.setLayout(new OverlayLayout(overlay));
         overlay.setBackground(new Color(0, 255, 0, 125));
@@ -43,6 +44,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
         if(piece != null && player != null) {
             image = "./images/png/" + player + "_" + piece + ".png";
+            // TODO: this must be tweaked to center the chess pieces on the panel
+            // TODO: this must be changed whenever we change the default size of the window
             pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
             add(pieceLabel);
         }
