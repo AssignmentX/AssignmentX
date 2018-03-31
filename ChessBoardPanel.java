@@ -54,7 +54,6 @@ public class ChessBoardPanel extends JPanel {
         for(int i = 48; i < 56; i++) {
             squares[i].setPiece("pawn", "black", i);
         }
-
     }
 
     public void paintComponent( Graphics g ) {

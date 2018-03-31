@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.OverlayLayout;
 
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
@@ -20,11 +22,18 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     private int position;
     private JLabel pieceLabel;
     private String image;
+    private JLayeredPane overlay;
 
     public ChessSquarePanel() {
         super();
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         addMouseListener(this);
+        overlay = new JLayeredPane();
+        overlay.setLayout(new OverlayLayout(overlay));
+        overlay.setBackground(new Color(0, 255, 0, 125));
+        add(overlay);
+        //overlay.setSize(getWidth(), getHeight());
+        //add(overlay);
     }
 
     public void setPiece(String piece, String player, int pos) {
@@ -49,10 +58,14 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         //pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT)));
     }
 
-    @Override
     public void mouseClicked(MouseEvent event) {
         System.out.print("mouse clicked ");
         System.out.println(position);
+        overlay.setBackground(new Color(0, 255, 0, 125));
+        //repaint();
+        //overlay.setSize(getWidth(), getHeight());
+        //add(overlay);
+        
     }
 
     public void mouseExited(MouseEvent event) {
