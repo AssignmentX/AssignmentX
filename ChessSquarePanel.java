@@ -27,7 +27,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
     public ChessSquarePanel(ChessBoardPanel parent) {
         super();
-        this.parent = parent;
+        this.parent = parent; // keep track of chessboardpanel as parent
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         addMouseListener(this);
         overlay = new JLayeredPane();
@@ -60,6 +60,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
     public void mouseClicked(MouseEvent event) {
         System.out.print("mouse clicked ");
+        parent.textArea.append("test\n");
         System.out.println(position);
         overlay.setBackground(new Color(0, 255, 0, 125));
         //repaint();
