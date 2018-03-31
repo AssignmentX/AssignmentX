@@ -55,13 +55,16 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     public void paintComponent( Graphics g ) {
         super.paintComponent( g ); // call superclass's paintComponent
         Graphics2D g2d = ( Graphics2D ) g;
-        //pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_DEFAULT)));
+
+        // TODO: RESIZE CHESS PIECES WHEN THE BOARD RESIZES
+        //pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(getWidth()*3/4, getHeight()*3/4, Image.SCALE_DEFAULT)));
     }
 
     public void mouseClicked(MouseEvent event) {
-        System.out.print("mouse clicked ");
-        parent.textArea.append("test\n");
-        System.out.println(position);
+        String msg = "clicked " + Integer.toString(position);
+        parent.getChessGameFrame().appendTextArea(msg);
+
+        // TODO: HIGHLIGHT SQUARE WHEN CLICKED
         overlay.setBackground(new Color(0, 255, 0, 125));
         //repaint();
         //overlay.setSize(getWidth(), getHeight());

@@ -8,9 +8,10 @@ import javax.swing.BorderFactory;
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
 public class ChessBoardPanel extends JPanel {
     private ChessSquarePanel squares[];
-
-    public ChessBoardPanel() {
+    private ChessGameFrame parent;
+    public ChessBoardPanel(ChessGameFrame parent) {
         super();
+        this.parent = parent; // keep track of chessgameframe as parent
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         setLayout(new GridLayout(8, 8, 3, 3));
         setBackground(Color.WHITE);
@@ -59,5 +60,9 @@ public class ChessBoardPanel extends JPanel {
     public void paintComponent( Graphics g ) {
         super.paintComponent( g ); // call superclass's paintComponent
         Graphics2D g2d = ( Graphics2D ) g;
+    }
+
+    public ChessGameFrame getChessGameFrame() {
+        return parent;
     }
 }

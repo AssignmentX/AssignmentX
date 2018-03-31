@@ -21,8 +21,7 @@ public class ChessGameFrame extends JFrame {
    private BorderLayout layout; // borderlayout object
 
    // set up GUI and event handling
-   public ChessGameFrame(String s)
-   {
+   public ChessGameFrame(String s) {
       super(s); // pass title for window to parent constructor
 
       layout = new BorderLayout( 5, 5 ); // 5 pixel gaps
@@ -33,8 +32,11 @@ public class ChessGameFrame extends JFrame {
       textArea.setEditable(false);
       add(textArea, BorderLayout.EAST); // add text area to east side
 
-      chessBoard = new ChessBoardPanel(); // create a panel for the chess board
+      chessBoard = new ChessBoardPanel(this); // create a panel for the chess board
       add(chessBoard, BorderLayout.CENTER); // add chess board to center
-      
+   }
+
+   public void appendTextArea(String s) {
+      textArea.append(s + "\n");
    }
 }
