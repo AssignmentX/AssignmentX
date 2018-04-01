@@ -30,7 +30,7 @@ public class ChessGameFrame extends JFrame {
       layout = new BorderLayout( 5, 5 ); // 5 pixel gaps
       setLayout( layout ); // set frame layout
 
-      textArea = new JTextArea(0, 10);
+      textArea = new JTextArea(0, 12);
       textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
       textArea.setEditable(false);
       add(textArea, BorderLayout.EAST); // add text area to east side

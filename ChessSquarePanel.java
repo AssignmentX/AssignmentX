@@ -49,6 +49,9 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
             pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
             add(pieceLabel);
         }
+        else{
+            pieceLabel = null;
+        }
     }
 
     public String getPiece() {
@@ -66,22 +69,54 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent event) {
         // validate the correct player is clicking the square
         if(ChessGame.getCurrentPlayer() == player){
+            // TODO: MAYBE HIGHLIGHT SQUARE WHEN CLICKED ??? might need JLayeredPane
+            //overlay.setPreferredSize(new Dimension(getWidth(), getHeight()));
+            //add(overlay);
+            //setLayout(null);
+            //repaint();
+
+            // change background color back to default for previously clicked square
+            if(ChessGame.getMovingFrom() != -1) {
+                parent.squareAt(ChessGame.getMovingFrom()).setBackground(ChessGame.getSelectedSquaresColor());
+            }
+
+
+            // lazy solution instead of highlighting, changes background color
+            setBackground(Color.GREEN);
+
             ChessGame.setCurrentlyMoving(true);
             ChessGame.setMovingFrom(position);
             ChessGame.setSelectedPiece(piece);
+            ChessGame.setSelectedSquaresColor(getBackground());
 
-            // TODO: HIGHLIGHT SQUARE WHEN CLICKED
-            overlay.setBackground(new Color(0, 255, 0, 125));
-            //repaint();
-            //overlay.setSize(getWidth(), getHeight());
-            //add(overlay);
         }
         else if(ChessGame.isMoving()){
+            ChessSquarePanel currentPosition = parent.squareAt(ChessGame.getMovingFrom());
+
             // TODO: VALIDATE RULE HERE BEFORE ALLOWING THIS MOVE TO BE DONE
 
             // display move message
             String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);
             parent.getChessGameFrame().appendTextArea(msg);
+
+            // TODO: UN-HIGHLIGHT SQUARES HERE
+
+            // lazy solution, set color back to default
+            //currentPosition.setBackground(ChessGame.getSelectedSquaresColor());
+
+            // remove piece from its current position
+            currentPosition.remove(currentPosition.getPieceLabel());
+            currentPosition.setPiece(null, null, ChessGame.getMovingFrom());
+            currentPosition.repaint();
+
+            // if there is an enemy piece in clicked position, remove it
+            if(pieceLabel != null) {
+                remove(pieceLabel);
+                pieceLabel = null;
+            }
+
+            // move piece to clicked position
+            setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
 
             // clear data for previously selected piece
             ChessGame.setCurrentlyMoving(false);
@@ -97,9 +132,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 ChessGame.setCurrentPlayer("White");
                 ChessGame.getFrame().setNorthTextField("White's Move");
             }
-
-            // TODO: UN-HIGHLIGHT SQUARE HERE
         }
+    }
+
+    public JLabel getPieceLabel() {
+        return pieceLabel;
     }
 
     public void mouseExited(MouseEvent event) {}

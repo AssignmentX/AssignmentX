@@ -10,6 +10,7 @@ public class ChessGame {
     private static int movingFrom;
     private static String selectedPiece;
     private static ChessGameFrame frame;
+    private static Color selectedSquaresColor;
 
     public static void main( String args[] ) {
 
@@ -38,6 +39,7 @@ public class ChessGame {
 
     public static String getCurrentPlayer(){ return currentPlayer; }
     public static String getSelectedPiece(){ return selectedPiece; }
+    public static Color getSelectedSquaresColor() { return selectedSquaresColor; }
     public static ChessGameFrame getFrame(){ return frame; }
 
     public static boolean isMoving() { return currentlyMoving; }
@@ -45,5 +47,6 @@ public class ChessGame {
     public static void setCurrentPlayer(String player){ currentPlayer = player; }
     public static void setSelectedPiece(String piece){ selectedPiece = piece; }
     public static void setCurrentlyMoving(boolean val){ currentlyMoving = val; }
+    public static void setSelectedSquaresColor(Color c) { selectedSquaresColor = c; }
     public static void setMovingFrom(int pos){ movingFrom = pos; }
 }

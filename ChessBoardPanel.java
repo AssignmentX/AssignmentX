@@ -55,8 +55,6 @@ public class ChessBoardPanel extends JPanel {
         for(int i = 48; i < 56; i++) {
             squares[i].setPiece("pawn", "Black", i);
         }
-
-        
     }
 
     public void paintComponent( Graphics g ) {
@@ -67,5 +65,9 @@ public class ChessBoardPanel extends JPanel {
     // this is used by ChessSquarePanels to call the appendTextArea() method in ChessGameFrame
     public ChessGameFrame getChessGameFrame() {
         return parent;
+    }
+
+    public ChessSquarePanel squareAt(int pos) {
+        return squares[pos];
     }
 }
