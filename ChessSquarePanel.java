@@ -43,7 +43,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         this.position = pos;
 
         if(piece != null && player != null) {
-            image = "./images/png/" + player + "_" + piece + ".png";
+            image = "./images/png/" + player.toLowerCase() + "_" + piece + ".png";
             // TODO: this must be tweaked to center the chess pieces on the panel
             // TODO: this must be changed whenever we change the default size of the window
             pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
@@ -64,31 +64,47 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent event) {
-        String msg = "clicked " + Integer.toString(position);
-        parent.getChessGameFrame().appendTextArea(msg);
+        // validate the correct player is clicking the square
+        if(ChessGame.getCurrentPlayer() == player){
+            ChessGame.setCurrentlyMoving(true);
+            ChessGame.setMovingFrom(position);
+            ChessGame.setSelectedPiece(piece);
 
-        // TODO: HIGHLIGHT SQUARE WHEN CLICKED
-        overlay.setBackground(new Color(0, 255, 0, 125));
-        //repaint();
-        //overlay.setSize(getWidth(), getHeight());
-        //add(overlay);
-        
+            // TODO: HIGHLIGHT SQUARE WHEN CLICKED
+            overlay.setBackground(new Color(0, 255, 0, 125));
+            //repaint();
+            //overlay.setSize(getWidth(), getHeight());
+            //add(overlay);
+        }
+        else if(ChessGame.isMoving()){
+            // TODO: VALIDATE RULE HERE BEFORE ALLOWING THIS MOVE TO BE DONE
+
+            // display move message
+            String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);
+            parent.getChessGameFrame().appendTextArea(msg);
+
+            // clear data for previously selected piece
+            ChessGame.setCurrentlyMoving(false);
+            ChessGame.setMovingFrom(-1);
+            ChessGame.setSelectedPiece(null);
+
+            // change turn to other player
+            if(ChessGame.getCurrentPlayer() == "White") {
+                ChessGame.setCurrentPlayer("Black");
+                ChessGame.getFrame().setNorthTextField("Black's Move");
+            }
+            else {
+                ChessGame.setCurrentPlayer("White");
+                ChessGame.getFrame().setNorthTextField("White's Move");
+            }
+
+            // TODO: UN-HIGHLIGHT SQUARE HERE
+        }
     }
 
-    public void mouseExited(MouseEvent event) {
-
-    }
-
-    public void mouseEntered(MouseEvent e) {
-
-   }
-
-    public void mousePressed(MouseEvent e) {
-
-    }
-     
-    public void mouseReleased(MouseEvent e) {
-
-    }
+    public void mouseExited(MouseEvent event) {}
+    public void mouseEntered(MouseEvent event) {}
+    public void mousePressed(MouseEvent event) {}
+    public void mouseReleased(MouseEvent event) {}
      
 }

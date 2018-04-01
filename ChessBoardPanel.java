@@ -28,33 +28,35 @@ public class ChessBoardPanel extends JPanel {
             }
         }
         // initialize white pieces
-        squares[0].setPiece("rook", "white", 0);
-        squares[1].setPiece("knight", "white", 1);
-        squares[2].setPiece("bishop", "white", 2);
-        squares[3].setPiece("queen", "white", 3);
-        squares[4].setPiece("king", "white", 4);
-        squares[5].setPiece("bishop", "white", 5);
-        squares[6].setPiece("knight", "white", 6);
-        squares[7].setPiece("rook", "white", 7);
+        squares[0].setPiece("rook", "White", 0);
+        squares[1].setPiece("knight", "White", 1);
+        squares[2].setPiece("bishop", "White", 2);
+        squares[3].setPiece("queen", "White", 3);
+        squares[4].setPiece("king", "White", 4);
+        squares[5].setPiece("bishop", "White", 5);
+        squares[6].setPiece("knight", "White", 6);
+        squares[7].setPiece("rook", "White", 7);
         for(int i = 8; i < 16; i++) {
-            squares[i].setPiece("pawn", "white", i);
+            squares[i].setPiece("pawn", "White", i);
         }
         // initialize empty pieces
         for(int i = 17; i < 56; i++) {
             squares[i].setPiece(null, null, i);
         }
         // initialize black pieces
-        squares[56].setPiece("rook", "black", 56);
-        squares[57].setPiece("knight", "black", 57);
-        squares[58].setPiece("bishop", "black", 58);
-        squares[59].setPiece("queen", "black", 59);
-        squares[60].setPiece("king", "black", 60);
-        squares[61].setPiece("bishop", "black", 61);
-        squares[62].setPiece("knight", "black", 62);
-        squares[63].setPiece("rook", "black", 63);
+        squares[56].setPiece("rook", "Black", 56);
+        squares[57].setPiece("knight", "Black", 57);
+        squares[58].setPiece("bishop", "Black", 58);
+        squares[59].setPiece("queen", "Black", 59);
+        squares[60].setPiece("king", "Black", 60);
+        squares[61].setPiece("bishop", "Black", 61);
+        squares[62].setPiece("knight", "Black", 62);
+        squares[63].setPiece("rook", "Black", 63);
         for(int i = 48; i < 56; i++) {
-            squares[i].setPiece("pawn", "black", i);
+            squares[i].setPiece("pawn", "Black", i);
         }
+
+        
     }
 
     public void paintComponent( Graphics g ) {
@@ -62,6 +64,7 @@ public class ChessBoardPanel extends JPanel {
         Graphics2D g2d = ( Graphics2D ) g;
     }
 
+    // this is used by ChessSquarePanels to call the appendTextArea() method in ChessGameFrame
     public ChessGameFrame getChessGameFrame() {
         return parent;
     }
