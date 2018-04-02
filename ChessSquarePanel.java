@@ -64,6 +64,10 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         return piece;
     }
 
+    public String getPlayer() {
+        return player;
+    }
+
     public void paintComponent( Graphics g ) {
         super.paintComponent( g ); // call superclass's paintComponent
         Graphics2D g2d = ( Graphics2D ) g;
@@ -152,6 +156,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 if(pieceLabel != null) {
                     remove(pieceLabel);
                     pieceLabel = null;
+                    player = null;
                 }
 
                 // move piece to clicked position
