@@ -1,7 +1,9 @@
 import java.awt.Color;
+
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 import java.util.Random;
 
 public class ChessGame {

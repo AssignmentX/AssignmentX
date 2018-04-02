@@ -4,16 +4,17 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-//import javax.imageio.ImageIO;
 import java.awt.Dimension;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.OverlayLayout;
+
+import java.util.ArrayList;
 
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
@@ -59,269 +60,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         return piece;
     }
 
-    // check to see if coordinates are a valid move on the board
-    // TODO NEED TO ADD COLLISION DETECTION FOR FRIENDLY UNITS
-    public boolean coords_valid_check(int[] coords){
-        if(coords[0] >= 0 && coords[0] <= 7 && coords[1] >= 0 && coords[1] <= 7)
-            return true;
-        else
-            return false;
-    }
-
-    // converts a position on the game board to its corresponding coordinates
-    public int[] position_to_coord(int pos) {
-        int[] the_coords = {0,0};
-
-        for(int i = 0; i < pos; i++){
-            the_coords[1]++;
-            if (the_coords[1] > 7){
-                the_coords[1]=0;
-                the_coords[0]++;
-            }
-        }
-        return the_coords;
-    }
-
-    // converts a pair (array size 2) of coordinates to a position on a the game board
-    // coords[0] = x-value
-    // coords[1] = y-value
-    public int coord_to_position(int[] coords) {
-        return coords[0]*8+coords[1];
-    }
-
-    // returns ArrayList of valid positions to choose from
-    public ArrayList<Integer> get_valid_moves(String player, String piece, int curr_pos){
-        ArrayList<Integer> my_moves = new ArrayList<>();
-
-        // TODO NOT SURE HOW TO CHECK IF A PIECE/ENEMY OCCUPIES A GIVEN POSITION, need to write helper function
-        // TODO NEED TO ADD COLLISION DETECTION REGARDING MOVEMENT WITH FRIENDLY/ENEMY PIECES
-        if(player.equals("White")){
-            if(piece.equals("pawn")){
-                // TODO NEED TO ADD ABILITY TO MOVE TWO SPACES AT START & OTHER WEIRD PAWN RULES
-                // TODO SUCH AS THE ABILITY TO MOVE BACKWARDS IF PAWN REACHES END OF GAME BOARD
-                int[] new_move = position_to_coord(curr_pos);
-                // allows pawn to move one unit forward
-                new_move[0]++;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-                // TODO allows pawn to attack on the left diagonal if enemy present
-                // TODO allows pawn to attack on the right diagonal if enemy present
-            }
-            else if(piece.equals("rook")){
-                int[] new_move = position_to_coord(curr_pos);
-                // allows rook to move down vertically
-                while(true){
-                    new_move[0]++;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-                // allows rook to move up vertically
-                while(true){
-                    new_move[0]--;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-                // allows rook to move right horizontally
-                while(true){
-                    new_move[1]++;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-                // allows rook to move left horizontally
-                while(true){
-                    new_move[1]--;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-            }
-            else if(piece.equals("knight")){
-                int[] new_move = position_to_coord(curr_pos);
-                // allows knight to move right (HOOK UP)
-                new_move[0]+=1;
-                new_move[1]+=2;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-                // allows knight to move right (HOOK DOWN)
-                new_move = position_to_coord(curr_pos);
-                new_move[0]-=1;
-                new_move[1]+=2;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-
-                // allows knight to move left (HOOK UP)
-                new_move = position_to_coord(curr_pos);
-                new_move[0]-=1;
-                new_move[1]-=2;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-                // allows knight to move left (HOOK DOWN)
-                new_move = position_to_coord(curr_pos);
-                new_move[0]+=1;
-                new_move[1]-=2;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-
-                // allows knight to move up (HOOK LEFT)
-                new_move = position_to_coord(curr_pos);
-                new_move[0]-=2;
-                new_move[1]-=1;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-                // allows knight to move up (HOOK RIGHT)
-                new_move = position_to_coord(curr_pos);
-                new_move[0]-=2;
-                new_move[1]+=1;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-
-                // allows knight to move down (HOOK LEFT)
-                new_move = position_to_coord(curr_pos);
-                new_move[0]+=2;
-                new_move[1]-=1;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-                // allows knight to move down (HOOK LEFT)
-                new_move = position_to_coord(curr_pos);
-                new_move[0]+=2;
-                new_move[1]+=1;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-            }
-            else if(piece.equals("bishop")) {
-                int[] new_move = position_to_coord(curr_pos);
-                // allows bishop to move diagonally
-                while(true){
-                    new_move[0]++;
-                    new_move[1]++;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-                while(true){
-                    new_move[0]--;
-                    new_move[1]--;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-            }
-            else if(piece.equals("queen")) {
-                int[] new_move = position_to_coord(curr_pos);
-                // allows queen to move diagonally
-                while(true){
-                    new_move[0]++;
-                    new_move[1]++;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-
-                new_move = position_to_coord(curr_pos);
-                while(true){
-                    new_move[0]--;
-                    new_move[1]--;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-
-                new_move = position_to_coord(curr_pos);
-                while(true){
-                    new_move[0]++;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-                // allows queen to move up vertically
-                new_move = position_to_coord(curr_pos);
-                while(true){
-                    new_move[0]--;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-                // allows queen to move right horizontally
-                new_move = position_to_coord(curr_pos);
-                while(true){
-                    new_move[1]++;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-                // allows queen to move left horizontally
-                new_move = position_to_coord(curr_pos);
-                while(true){
-                    new_move[1]--;
-                    if(!coords_valid_check(new_move))
-                        break;
-                    my_moves.add(coord_to_position(new_move));
-                }
-            }
-            else if(piece.equals("king")) {
-                int[] new_move = position_to_coord(curr_pos);
-                // allows king to move diagonally up/left
-                new_move[0]--;
-                new_move[1]--;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-                // allows king to move diagonally up/right
-                new_move = position_to_coord(curr_pos);
-                new_move[0]--;
-                new_move[1]++;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-                // allows king to move diagonally down/right
-                new_move = position_to_coord(curr_pos);
-                new_move[0]++;
-                new_move[1]++;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-                // allows king to move diagonally down/left
-                new_move = position_to_coord(curr_pos);
-                new_move[0]++;
-                new_move[1]--;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-                // allows king to move up
-                new_move = position_to_coord(curr_pos);
-                new_move[0]--;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-                // allows king to move down
-                new_move = position_to_coord(curr_pos);
-                new_move[0]++;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-                // allows king to move left
-                new_move = position_to_coord(curr_pos);
-                new_move[1]++;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-
-                // allows king to move right
-                new_move = position_to_coord(curr_pos);
-                new_move[1]--;
-                if(coords_valid_check(new_move))
-                    my_moves.add(coord_to_position(new_move));
-            }
-        }
-
-        return my_moves;
-    }
-
     public void paintComponent( Graphics g ) {
         super.paintComponent( g ); // call superclass's paintComponent
         Graphics2D g2d = ( Graphics2D ) g;
@@ -339,6 +77,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
             //setLayout(null);
             //repaint();
 
+            // TODO: FIX THIS
             // change background color back to default for previously clicked square
             if(ChessGame.getMovingFrom() != -1) {
                 parent.squareAt(ChessGame.getMovingFrom()).setBackground(ChessGame.getSelectedSquaresColor());
@@ -359,7 +98,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
 
             // TODO: VALIDATE RULE HERE BEFORE ALLOWING THIS MOVE TO BE DONE
-            ArrayList<Integer> valid_moves = get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
+            ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
             System.out.print("\nValid moves: ");
             for (int x : valid_moves)
                 System.out.print(" " + x);
@@ -373,6 +112,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
                 // TODO: UN-HIGHLIGHT SQUARES HERE
 
+                // TODO: FIX THIS
                 // lazy solution, set color back to default
                 //currentPosition.setBackground(ChessGame.getSelectedSquaresColor());
 
@@ -412,6 +152,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         }
     }
 
+    // this is used to clear chess pieces in other squares
     public JLabel getPieceLabel() {
         return pieceLabel;
     }
