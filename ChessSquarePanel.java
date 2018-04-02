@@ -137,7 +137,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 ChessGame.setSelectedPiece(null);
 
                 // change turn to other player
-                if(ChessGame.getCurrentPlayer() == "White") {
+                if(ChessGame.getCurrentPlayer().equals("White")) {
                     ChessGame.setCurrentPlayer("Black");
                     ChessGame.getFrame().setNorthTextField("Black's Move");
                 }
