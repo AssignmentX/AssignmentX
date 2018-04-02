@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -13,6 +15,8 @@ public class ChessGame {
     private static String selectedPiece;
     private static ChessGameFrame frame;
     private static Color selectedSquaresColor;
+    private static Color[] validMoveColors;
+    private static boolean[] validMovePositions;
 
     public static void main( String args[] ) {
 
@@ -36,13 +40,22 @@ public class ChessGame {
         // set current player
         setCurrentPlayer(firstMove);
         frame.setNorthTextField(firstMove + "'s Move");
+        // tracks which piece is currently making a move
         currentlyMoving = false;
+        movingFrom = -1;
+        // tracks valid squares for moves
+        validMoveColors = new Color[64];
+        validMovePositions = new boolean[64];
+        for(boolean x : validMovePositions)
+            x = false;
     }
 
     public static String getCurrentPlayer(){ return currentPlayer; }
     public static String getSelectedPiece(){ return selectedPiece; }
     public static Color getSelectedSquaresColor() { return selectedSquaresColor; }
     public static ChessGameFrame getFrame(){ return frame; }
+    public static Color[] getValidMoveColors(){ return validMoveColors; }
+    public static boolean[] getValidMovePositions(){ return validMovePositions; }
 
     public static boolean isMoving() { return currentlyMoving; }
     public static int getMovingFrom() { return movingFrom; }

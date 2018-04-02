@@ -55,7 +55,7 @@ public class ChessGameFrame extends JFrame {
 
    }
 
+   public ChessBoardPanel getBoard() { return chessBoard; }
    public void appendTextArea(String s) { textArea.append(s + "\n"); }
-
    public void setNorthTextField(String s) { textFieldNorth.setText(s); }
 }

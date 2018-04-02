@@ -31,19 +31,36 @@ public class MoveLogic {
         return coords[0]*8+coords[1];
     }
 
-    public static void movePawn(int[] new_move, ArrayList<Integer> my_moves) {
-        // TODO NEED TO ADD ABILITY TO MOVE TWO SPACES AT START & OTHER WEIRD PAWN RULES
-        // TODO SUCH AS THE ABILITY TO MOVE BACKWARDS IF PAWN REACHES END OF GAME BOARD
-
+    public static void movePawn(int[] new_move, ArrayList<Integer> my_moves, String player, boolean hasMoved) {
         // allows pawn to move one unit forward
-        new_move[0]++;
+        if(player.equals("White"))
+            new_move[0]++;
+        else
+            new_move[0]--;
         if(coords_valid_check(new_move))
             my_moves.add(coord_to_position(new_move));
+
+        //System.out.println(hasMoved);
+
+        // pawn can move two spaces on its first move
+        if(!hasMoved) {
+            if(player.equals("White"))
+                new_move[0]++;
+            else
+                new_move[0]--;
+            //System.out.println("hit");
+            if(coords_valid_check(new_move))
+                my_moves.add(coord_to_position(new_move));
+        }
+
+        // TODO: since pawns cannot attack forward, make sure that the piece ahead is null in order for
+        //       the pawn to move forward
+
         // TODO allows pawn to attack on the left diagonal if enemy present
         // TODO allows pawn to attack on the right diagonal if enemy present
     }
 
-    public static void moveRook(int[] new_move, ArrayList<Integer> my_moves) {
+    public static void moveRook(int[] new_move, ArrayList<Integer> my_moves, boolean hasMoved) {
         // allows rook to move down vertically
         while(true){
             new_move[0]++;
@@ -200,7 +217,7 @@ public class MoveLogic {
         }
     }
 
-    public static void moveKing(int[] new_move, ArrayList<Integer> my_moves, int curr_pos) {
+    public static void moveKing(int[] new_move, ArrayList<Integer> my_moves, int curr_pos, boolean hasMoved) {
         // allows king to move diagonally up/left
         new_move[0]--;
         new_move[1]--;
@@ -259,12 +276,14 @@ public class MoveLogic {
 
         // TODO NOT SURE HOW TO CHECK IF A PIECE/ENEMY OCCUPIES A GIVEN POSITION, need to write helper function
         // TODO NEED TO ADD COLLISION DETECTION REGARDING MOVEMENT WITH FRIENDLY/ENEMY PIECES
+        boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
+        //System.out.println(pieceHasMoved);
         int[] new_move = position_to_coord(curr_pos);
-        if(player.equals("White")){
+        //if(player.equals("White")){
             if(piece.equals("pawn"))
-                movePawn(new_move, my_moves);
+                movePawn(new_move, my_moves, player, pieceHasMoved);
             else if(piece.equals("rook"))
-                moveRook(new_move, my_moves);
+                moveRook(new_move, my_moves, pieceHasMoved);
             else if(piece.equals("knight"))
                 moveKnight(new_move, my_moves, curr_pos);
             else if(piece.equals("bishop"))
@@ -272,8 +291,8 @@ public class MoveLogic {
             else if(piece.equals("queen"))
                 moveQueen(new_move, my_moves, curr_pos);
             else if(piece.equals("king"))
-                moveKing(new_move, my_moves, curr_pos);
-        }
+                moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
+        //}
         return my_moves;
     }
 

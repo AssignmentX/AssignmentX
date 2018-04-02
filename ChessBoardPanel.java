@@ -24,6 +24,8 @@ public class ChessBoardPanel extends JPanel {
                 squares[i*8 + j] = new ChessSquarePanel(this);
                 if((i % 2 == 0 && j % 2 == 0) || (i % 2 != 0 && j % 2 != 0))
                     squares[i*8 + j].setBackground(Color.GRAY);
+                else
+                    squares[i*8 + j].setBackground(Color.WHITE);
                 add(squares[i*8 + j]);
             }
         }
@@ -42,6 +44,7 @@ public class ChessBoardPanel extends JPanel {
         // initialize empty pieces
         for(int i = 17; i < 56; i++) {
             squares[i].setPiece(null, null, i);
+            squares[i].pieceHasMoved(); // needed on empty squares since the board is stateless
         }
         // initialize black pieces
         squares[56].setPiece("rook", "Black", 56);
@@ -70,4 +73,5 @@ public class ChessBoardPanel extends JPanel {
     public ChessSquarePanel squareAt(int pos) {
         return squares[pos];
     }
+
 }

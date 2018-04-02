@@ -24,19 +24,23 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     private int position;
     private JLabel pieceLabel;
     private String image;
-    private JLayeredPane overlay;
     private ChessBoardPanel parent;
+    private boolean hasMoved;
 
     public ChessSquarePanel(ChessBoardPanel parent) {
         super();
         this.parent = parent; // keep track of chessboardpanel as parent
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
+        this.hasMoved = false; // keeps track of if piece has moved from starting position
+        //System.out.println(hasMoved);
         addMouseListener(this); // adds mouse listener to panel 
+        
+
         // overlay is used to highlight the panel
-        overlay = new JLayeredPane();
-        overlay.setLayout(new OverlayLayout(overlay));
-        overlay.setBackground(new Color(0, 255, 0, 125));
-        add(overlay);
+        //overlay = new JLayeredPane();
+        //overlay.setLayout(new OverlayLayout(overlay));
+        //overlay.setBackground(new Color(0, 255, 0, 125));
+        //add(overlay);
     }
 
     public void setPiece(String piece, String player, int pos) {
@@ -71,50 +75,73 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent event) {
         // validate the correct player is clicking the square
         if(ChessGame.getCurrentPlayer() == player){
+            // System.out.println(hasMoved);
             // TODO: MAYBE HIGHLIGHT SQUARE WHEN CLICKED ??? might need JLayeredPane
             //overlay.setPreferredSize(new Dimension(getWidth(), getHeight()));
             //add(overlay);
             //setLayout(null);
             //repaint();
 
-            // TODO: FIX THIS
             // change background color back to default for previously clicked square
             if(ChessGame.getMovingFrom() != -1) {
                 parent.squareAt(ChessGame.getMovingFrom()).setBackground(ChessGame.getSelectedSquaresColor());
+                // also, unhighlight valid move squares
+                for(int i = 0; i < 64; i++) {
+                    if(ChessGame.getValidMovePositions()[i])
+                        parent.squareAt(i).setBackground(ChessGame.getValidMoveColors()[i]);
+                }
             }
-
-
-            // lazy solution instead of highlighting, changes background color
-            setBackground(Color.GREEN);
 
             ChessGame.setCurrentlyMoving(true);
             ChessGame.setMovingFrom(position);
             ChessGame.setSelectedPiece(piece);
             ChessGame.setSelectedSquaresColor(getBackground());
 
+            // lazy solution instead of highlighting, changes background color
+            setBackground(Color.GREEN);
+
+            // get list of valid moves
+            ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
+            for(int x : valid_moves) {
+                // save position of square we are highlighting
+                ChessGame.getValidMovePositions()[x] = true;
+                ChessGame.getValidMoveColors()[x] = parent.squareAt(x).getBackground();
+
+                // highlight square
+                parent.squareAt(x).setBackground(new Color(0, 200, 0));
+            }
+
         }
         else if(ChessGame.isMoving()){
             ChessSquarePanel currentPosition = parent.squareAt(ChessGame.getMovingFrom());
 
-
-            // TODO: VALIDATE RULE HERE BEFORE ALLOWING THIS MOVE TO BE DONE
+            // get list of valid moves
             ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
             System.out.print("\nValid moves: ");
-            for (int x : valid_moves)
+            for (int x : valid_moves) {
                 System.out.print(" " + x);
+            }
 
+            // validate move
             if(valid_moves.contains(position)){
+                // piece has been moved
+                parent.squareAt(ChessGame.getMovingFrom()).pieceHasMoved();
+                hasMoved = true;
+
                 System.out.printf("\nUser selected: %d", position);
 
                 // display move message
                 String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);
                 parent.getChessGameFrame().appendTextArea(msg);
 
-                // TODO: UN-HIGHLIGHT SQUARES HERE
-
-                // TODO: FIX THIS
                 // lazy solution, set color back to default
-                //currentPosition.setBackground(ChessGame.getSelectedSquaresColor());
+                currentPosition.setBackground(ChessGame.getSelectedSquaresColor());
+
+                // also, unhighlight valid move squares
+                for(int x : valid_moves) {
+                    parent.squareAt(x).setBackground(ChessGame.getValidMoveColors()[x]);
+                    ChessGame.getValidMovePositions()[x] = false;
+                }
 
                 // remove piece from its current position
                 currentPosition.remove(currentPosition.getPieceLabel());
@@ -129,7 +156,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
                 // move piece to clicked position
                 setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
-
 
                 // clear data for previously selected piece
                 ChessGame.setCurrentlyMoving(false);
@@ -153,9 +179,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     }
 
     // this is used to clear chess pieces in other squares
-    public JLabel getPieceLabel() {
-        return pieceLabel;
-    }
+    public JLabel getPieceLabel() { return pieceLabel; }
+
+    // this is used to keep track of each piece's first move
+    public void pieceHasMoved() { hasMoved = true; }
+    public boolean hasPieceMoved() { return hasMoved; }
 
     public void mouseExited(MouseEvent event) {}
     public void mouseEntered(MouseEvent event) {}
