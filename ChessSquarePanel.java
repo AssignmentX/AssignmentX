@@ -58,6 +58,35 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         return piece;
     }
 
+    // check to see if coordinates are a valid move on the board
+    public boolean coords_valid_check(int[] coords){
+        if(coords[0] >= 0 && coords[0] <= 7 && coords[1] >= 0 && coords[1] <= 7)
+            return true;
+        else
+            return false;
+    }
+
+    // converts a position on the game board to its corresponding coordinates
+    public int[] position_to_coord(int pos) {
+        int[] the_coords = {0,0};
+
+        for(int i = 0; i < pos; i++){
+            the_coords[1]++;
+            if (the_coords[1] > 7){
+                the_coords[1]=0;
+                the_coords[0]++;
+            }
+        }
+        return the_coords;
+    }
+
+    // converts a pair (array size 2) of coordinates to a position on a the game board
+    // coords[0] = x-value
+    // coords[1] = y-value
+    public int coord_to_position(int[] coords) {
+        return coords[0]*8+coords[1];
+    }
+
     public void paintComponent( Graphics g ) {
         super.paintComponent( g ); // call superclass's paintComponent
         Graphics2D g2d = ( Graphics2D ) g;
@@ -95,6 +124,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
             // TODO: VALIDATE RULE HERE BEFORE ALLOWING THIS MOVE TO BE DONE
 
+
             // display move message
             String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);
             parent.getChessGameFrame().appendTextArea(msg);
@@ -117,6 +147,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
             // move piece to clicked position
             setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
+
 
             // clear data for previously selected piece
             ChessGame.setCurrentlyMoving(false);
