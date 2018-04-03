@@ -57,42 +57,51 @@ public class MoveLogic {
         // TODO allows pawn to attack on the right diagonal if enemy present
     }
 
-    public static void moveRook(int[] new_move, ArrayList<Integer> my_moves, boolean hasMoved) {
+    public static void moveRook(int[] new_move, ArrayList<Integer> my_moves, boolean hasMoved, int curr_pos) {
         // allows rook to move down vertically
         while(true){
             new_move[0]++;
             if(!coords_valid_check(new_move))
                 break;
-            my_moves.add(coord_to_position(new_move));
             if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
                 break;
+            my_moves.add(coord_to_position(new_move));
         }
+
+        new_move = position_to_coord(curr_pos);
+
         // allows rook to move up vertically
         while(true){
             new_move[0]--;
             if(!coords_valid_check(new_move))
                 break;
-            my_moves.add(coord_to_position(new_move));
             if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
                 break;
+            my_moves.add(coord_to_position(new_move));
         }
+
+        new_move = position_to_coord(curr_pos);
+
         // allows rook to move right horizontally
         while(true){
             new_move[1]++;
             if(!coords_valid_check(new_move))
                 break;
-            my_moves.add(coord_to_position(new_move));
             if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
                 break;
+            my_moves.add(coord_to_position(new_move));
         }
+
+        new_move = position_to_coord(curr_pos);
+
         // allows rook to move left horizontally
         while(true){
             new_move[1]--;
             if(!coords_valid_check(new_move))
                 break;
-            my_moves.add(coord_to_position(new_move));
             if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
                 break;
+            my_moves.add(coord_to_position(new_move));
         }
 
         // TODO: IMPLEMENT CASTLING FOR ROOKS
@@ -289,7 +298,7 @@ public class MoveLogic {
             if(piece.equals("pawn"))
                 movePawn(new_move, my_moves, player, pieceHasMoved);
             else if(piece.equals("rook"))
-                moveRook(new_move, my_moves, pieceHasMoved);
+                moveRook(new_move, my_moves, pieceHasMoved, curr_pos);
             else if(piece.equals("knight"))
                 moveKnight(new_move, my_moves, curr_pos);
             else if(piece.equals("bishop"))

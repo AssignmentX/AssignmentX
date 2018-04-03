@@ -77,7 +77,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent event) {
 
         // validate the correct player is clicking the square
-        if(ChessGame.getCurrentPlayer() == player){
+        if(ChessGame.getCurrentPlayer().equals(player)){
 
             // MAYBE HIGHLIGHT SQUARE WHEN CLICKED ??? might need JLayeredPane
             //overlay.setPreferredSize(new Dimension(getWidth(), getHeight()));
@@ -120,10 +120,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
             // get list of valid moves
             ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
-            System.out.print("\nValid moves: ");
+            System.out.print("Valid moves: ");
             for (int x : valid_moves) {
                 System.out.print(" " + x);
             }
+            System.out.println();
 
             // validate move
             if(valid_moves.contains(position)){
