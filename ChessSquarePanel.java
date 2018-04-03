@@ -141,7 +141,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
                 // lazy solution, set color back to default
                 currentPosition.setBackground(ChessGame.getSelectedSquaresColor());
-                setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                currentPosition.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
                 // also, unhighlight valid move squares
                 for(int x : valid_moves) {
