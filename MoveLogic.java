@@ -30,9 +30,9 @@ public class MoveLogic {
         return coords[0]*8+coords[1];
     }
 
-    public static void movePawn(int[] new_move, ArrayList<Integer> my_moves, String player, boolean hasMoved, int curr_pos) {
+    public static void movePawn(int[] new_move, ArrayList<Integer> my_moves, boolean hasMoved, int curr_pos) {
         // allows pawn to move one unit forward
-        if(player.equals("White"))
+        if(ChessGame.getCurrentPlayer().equals("White"))
             new_move[0]++;
         else
             new_move[0]--;
@@ -44,7 +44,7 @@ public class MoveLogic {
 
         // allows pawn to move two spaces on its first move
         if(!hasMoved) {
-            if(player.equals("White"))
+            if(ChessGame.getCurrentPlayer().equals("White"))
                 new_move[0]++;
             else
                 new_move[0]--;
@@ -57,14 +57,15 @@ public class MoveLogic {
 
         new_move = position_to_coord(curr_pos);
 
-        if(player.equals("White")) {
+        if(ChessGame.getCurrentPlayer().equals("White")) {
             // diagnol left
             new_move[0]--;
             new_move[1]++;
 
             // validate move
             if(coords_valid_check(new_move)) {
-                if(!player.equals(ChessGame.getCurrentPlayer()))
+                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                //if(!player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
 
@@ -73,7 +74,8 @@ public class MoveLogic {
 
             // validate move
             if(coords_valid_check(new_move)) {
-                if(!player.equals(ChessGame.getCurrentPlayer()))
+                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                //if(!player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
         }
@@ -84,7 +86,8 @@ public class MoveLogic {
 
             // validate move
             if(coords_valid_check(new_move)) {
-                if(!player.equals(ChessGame.getCurrentPlayer()))
+                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                //if(!player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
 
@@ -93,7 +96,8 @@ public class MoveLogic {
 
             // validate move
             if(coords_valid_check(new_move)) {
-                if(!player.equals(ChessGame.getCurrentPlayer()))
+                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                //if(!player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
         }
@@ -105,9 +109,9 @@ public class MoveLogic {
             new_move[0]++;
             if(!coords_valid_check(new_move))
                 break;
+            my_moves.add(coord_to_position(new_move));
             if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
                 break;
-            my_moves.add(coord_to_position(new_move));
         }
 
         new_move = position_to_coord(curr_pos);
@@ -117,9 +121,9 @@ public class MoveLogic {
             new_move[0]--;
             if(!coords_valid_check(new_move))
                 break;
+            my_moves.add(coord_to_position(new_move));
             if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
                 break;
-            my_moves.add(coord_to_position(new_move));
         }
 
         new_move = position_to_coord(curr_pos);
@@ -129,9 +133,9 @@ public class MoveLogic {
             new_move[1]++;
             if(!coords_valid_check(new_move))
                 break;
+            my_moves.add(coord_to_position(new_move));
             if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
                 break;
-            my_moves.add(coord_to_position(new_move));
         }
 
         new_move = position_to_coord(curr_pos);
@@ -141,9 +145,9 @@ public class MoveLogic {
             new_move[1]--;
             if(!coords_valid_check(new_move))
                 break;
+            my_moves.add(coord_to_position(new_move));
             if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
                 break;
-            my_moves.add(coord_to_position(new_move));
         }
 
         // TODO: IMPLEMENT CASTLING FOR ROOKS
@@ -261,9 +265,9 @@ public class MoveLogic {
             new_move[1]++;
             if(!coords_valid_check(new_move))
                 break;
+            my_moves.add(coord_to_position(new_move));
             if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
                 break;
-            my_moves.add(coord_to_position(new_move));
         }
 
         new_move = position_to_coord(curr_pos);
@@ -379,20 +383,18 @@ public class MoveLogic {
         // TODO NEED TO ADD COLLISION DETECTION REGARDING MOVEMENT WITH FRIENDLY/ENEMY PIECES
         boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
         int[] new_move = position_to_coord(curr_pos);
-        //if(player.equals("White")){
-            if(piece.equals("pawn"))
-                movePawn(new_move, my_moves, player, pieceHasMoved, curr_pos);
-            else if(piece.equals("rook"))
-                moveRook(new_move, my_moves, pieceHasMoved, curr_pos);
-            else if(piece.equals("knight"))
-                moveKnight(new_move, my_moves, curr_pos);
-            else if(piece.equals("bishop"))
-                moveBishop(new_move, my_moves, curr_pos);
-            else if(piece.equals("queen"))
-                moveQueen(new_move, my_moves, curr_pos);
-            else if(piece.equals("king"))
-                moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
-        //}
+        if(piece.equals("pawn"))
+            movePawn(new_move, my_moves, pieceHasMoved, curr_pos);
+        else if(piece.equals("rook"))
+            moveRook(new_move, my_moves, pieceHasMoved, curr_pos);
+        else if(piece.equals("knight"))
+            moveKnight(new_move, my_moves, curr_pos);
+        else if(piece.equals("bishop"))
+            moveBishop(new_move, my_moves, curr_pos);
+        else if(piece.equals("queen"))
+            moveQueen(new_move, my_moves, curr_pos);
+        else if(piece.equals("king"))
+            moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
         return my_moves;
     }
 
