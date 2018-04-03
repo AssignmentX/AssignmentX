@@ -32,10 +32,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         this.parent = parent; // keep track of chessboardpanel as parent
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         this.hasMoved = false; // keeps track of if piece has moved from starting position
-        //System.out.println(hasMoved);
         addMouseListener(this); // adds mouse listener to panel 
         
-
         // overlay is used to highlight the panel
         //overlay = new JLayeredPane();
         //overlay.setLayout(new OverlayLayout(overlay));
@@ -77,10 +75,14 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent event) {
+        // DELETE THIS LINE
+        System.out.println("clicked: ");
+        System.out.println(hasPieceMoved());
+
         // validate the correct player is clicking the square
         if(ChessGame.getCurrentPlayer() == player){
-            // System.out.println(hasMoved);
-            // TODO: MAYBE HIGHLIGHT SQUARE WHEN CLICKED ??? might need JLayeredPane
+
+            // MAYBE HIGHLIGHT SQUARE WHEN CLICKED ??? might need JLayeredPane
             //overlay.setPreferredSize(new Dimension(getWidth(), getHeight()));
             //add(overlay);
             //setLayout(null);
@@ -128,11 +130,10 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
             // validate move
             if(valid_moves.contains(position)){
-                // piece has been moved
+                // piece has been moved (used for pawns first move, and kings+rooks for castling)
+                System.out.println(parent.squareAt(ChessGame.getMovingFrom()).hasPieceMoved());
                 parent.squareAt(ChessGame.getMovingFrom()).pieceHasMoved();
                 hasMoved = true;
-
-                System.out.printf("\nUser selected: %d", position);
 
                 // display move message
                 String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);

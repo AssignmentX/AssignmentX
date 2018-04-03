@@ -42,7 +42,7 @@ public class ChessBoardPanel extends JPanel {
             squares[i].setPiece("pawn", "White", i);
         }
         // initialize empty pieces
-        for(int i = 17; i < 56; i++) {
+        for(int i = 16; i < 48; i++) {
             squares[i].setPiece(null, null, i);
             squares[i].pieceHasMoved(); // needed on empty squares since the board is stateless
         }
@@ -58,6 +58,7 @@ public class ChessBoardPanel extends JPanel {
         for(int i = 48; i < 56; i++) {
             squares[i].setPiece("pawn", "Black", i);
         }
+        System.out.println(squares[48].hasPieceMoved());
     }
 
     public void paintComponent( Graphics g ) {

@@ -37,13 +37,16 @@ public class ChessGame {
             firstMove = "White";
         else
             firstMove = (new Random().nextInt() % 2 == 0) ? "Black" : "White";
+
         // set current player
         setCurrentPlayer(firstMove);
         frame.setNorthTextField(firstMove + "'s Move");
+
         // tracks which piece is currently making a move
         currentlyMoving = false;
         movingFrom = -1;
-        // tracks valid squares for moves
+
+        // tracks the colors and positions of valid moves
         validMoveColors = new Color[64];
         validMovePositions = new boolean[64];
         for(boolean x : validMovePositions)
