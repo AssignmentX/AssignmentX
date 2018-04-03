@@ -59,23 +59,23 @@ public class MoveLogic {
 
         if(ChessGame.getCurrentPlayer().equals("White")) {
             // diagnol left
-            new_move[0]--;
-            new_move[1]++;
+            new_move[0]++;
+            new_move[1]--;
 
             // validate move
             if(coords_valid_check(new_move)) {
-                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
-                //if(!player.equals(ChessGame.getCurrentPlayer()))
+                String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                if(player != null && !player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
 
             // diagnol right
-            new_move[0] += 2;
+            new_move[1] += 2;
 
             // validate move
             if(coords_valid_check(new_move)) {
-                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
-                //if(!player.equals(ChessGame.getCurrentPlayer()))
+                String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                if(player != null && !player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
         }
@@ -86,18 +86,18 @@ public class MoveLogic {
 
             // validate move
             if(coords_valid_check(new_move)) {
-                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
-                //if(!player.equals(ChessGame.getCurrentPlayer()))
+                String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                if(player != null && !player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
 
             // diagnol right
-            new_move[0] += 2;
+            new_move[1] += 2;
 
             // validate move
             if(coords_valid_check(new_move)) {
-                //String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
-                //if(!player.equals(ChessGame.getCurrentPlayer()))
+                String player = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPlayer();
+                if(player != null && !player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
         }
