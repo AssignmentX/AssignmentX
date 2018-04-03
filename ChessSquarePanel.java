@@ -75,9 +75,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     }
 
     public void mouseClicked(MouseEvent event) {
-        // DELETE THIS LINE
-        System.out.println("clicked: ");
-        System.out.println(hasPieceMoved());
 
         // validate the correct player is clicking the square
         if(ChessGame.getCurrentPlayer() == player){
@@ -131,7 +128,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
             // validate move
             if(valid_moves.contains(position)){
                 // piece has been moved (used for pawns first move, and kings+rooks for castling)
-                System.out.println(parent.squareAt(ChessGame.getMovingFrom()).hasPieceMoved());
                 parent.squareAt(ChessGame.getMovingFrom()).pieceHasMoved();
                 hasMoved = true;
 

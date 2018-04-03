@@ -25,8 +25,7 @@ public class MoveLogic {
     }
 
     // converts a pair (array size 2) of coordinates to a position on a the game board
-    // coords[0] = x-value
-    // coords[1] = y-value
+    // coords[0] = x-value        coords[1] = y-value
     public static int coord_to_position(int[] coords) {
         return coords[0]*8+coords[1];
     }
@@ -38,9 +37,9 @@ public class MoveLogic {
         else
             new_move[0]--;
         if(coords_valid_check(new_move))
-            my_moves.add(coord_to_position(new_move));
-
-        //System.out.println(hasMoved);
+            // make sure pawn can move forward
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() == null)
+                my_moves.add(coord_to_position(new_move));
 
         // pawn can move two spaces on its first move
         if(!hasMoved) {
@@ -48,13 +47,11 @@ public class MoveLogic {
                 new_move[0]++;
             else
                 new_move[0]--;
-            //System.out.println("hit");
             if(coords_valid_check(new_move))
-                my_moves.add(coord_to_position(new_move));
+                // make sure pawn can move forward
+                if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() == null)
+                    my_moves.add(coord_to_position(new_move));
         }
-
-        // TODO: since pawns cannot attack forward, make sure that the piece ahead is null in order for
-        //       the pawn to move forward
 
         // TODO allows pawn to attack on the left diagonal if enemy present
         // TODO allows pawn to attack on the right diagonal if enemy present
@@ -67,6 +64,8 @@ public class MoveLogic {
             if(!coords_valid_check(new_move))
                 break;
             my_moves.add(coord_to_position(new_move));
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
+                break;
         }
         // allows rook to move up vertically
         while(true){
@@ -74,6 +73,8 @@ public class MoveLogic {
             if(!coords_valid_check(new_move))
                 break;
             my_moves.add(coord_to_position(new_move));
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
+                break;
         }
         // allows rook to move right horizontally
         while(true){
@@ -81,6 +82,8 @@ public class MoveLogic {
             if(!coords_valid_check(new_move))
                 break;
             my_moves.add(coord_to_position(new_move));
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
+                break;
         }
         // allows rook to move left horizontally
         while(true){
@@ -88,7 +91,11 @@ public class MoveLogic {
             if(!coords_valid_check(new_move))
                 break;
             my_moves.add(coord_to_position(new_move));
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() != null)
+                break;
         }
+
+        // TODO: IMPLEMENT CASTLING FOR ROOKS
     }
 
     public static void moveKnight(int[] new_move, ArrayList<Integer> my_moves, int curr_pos) {
@@ -277,7 +284,6 @@ public class MoveLogic {
         // TODO NOT SURE HOW TO CHECK IF A PIECE/ENEMY OCCUPIES A GIVEN POSITION, need to write helper function
         // TODO NEED TO ADD COLLISION DETECTION REGARDING MOVEMENT WITH FRIENDLY/ENEMY PIECES
         boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
-        //System.out.println(pieceHasMoved);
         int[] new_move = position_to_coord(curr_pos);
         //if(player.equals("White")){
             if(piece.equals("pawn"))
