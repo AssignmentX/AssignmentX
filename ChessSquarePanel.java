@@ -76,8 +76,19 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
     public void mouseClicked(MouseEvent event) {
 
+        // determine if player is in check
+        boolean checked;
+        if(ChessGame.getCurrentPlayer().equals("White")){
+            checked = ChessGame.isWhiteChecked();
+        }
+        else{
+            checked = ChessGame.isBlackChecked();
+        }
+
+
         // validate the correct player is clicking the square
-        if(ChessGame.getCurrentPlayer().equals(player)){
+        // and, if player is checked, force player to move king
+        if(ChessGame.getCurrentPlayer().equals(player) && (!checked || piece.equals("king"))) {
 
             // MAYBE HIGHLIGHT SQUARE WHEN CLICKED ??? might need JLayeredPane
             //overlay.setPreferredSize(new Dimension(getWidth(), getHeight()));
@@ -165,10 +176,30 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 // move piece to clicked position
                 setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
 
-                // clear data for previously selected piece
-                ChessGame.setCurrentlyMoving(false);
-                ChessGame.setMovingFrom(-1);
-                ChessGame.setSelectedPiece(null);
+                // get moves to see if other player is in check
+                ArrayList<Integer> moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), position);
+
+                // check if other player is in check
+                if(ChessGame.getCurrentPlayer().equals("White")){
+                    if(moves.contains(ChessGame.getBlackKingPos())){
+                        System.out.println("CHECK");
+                        ChessGame.blackIsChecked(true);
+                        //ChessGame.getValidMovePositions()[position] = true;
+                        //ChessGame.getValidMoveColors()[position] = parent.squareAt(position).getBackground();
+                        parent.squareAt(position).setBackground(Color.RED);
+                        parent.squareAt(ChessGame.getBlackKingPos()).setBackground(Color.RED);
+                    }
+                }
+                else{
+                    if(moves.contains(ChessGame.getWhiteKingPos())) {
+                        System.out.println("CHECK");
+                        ChessGame.whiteIsChecked(true);
+                        //ChessGame.getValidMovePositions()[position] = true;
+                        //ChessGame.getValidMoveColors()[position] = parent.squareAt(position).getBackground();
+                        parent.squareAt(position).setBackground(Color.RED);
+                        parent.squareAt(ChessGame.getWhiteKingPos()).setBackground(Color.RED);
+                    }
+                }
 
                 // change turn to other player
                 if(ChessGame.getCurrentPlayer().equals("White")) {
@@ -179,6 +210,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                     ChessGame.setCurrentPlayer("White");
                     ChessGame.getFrame().setNorthTextField("White's Move");
                 }
+
+                // clear data for previously selected piece
+                ChessGame.setCurrentlyMoving(false);
+                ChessGame.setMovingFrom(-1);
+                ChessGame.setSelectedPiece(null);
             }
             else
                 System.out.printf("Invalid move: %d\n", position);

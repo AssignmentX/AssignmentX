@@ -17,6 +17,10 @@ public class ChessGame {
     private static Color selectedSquaresColor;
     private static Color[] validMoveColors;
     private static boolean[] validMovePositions;
+    private static int whiteKing;
+    private static int blackKing;
+    private static boolean blackIsChecked;
+    private static boolean whiteIsChecked;
 
     public static void main( String args[] ) {
 
@@ -42,6 +46,10 @@ public class ChessGame {
         setCurrentPlayer(firstMove);
         frame.setNorthTextField(firstMove + "'s Move");
 
+        // initialize both players to be not in check
+        blackIsChecked = false;
+        whiteIsChecked = false;
+
         // tracks which piece is currently making a move
         currentlyMoving = false;
         movingFrom = -1;
@@ -53,6 +61,7 @@ public class ChessGame {
             x = false;
     }
 
+    // accessors
     public static String getCurrentPlayer(){ return currentPlayer; }
     public static String getSelectedPiece(){ return selectedPiece; }
     public static Color getSelectedSquaresColor() { return selectedSquaresColor; }
@@ -60,12 +69,21 @@ public class ChessGame {
     public static Color[] getValidMoveColors(){ return validMoveColors; }
     public static boolean[] getValidMovePositions(){ return validMovePositions; }
     public static boolean isSpaceEmpty(int pos) { return (frame.getBoard().squareAt(pos).getPiece() != null); }
-
+    public static int getWhiteKingPos() { return whiteKing; }
+    public static int getBlackKingPos() { return blackKing; }
     public static boolean isMoving() { return currentlyMoving; }
     public static int getMovingFrom() { return movingFrom; }
+    public static boolean isWhiteChecked() { return whiteIsChecked; }
+    public static boolean isBlackChecked() { return blackIsChecked; }
+
+    // mutators
     public static void setCurrentPlayer(String player){ currentPlayer = player; }
     public static void setSelectedPiece(String piece){ selectedPiece = piece; }
     public static void setCurrentlyMoving(boolean val){ currentlyMoving = val; }
     public static void setSelectedSquaresColor(Color c) { selectedSquaresColor = c; }
     public static void setMovingFrom(int pos){ movingFrom = pos; }
+    public static void setWhiteKingPos(int pos){ whiteKing = pos; }
+    public static void setBlackKingPos(int pos){ blackKing = pos; }
+    public static void blackIsChecked(boolean b){ blackIsChecked = b; }
+    public static void whiteIsChecked(boolean b){ whiteIsChecked = b; }
 }
