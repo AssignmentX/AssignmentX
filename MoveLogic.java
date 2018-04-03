@@ -259,73 +259,9 @@ public class MoveLogic {
     }
 
     public static void moveQueen(int[] new_move, ArrayList<Integer> my_moves, int curr_pos) {
-        /*
-        // allows queen to move diagonally up-right
-        while(true){
-            new_move[0]++;
-            new_move[1]++;
-            if(!coords_valid_check(new_move))
-                break;
-            my_moves.add(coord_to_position(new_move));
-            if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
-                break;
-        }
-
-        // allows queen to move diagonally down-left
+        moveBishop(new_move, my_moves, curr_pos); // allows queen to move diagonally
         new_move = position_to_coord(curr_pos);
-        while(true){
-            new_move[0]--;
-            new_move[1]--;
-            if(!coords_valid_check(new_move))
-                break;
-            my_moves.add(coord_to_position(new_move));
-            if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
-                break;
-       }*/
-
-       // allows queen to move diagonally
-       moveBishop(new_move, my_moves, curr_pos);
-
-        // allows queen to move down vertically
-        new_move = position_to_coord(curr_pos);
-        while(true){
-            new_move[0]++;
-            if(!coords_valid_check(new_move))
-                break;
-            my_moves.add(coord_to_position(new_move));
-            if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
-                break;
-        }
-        // allows queen to move up vertically
-        new_move = position_to_coord(curr_pos);
-        while(true){
-            new_move[0]--;
-            if(!coords_valid_check(new_move))
-                break;
-            my_moves.add(coord_to_position(new_move));
-            if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
-                break;
-        }
-        // allows queen to move right horizontally
-        new_move = position_to_coord(curr_pos);
-        while(true){
-            new_move[1]++;
-            if(!coords_valid_check(new_move))
-                break;
-            my_moves.add(coord_to_position(new_move));
-            if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
-                break;
-        }
-        // allows queen to move left horizontally
-        new_move = position_to_coord(curr_pos);
-        while(true){
-            new_move[1]--;
-            if(!coords_valid_check(new_move))
-                break;
-            my_moves.add(coord_to_position(new_move));
-            if(ChessGame.isSpaceEmpty(coord_to_position(new_move)))
-                break;
-        }
+        moveRook(new_move, my_moves, true, curr_pos); // allows queen to move vertically
     }
 
     public static void moveKing(int[] new_move, ArrayList<Integer> my_moves, int curr_pos, boolean hasMoved) {
