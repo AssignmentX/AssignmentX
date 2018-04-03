@@ -176,7 +176,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 }
             }
             else
-                System.out.printf("\nMove is: %d, Invalid move", position);
+                System.out.printf("Invalid move: %d\n", position);
 
         }
     }
