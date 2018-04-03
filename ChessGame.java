@@ -59,6 +59,7 @@ public class ChessGame {
     public static ChessGameFrame getFrame(){ return frame; }
     public static Color[] getValidMoveColors(){ return validMoveColors; }
     public static boolean[] getValidMovePositions(){ return validMovePositions; }
+    public static boolean isSpaceEmpty(int pos) { return (frame.getBoard().squareAt(pos).getPiece() != null); }
 
     public static boolean isMoving() { return currentlyMoving; }
     public static int getMovingFrom() { return movingFrom; }
