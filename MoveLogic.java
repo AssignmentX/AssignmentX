@@ -321,7 +321,7 @@ public class MoveLogic {
     }
 
     // returns ArrayList of valid positions to choose from
-    public static ArrayList<Integer> get_valid_moves(String player, String piece, int curr_pos){
+    public static ArrayList<Integer> get_valid_moves(String player, String piece, int curr_pos, boolean recurse){
         ArrayList<Integer> my_moves = new ArrayList<>();
         boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
         int[] new_move = position_to_coord(curr_pos);
@@ -337,7 +337,10 @@ public class MoveLogic {
             moveQueen(new_move, my_moves, curr_pos);
         else if(piece.equals("king"))
             moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
-        
+        /*
+        if(!recurse)
+            return my_moves;
+
         // TODO: prune moves that put you in check
         for(int move : my_moves){
             // save piece and player in desired location
@@ -352,8 +355,9 @@ public class MoveLogic {
                 for(int i = 0; i < 64; i++) {
                     if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() == "Black") {
                         // for every piece on the board, get its valid moves
-                        ArrayList<Integer> moves = get_valid_moves("Black", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
-                        if(moves.contains(ChessGame.getWhiteKingPos())){
+                        ArrayList<Integer> moves = get_valid_moves("Black", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i, true);
+                        if(moves.contains(ChessGame.getWhiteKingPos()) || (piece == "King" && moves.contains(move))){
+                            my_moves.remove(Integer.valueOf(i));
                             // white king is in check
                         }
                     }
@@ -363,9 +367,10 @@ public class MoveLogic {
                 for(int i = 0; i < 64; i++) {
                     if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() == "White") {
                         // for every piece on the board, get its valid moves
-                        ArrayList<Integer> moves = get_valid_moves("White", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
-                        if(moves.contains(ChessGame.getBlackKingPos())){
+                        ArrayList<Integer> moves = get_valid_moves("White", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i, true);
+                        if(moves.contains(ChessGame.getBlackKingPos()) || (piece == "King" && moves.contains(move))) {
                             // black king is in check
+                            my_moves.remove(Integer.valueOf(i));
                         }
                     }
                 }
@@ -376,7 +381,7 @@ public class MoveLogic {
             ChessGame.getFrame().getBoard().squareAt(move).setPiece(tmpPiece, tmpPlayer, curr_pos);
 
             
-        }
+        }*/
         return my_moves;
     }
 
