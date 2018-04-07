@@ -212,6 +212,10 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     // this is used to clear chess pieces in other squares
     public JLabel getPieceLabel() { return pieceLabel; }
 
+    // get piece and player
+    public String getPiece() { return piece; }
+    public String getPlayer() { return player; }
+
     // this is used to keep track of each piece's first move
     public void pieceHasMoved() { hasMoved = true; }
     public boolean hasPieceMoved() { return hasMoved; }

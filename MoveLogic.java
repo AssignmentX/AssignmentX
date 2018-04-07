@@ -31,6 +31,9 @@ public class MoveLogic {
     }
 
     public static void movePawn(int[] new_move, ArrayList<Integer> my_moves, boolean hasMoved, int curr_pos) {
+        // TODO: EN PASSANT (IN PASSING)
+
+
         // allows pawn to move one unit forward
         if(ChessGame.getCurrentPlayer().equals("White"))
             new_move[0]++;
@@ -335,6 +338,18 @@ public class MoveLogic {
         else if(piece.equals("king"))
             moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
         // TODO: prune moves that put you in check
+        for(int move : my_moves){
+            // save piece and player in desired location
+            String tmpPiece = ChessGame.getFrame().getBoard().squareAt(move).getPiece();
+            String tmpPlayer = ChessGame.getFrame().getBoard().squareAt(move).getPlayer();
+            // move piece to desired location
+            ChessGame.getFrame().getBoard().squareAt(curr_pos).setPiece(null, null, curr_pos);
+            ChessGame.getFrame().getBoard().squareAt(move).setPiece(piece, player, move);
+            // check if move puts player in check
+            if(putsInCheck(move, player, piece))
+            // put piece back to where it was moved from
+            
+        }
         return my_moves;
     }
 
