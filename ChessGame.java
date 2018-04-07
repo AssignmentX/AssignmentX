@@ -32,19 +32,19 @@ public class ChessGame {
         frame.setVisible( true );               // display frame
     
         // figure out who goes first
-        Object[] options = {"Black", "White", "Random"};
-        int n = JOptionPane.showOptionDialog(frame, "Who should go first?", "Select First Move", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
-        String firstMove;
-        if(n == 0)
-            firstMove = "Black";
-        else if(n == 1)
-            firstMove = "White";
-        else
-            firstMove = (new Random().nextInt() % 2 == 0) ? "Black" : "White";
+        //Object[] options = {"Black", "White", "Random"};
+        //int n = JOptionPane.showOptionDialog(frame, "Who should go first?", "Select First Move", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+        //String firstMove;
+        //if(n == 0)
+        //    firstMove = "Black";
+        //else if(n == 1)
+        //    firstMove = "White";
+        //else
+        //    firstMove = (new Random().nextInt() % 2 == 0) ? "Black" : "White";
 
         // set current player
-        setCurrentPlayer(firstMove);
-        frame.setNorthTextField(firstMove + "'s Move");
+        setCurrentPlayer("White");
+        frame.setNorthTextField("White's Move");
 
         // initialize both players to be not in check
         blackIsChecked = false;

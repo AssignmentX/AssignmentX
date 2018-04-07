@@ -320,9 +320,6 @@ public class MoveLogic {
     // returns ArrayList of valid positions to choose from
     public static ArrayList<Integer> get_valid_moves(String player, String piece, int curr_pos){
         ArrayList<Integer> my_moves = new ArrayList<>();
-
-        // TODO NOT SURE HOW TO CHECK IF A PIECE/ENEMY OCCUPIES A GIVEN POSITION, need to write helper function
-        // TODO NEED TO ADD COLLISION DETECTION REGARDING MOVEMENT WITH FRIENDLY/ENEMY PIECES
         boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
         int[] new_move = position_to_coord(curr_pos);
         if(piece.equals("pawn"))
@@ -337,6 +334,7 @@ public class MoveLogic {
             moveQueen(new_move, my_moves, curr_pos);
         else if(piece.equals("king"))
             moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
+        // TODO: prune moves that put you in check
         return my_moves;
     }
 

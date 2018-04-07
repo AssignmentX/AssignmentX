@@ -33,12 +33,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         this.hasMoved = false; // keeps track of if piece has moved from starting position
         addMouseListener(this); // adds mouse listener to panel 
-        
-        // overlay is used to highlight the panel
-        //overlay = new JLayeredPane();
-        //overlay.setLayout(new OverlayLayout(overlay));
-        //overlay.setBackground(new Color(0, 255, 0, 125));
-        //add(overlay);
     }
 
     public void setPiece(String piece, String player, int pos) {
@@ -85,16 +79,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
             checked = ChessGame.isBlackChecked();
         }
 
-
         // validate the correct player is clicking the square
-        // and, if player is checked, force player to move king
-        if(ChessGame.getCurrentPlayer().equals(player) && (!checked || piece.equals("king"))) {
-
-            // MAYBE HIGHLIGHT SQUARE WHEN CLICKED ??? might need JLayeredPane
-            //overlay.setPreferredSize(new Dimension(getWidth(), getHeight()));
-            //add(overlay);
-            //setLayout(null);
-            //repaint();
+        if(ChessGame.getCurrentPlayer().equals(player)) {// && (!checked || piece.equals("king"))) {
 
             // change background color back to default for previously clicked square
             if(ChessGame.getMovingFrom() != -1) {
@@ -116,7 +102,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
             ChessGame.setSelectedSquaresColor(getBackground());
 
             // lazy solution instead of highlighting, changes background color
-            setBackground(Color.GREEN);
+            if(!checked || !piece.equals("king"))
+                setBackground(Color.GREEN);
 
             // get list of valid moves
             ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
