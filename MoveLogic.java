@@ -337,6 +337,7 @@ public class MoveLogic {
             moveQueen(new_move, my_moves, curr_pos);
         else if(piece.equals("king"))
             moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
+        
         // TODO: prune moves that put you in check
         for(int move : my_moves){
             // save piece and player in desired location
@@ -346,8 +347,34 @@ public class MoveLogic {
             ChessGame.getFrame().getBoard().squareAt(curr_pos).setPiece(null, null, curr_pos);
             ChessGame.getFrame().getBoard().squareAt(move).setPiece(piece, player, move);
             // check if move puts player in check
-            if(putsInCheck(move, player, piece))
+
+            if(player.equals("White")){
+                for(int i = 0; i < 64; i++) {
+                    if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() == "Black") {
+                        // for every piece on the board, get its valid moves
+                        ArrayList<Integer> moves = get_valid_moves("Black", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
+                        if(moves.contains(ChessGame.getWhiteKingPos())){
+                            // white king is in check
+                        }
+                    }
+                }
+            }
+            else{
+                for(int i = 0; i < 64; i++) {
+                    if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() == "White") {
+                        // for every piece on the board, get its valid moves
+                        ArrayList<Integer> moves = get_valid_moves("White", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
+                        if(moves.contains(ChessGame.getBlackKingPos())){
+                            // black king is in check
+                        }
+                    }
+                }
+            }
+
             // put piece back to where it was moved from
+            ChessGame.getFrame().getBoard().squareAt(curr_pos).setPiece(piece, player, move);
+            ChessGame.getFrame().getBoard().squareAt(move).setPiece(tmpPiece, tmpPlayer, curr_pos);
+
             
         }
         return my_moves;
