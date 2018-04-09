@@ -131,27 +131,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
             // validate move
             if(valid_moves.contains(position)){
 
-                // validate move does not put you in check
-                // for(int i = 0; i < 64; i++) {
-                //    if(ChessGame.getCurrentPlayer() == "White"){
-                //        if(parent.squareAt(i).getPlayer() == "Black") {
-                //            ArrayList<Integer> moves = MoveLogic.get_valid_moves("Black", parent.squareAt(i).getPiece(), i, true);
-                //            if(moves.contains(ChessGame.getWhiteKingPos()))
-                //                System.out.println("puts u in check");
-                //        }
-                //    }
-                //    else{
-                //    if(ChessGame.getCurrentPlayer() == "Black"){
-                //        if(parent.squareAt(i).getPlayer() == "White") {
-                //            ArrayList<Integer> moves = MoveLogic.get_valid_moves("White", parent.squareAt(i).getPiece(), i, true);
-                //            if(moves.contains(ChessGame.getBlackKingPos()))
-                //                System.out.println("puts u in check");
-                //        }
-                //    }
-                //    }
-                //}
-                // check if move puts player in check
-
                 // piece has been moved (used for pawns first move, and kings+rooks for castling)
                 parent.squareAt(ChessGame.getMovingFrom()).pieceHasMoved();
                 hasMoved = true;
@@ -184,6 +163,28 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
                 // move piece to clicked position
                 setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
+
+                // set if move puts current player in check
+                //System.out.print("MOVES: ");
+                for(int i = 0; i < 64; i++) {
+                   if(ChessGame.getCurrentPlayer() == "White"){
+                       if(parent.squareAt(i).getPlayer() == "Black") {
+                           ArrayList<Integer> moves = MoveLogic.get_valid_moves("Black", parent.squareAt(i).getPiece(), i, true);
+                           //System.out.print(moves.toString());
+                           if(moves.contains(ChessGame.getWhiteKingPos()))
+                               System.out.println("puts u in check");
+                       }
+                   }
+                   else{
+                       if(parent.squareAt(i).getPlayer() == "White") {
+                           ArrayList<Integer> moves = MoveLogic.get_valid_moves("White", parent.squareAt(i).getPiece(), i, true);
+                           //System.out.print(moves.toString());
+                           if(moves.contains(ChessGame.getBlackKingPos()))
+                               System.out.println("puts u in check");
+                       }
+                   }
+                }
+                //System.out.println();
 
                 // get moves to see if other player is in check
                 ArrayList<Integer> moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), position, false);
