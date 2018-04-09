@@ -185,6 +185,10 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 // move piece to clicked position
                 setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
 
+                // check if move puts player in check
+                MoveLogic.amIChecked();
+
+
                 // get moves to see if other player is in check
                 ArrayList<Integer> moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), position, false);
 
@@ -233,6 +237,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
 
     // this is used to clear chess pieces in other squares
     public JLabel getPieceLabel() { return pieceLabel; }
+    public void setPieceLabel(JLabel pLabel) { pieceLabel = pLabel; }
+    public void setPlayer(String s) { player = s; }
 
     // this is used to keep track of each piece's first move
     public void pieceHasMoved() { hasMoved = true; }
