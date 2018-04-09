@@ -165,9 +165,9 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
 
                 // update king's position
-                if(ChessGame.getCurrentPlayer().equals("White"))
+                if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king"))
                     ChessGame.setWhiteKingPos(position);
-                else
+                else if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king"))
                     ChessGame.setBlackKingPos(position);
 
                 // set if move puts current player in check
