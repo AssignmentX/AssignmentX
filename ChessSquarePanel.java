@@ -164,11 +164,17 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                 // move piece to clicked position
                 setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
 
+                // update king's position
+                if(ChessGame.getCurrentPlayer().equals("White"))
+                    ChessGame.setWhiteKingPos(position);
+                else
+                    ChessGame.setBlackKingPos(position);
+
                 // set if move puts current player in check
                 //System.out.print("MOVES: ");
                 for(int i = 0; i < 64; i++) {
-                   if(ChessGame.getCurrentPlayer() == "White"){
-                       if(parent.squareAt(i).getPlayer() == "Black") {
+                   if(ChessGame.getCurrentPlayer().equals("White")) {
+                       if(parent.squareAt(i).getPlayer() != null && parent.squareAt(i).getPlayer().equals("Black")) {
                            ArrayList<Integer> moves = MoveLogic.get_valid_moves("Black", parent.squareAt(i).getPiece(), i, true);
                            //System.out.print(moves.toString());
                            if(moves.contains(ChessGame.getWhiteKingPos()))
@@ -176,7 +182,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                        }
                    }
                    else{
-                       if(parent.squareAt(i).getPlayer() == "White") {
+                        System.out.println(parent.squareAt(i).getPlayer());
+                       if(parent.squareAt(i).getPlayer() != null && parent.squareAt(i).getPlayer().equals("White")) {
                            ArrayList<Integer> moves = MoveLogic.get_valid_moves("White", parent.squareAt(i).getPiece(), i, true);
                            //System.out.print(moves.toString());
                            if(moves.contains(ChessGame.getBlackKingPos()))
