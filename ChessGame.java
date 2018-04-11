@@ -21,6 +21,8 @@ public class ChessGame {
     private static int blackKing;
     private static boolean blackIsChecked;
     private static boolean whiteIsChecked;
+    private static boolean canBlackBeChecked;
+    private static boolean canWhiteBeChecked;
 
     public static void main( String args[] ) {
 
@@ -78,6 +80,10 @@ public class ChessGame {
     public static boolean isWhiteChecked() { return whiteIsChecked; }
     // bool that determines if black is in check
     public static boolean isBlackChecked() { return blackIsChecked; }
+    // bool that determines if a move can lead to check
+    public static boolean canWhiteBeChecked() { return canWhiteBeChecked; }
+    public static boolean canBlackBeChecked() { return canBlackBeChecked; }
+
 
     // mutators
 
@@ -97,4 +103,7 @@ public class ChessGame {
     // set the bool indicating if a player is checked or not
     public static void blackIsChecked(boolean b){ blackIsChecked = b; }
     public static void whiteIsChecked(boolean b){ whiteIsChecked = b; }
+    // set the bool indicating if a player detects check on a move
+    public static void canWhiteBeChecked(boolean b){ canWhiteBeChecked = b; }
+    public static void canBlackBeChecked(boolean b){ canBlackBeChecked = b; }
 }
