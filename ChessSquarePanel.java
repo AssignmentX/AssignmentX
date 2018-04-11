@@ -135,8 +135,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 
                 // highlight square
                 parent.squareAt(x).setBackground(new Color(0, 200, 0));
-                
-                
             }
 
         }
@@ -252,6 +250,14 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     for(int x : valid_moves) {
                         parent.squareAt(x).setBackground(ChessGame.getValidMoveColors()[x]);
                         ChessGame.getValidMovePositions()[x] = false;
+                    }
+
+                    // unhighlight red squares if we were previously in check
+                    for(int i = 0; i < 64; i++) {
+                        if(ChessGame.getValidMovePositions()[i]){
+                            parent.squareAt(i).setBackground(ChessGame.getValidMoveColors()[i]);
+                            ChessGame.getValidMovePositions()[i] = false;
+                        }
                     }
 
                     // update king's position if the king moved (we do this again in case the king re-checked itself)
