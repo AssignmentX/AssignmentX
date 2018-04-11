@@ -17,10 +17,13 @@ import javax.swing.OverlayLayout;
 import java.util.ArrayList;
 
 import java.util.concurrent.TimeUnit;
+import javax.swing.Timer;
+
+import java.awt.event.*;
 
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
-public class ChessSquarePanel extends JPanel implements MouseListener {
+public class ChessSquarePanel extends JPanel implements MouseListener, ActionListener {
     private String piece;
     private String player;
     private int position;
@@ -28,6 +31,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     private String image;
     private ChessBoardPanel parent;
     private boolean hasMoved;
+    private boolean pawnWasHere = false; // used for en passant (in passing)
+    private int delay = 100; // for flashing a square
+    private final int numOfFlashes = 4; // max number of flashes
+    private int flashCount = 0; // current number of flashes
+    protected Timer timer;
 
     public ChessSquarePanel(ChessBoardPanel parent) {
         super();
@@ -35,6 +43,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         this.hasMoved = false; // keeps track of if piece has moved from starting position
         addMouseListener(this); // adds mouse listener to panel 
+        timer = new Timer(delay, this); // creates timer for flashing a square
     }
 
     public void setPiece(String piece, String player, int pos) {
@@ -173,16 +182,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                            moves = MoveLogic.get_valid_moves("Black", parent.squareAt(i).getPiece(), i, false);
                            ChessGame.setCurrentPlayer("White"); // this is a janky fix, don't worry about it ;)
                            if(moves.contains(ChessGame.getWhiteKingPos())){
-                                // TODO: flash square red and put piece back to where it was coming from
-                               System.out.println("puts u in check");
                                ChessGame.canWhiteBeChecked(true);
-                               //parent.squareAt(position).setBackground(Color.RED);
-                               //repaint();
-                               // try{ Thread.sleep(300); }
-                               //catch(InterruptedException e){ }
-                               ////TimeUnit.SECONDS.sleep(0.5);
-                               //parent.squareAt(position).setBackground(new Color(0, 200, 0));
-
                            }
                        }
                    }
@@ -192,43 +192,24 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
                            moves = MoveLogic.get_valid_moves("White", parent.squareAt(i).getPiece(), i, false);
                            ChessGame.setCurrentPlayer("Black"); // this is a janky fix, don't worry about it ;)
                            if(moves.contains(ChessGame.getBlackKingPos())){
-                            // TODO: flash square red and put piece back to where it was coming from
-                               System.out.println("puts u in check");
                                ChessGame.canBlackBeChecked(true);
                            }
                        }
                    }
                 }
 
-                // put piece back if it can cause check
+                // put piece back if it can cause check (prevents moving)
                 if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) || (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked())) {
                     currentPosition.setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), ChessGame.getMovingFrom());
                     remove(pieceLabel);
                     setPiece(enemyPiece, enemyPlayer, position);
 
-                    //parent.squareAt(position).setBackground(Color.RED);
-                    //parent.squareAt(position).repaint();
-
-
-                    try{
-                        parent.squareAt(position).setBackground(Color.RED);
-                        parent.squareAt(position).repaint();
-                        Thread.sleep(300);
-                        parent.squareAt(position).setBackground(new Color(0, 200, 0));
-                        parent.squareAt(position).repaint();
-                    }
-                    catch(InterruptedException e){
-                        //parent.squareAt(position).setBackground(new Color(0, 200, 0));
-                        //parent.squareAt(position).repaint();
-                    }
-                    //TimeUnit.SECONDS.sleep(0.5);
-
-
+                    // flash the square
+                    timer.start();
                 }
-
-                //} while(ChessGame.isWhiteChecked() || ChessGame.isBlackChecked());
                 
-                else{
+                else { // move does not put current player in check
+
                     // display move message
                     String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);
                     parent.getChessGameFrame().appendTextArea(msg);
@@ -310,6 +291,24 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
         }
     }
 
+    // used to flash a square if a move can put you in check
+    public void actionPerformed(ActionEvent e) {
+        // will run when the timer fires
+        if(flashCount < numOfFlashes) {
+            flashCount += 1;
+            // flash the current square
+            if(getBackground() != Color.RED)
+                setBackground(Color.RED);
+            else
+                setBackground(new Color(0, 200, 0));
+            repaint();
+        }
+        else {
+            flashCount = 0;
+            timer.stop();
+        }
+    }
+
     // this is used to clear chess pieces in other squares
     public JLabel getPieceLabel() { return pieceLabel; }
 
@@ -322,4 +321,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent event) {}
     public void mouseReleased(MouseEvent event) {}
      
+    // used for en passant (in passing)
+    public boolean getPawnWasHere() { return pawnWasHere; }
+    public void setPawnWasHere(boolean b) { pawnWasHere = b; }
 }

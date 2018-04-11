@@ -31,9 +31,6 @@ public class MoveLogic {
     }
 
     public static void movePawn(int[] new_move, ArrayList<Integer> my_moves, boolean hasMoved, int curr_pos) {
-        // TODO: EN PASSANT (IN PASSING)
-
-
         // allows pawn to move one unit forward
         if(ChessGame.getCurrentPlayer().equals("White"))
             new_move[0]++;
@@ -72,6 +69,10 @@ public class MoveLogic {
                     my_moves.add(coord_to_position(new_move));
             }
 
+            // EN PASSANT (IN PASSING)
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere())
+                my_moves.add(coord_to_position(new_move));
+
             // diagnol right
             new_move[1] += 2;
 
@@ -81,6 +82,10 @@ public class MoveLogic {
                 if(player != null && !player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
+
+            // EN PASSANT (IN PASSING)
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere())
+                my_moves.add(coord_to_position(new_move));
         }
         else {
             // diagnol left
@@ -325,8 +330,22 @@ public class MoveLogic {
         ArrayList<Integer> my_moves = new ArrayList<>();
         boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
         int[] new_move = position_to_coord(curr_pos);
-        if(piece.equals("pawn"))
+        if(piece.equals("pawn")){
             movePawn(new_move, my_moves, pieceHasMoved, curr_pos);
+
+            // pawn moved 2 squares on its first move
+            if(!pieceHasMoved){
+                // pawn moved down 2 squares (white)
+                if(coord_to_position(new_move) == 16 + curr_pos) {
+                    ChessGame.getFrame().getBoard().squareAt(curr_pos + 8).setPawnWasHere(true);
+                }
+                // pawn moved up 2 squares (black)
+                else if(coord_to_position(new_move) == curr_pos - 16) {
+                    ChessGame.getFrame().getBoard().squareAt(curr_pos - 8).setPawnWasHere(true);
+                }
+            }
+
+        }
         else if(piece.equals("rook"))
             moveRook(new_move, my_moves, pieceHasMoved, curr_pos);
         else if(piece.equals("knight"))
