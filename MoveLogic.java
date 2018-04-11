@@ -71,6 +71,8 @@ public class MoveLogic {
 
             // EN PASSANT (IN PASSING)
             if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) {
+                System.out.print("pawn was at: ");
+                System.out.println(coord_to_position(new_move));
                 ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
                 if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
                     if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
@@ -340,22 +342,8 @@ public class MoveLogic {
         ArrayList<Integer> my_moves = new ArrayList<>();
         boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
         int[] new_move = position_to_coord(curr_pos);
-        if(piece.equals("pawn")){
+        if(piece.equals("pawn"))
             movePawn(new_move, my_moves, pieceHasMoved, curr_pos);
-
-            // pawn's first move
-            if(!pieceHasMoved){
-                // pawn moved down 2 squares (white), engage en passant rule
-                if(coord_to_position(new_move) == 16 + curr_pos) {
-                    ChessGame.getFrame().getBoard().squareAt(curr_pos + 8).setPawnWasHere(true);
-                }
-                // pawn moved up 2 squares (black), engage en passant rule
-                else if(coord_to_position(new_move) == curr_pos - 16) {
-                    ChessGame.getFrame().getBoard().squareAt(curr_pos - 8).setPawnWasHere(true);
-                }
-            }
-
-        }
         else if(piece.equals("rook"))
             moveRook(new_move, my_moves, pieceHasMoved, curr_pos);
         else if(piece.equals("knight"))

@@ -293,16 +293,28 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
                     }
 
+                    // pawn's first move, trigger possibility for en passant immediately
+                    if(!parent.squareAt(ChessGame.getMovingFrom()).hasPieceMoved()) {
+                        // pawn moved down 2 squares (white), engage en passant rule
+                        if(position == 16 + ChessGame.getMovingFrom()) {
+                            parent.squareAt(ChessGame.getMovingFrom() + 8).setPawnWasHere(true);
+                        }
+                        // pawn moved up 2 squares (black), engage en passant rule
+                        else if(position == ChessGame.getMovingFrom() - 16) {
+                            parent.squareAt(ChessGame.getMovingFrom() - 8).setPawnWasHere(true);
+                        }
+                    }
+
                     // piece has been moved (used for pawns first move, and kings+rooks for castling)
                     parent.squareAt(ChessGame.getMovingFrom()).pieceHasMoved();
                     hasMoved = true;
 
                     // disengage en passant
-                    for(int i = 0; i < 64; i++){
-                        if(disengageEnPassant[i])
-                            parent.squareAt(i).setPawnWasHere(false);
-                            disengageEnPassant[i] = false;
-                    }
+                    //for(int i = 0; i < 64; i++){
+                    //    if(disengageEnPassant[i])
+                    //        parent.squareAt(i).setPawnWasHere(false);
+                    //        disengageEnPassant[i] = false;
+                    //}
 
                     // clear data for previously selected piece
                     ChessGame.setCurrentlyMoving(false);
