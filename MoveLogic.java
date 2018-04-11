@@ -43,7 +43,7 @@ public class MoveLogic {
         }
 
         // allows pawn to move two spaces on its first move
-        if(!hasMoved) {
+        if(!hasMoved && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPiece() == null) {
             if(ChessGame.getCurrentPlayer().equals("White"))
                 new_move[0]++;
             else
@@ -70,8 +70,13 @@ public class MoveLogic {
             }
 
             // EN PASSANT (IN PASSING)
-            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere())
-                my_moves.add(coord_to_position(new_move));
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) {
+                ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
+                if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
+                    if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
+                        my_moves.add(coord_to_position(new_move));
+                }
+            }
 
             // diagnol right
             new_move[1] += 2;
@@ -84,8 +89,13 @@ public class MoveLogic {
             }
 
             // EN PASSANT (IN PASSING)
-            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere())
-                my_moves.add(coord_to_position(new_move));
+            if(ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) {
+                ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
+                if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
+                    if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
+                        my_moves.add(coord_to_position(new_move));
+                }
+            }
         }
         else {
             // diagnol left
@@ -333,13 +343,13 @@ public class MoveLogic {
         if(piece.equals("pawn")){
             movePawn(new_move, my_moves, pieceHasMoved, curr_pos);
 
-            // pawn moved 2 squares on its first move
+            // pawn's first move
             if(!pieceHasMoved){
-                // pawn moved down 2 squares (white)
+                // pawn moved down 2 squares (white), engage en passant rule
                 if(coord_to_position(new_move) == 16 + curr_pos) {
                     ChessGame.getFrame().getBoard().squareAt(curr_pos + 8).setPawnWasHere(true);
                 }
-                // pawn moved up 2 squares (black)
+                // pawn moved up 2 squares (black), engage en passant rule
                 else if(coord_to_position(new_move) == curr_pos - 16) {
                     ChessGame.getFrame().getBoard().squareAt(curr_pos - 8).setPawnWasHere(true);
                 }

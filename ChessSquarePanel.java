@@ -15,6 +15,7 @@ import javax.swing.JLayeredPane;
 import javax.swing.OverlayLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import java.util.concurrent.TimeUnit;
 import javax.swing.Timer;
@@ -36,6 +37,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
     private final int numOfFlashes = 4; // max number of flashes
     private int flashCount = 0; // current number of flashes
     protected Timer timer;
+    private int currentHeight;
+    private int currentWidth;
 
     public ChessSquarePanel(ChessBoardPanel parent) {
         super();
@@ -53,8 +56,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
         if(piece != null && player != null) {
             image = "./images/png/" + player.toLowerCase() + "_" + piece + ".png";
-            // TODO: this must be tweaked to center the chess pieces on the panel
-            // TODO: this must be changed whenever we change the default size of the window
             pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
             add(pieceLabel);
         }
@@ -77,8 +78,15 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         super.paintComponent( g ); // call superclass's paintComponent
         Graphics2D g2d = ( Graphics2D ) g;
 
-        // TODO: RESIZE CHESS PIECES WHEN THE BOARD RESIZES
-        //pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(getWidth()*3/4, getHeight()*3/4, Image.SCALE_DEFAULT)));
+        // RESIZE CHESS PIECES WHEN THE BOARD RESIZES
+        if(player != null && piece != null && (currentHeight != getHeight() || currentWidth != getWidth())) {
+            // save current height & width
+            currentHeight = getHeight();
+            currentWidth = getWidth();
+
+            image = "./images/png/" + player.toLowerCase() + "_" + piece + ".png";
+            pieceLabel.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
+        }
     }
 
     public void mouseClicked(MouseEvent event) {
@@ -149,6 +157,28 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 ArrayList<Integer> moves;
                 String enemyPiece;// = currentPosition.getPiece();
                 String enemyPlayer;// = currentPosition.getPlayer();
+
+                // init all values of array to false for determining if we should disengage en passant
+                boolean disengageEnPassant[] = new boolean[64];
+                Arrays.fill(disengageEnPassant, false);
+
+                // should we disengage en passant?
+                for(int i = 0; i < 64; i++){
+                    if(parent.squareAt(i).getPawnWasHere()) {
+                        if( i+8 < 64 && parent.squareAt(i+8).getPlayer() != null && parent.squareAt(i+8).getPlayer().equals("White")){
+                            if(parent.squareAt(i+8).getPiece() != null && parent.squareAt(i+8).getPiece().equals("pawn")) {
+                                //if(parent.squareAt(i+8).getPawnWasHere())
+                                    disengageEnPassant[i] = true;
+                            }
+                        }
+                        else if( i-8 >= 0 && parent.squareAt(i-8).getPlayer() != null && parent.squareAt(i-8).getPlayer().equals("Black")){
+                            if(parent.squareAt(i-8).getPiece() != null && parent.squareAt(i-8).getPiece().equals("pawn")) {
+                                //if(parent.squareAt(i-8).getPawnWasHere())
+                                    disengageEnPassant[i] = true;
+                            }
+                        }
+                    }
+                }
 
                 // remove piece from its current position
                 currentPosition.remove(currentPosition.getPieceLabel());
@@ -266,6 +296,13 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     // piece has been moved (used for pawns first move, and kings+rooks for castling)
                     parent.squareAt(ChessGame.getMovingFrom()).pieceHasMoved();
                     hasMoved = true;
+
+                    // disengage en passant
+                    for(int i = 0; i < 64; i++){
+                        if(disengageEnPassant[i])
+                            parent.squareAt(i).setPawnWasHere(false);
+                            disengageEnPassant[i] = false;
+                    }
 
                     // clear data for previously selected piece
                     ChessGame.setCurrentlyMoving(false);
