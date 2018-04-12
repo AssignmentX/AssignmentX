@@ -1,9 +1,8 @@
 import java.awt.Color;
 
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
+import java.awt.event.KeyEvent;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +31,27 @@ public class ChessGame {
         frame.setSize( 900, 900 );             // set frame size
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
+
+        //TODO need to implement functions and fix Mnemonics
+        // MENU BAR
+        JMenuBar menu = new JMenuBar();
+        JMenu file = new JMenu("File");
+        file.setMnemonic(KeyEvent.VK_F);
+        JMenuItem load = new JMenuItem("Load");
+        //load.setMnemonic(KeyEvent.VK_B);
+        file.add(load);
+        JMenuItem save = new JMenuItem("Save");
+        //save.setMnemonic(KeyEvent.VK_S);
+        file.add(save);
+        JMenuItem exit = new JMenuItem("Exit");
+        //exit.setMnemonic(KeyEvent.VK_E);
+        file.add(exit);
+
+        JMenu options = new JMenu("Options");
+        file.setMnemonic(KeyEvent.VK_O);
+        menu.add(file);
+        menu.add(options);
+        frame.setJMenuBar(menu);
 
         // set current player
         setCurrentPlayer("White");

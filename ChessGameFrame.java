@@ -47,11 +47,17 @@ public class ChessGameFrame extends JFrame {
       textFieldNorth.setEditable(false);
       add(textFieldNorth, BorderLayout.NORTH);
 
+      // TODO started thinking about how to make position labels, maybe need GridBagLayout
+       // TODO or maybe create another JPanel and add it to BorderLayout.South for more control
+      /*
       textFieldSouth = new JTextField();
       textFieldSouth.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-      textFieldSouth.setHorizontalAlignment(JTextField.CENTER);
+      textFieldSouth.setHorizontalAlignment(JTextField.LEFT);
       textFieldSouth.setEditable(false);
+      textFieldSouth.setFont(font);
+      textFieldSouth.setText("A");
       add(textFieldSouth, BorderLayout.SOUTH);
+      */
 
    }
 
