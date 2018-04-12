@@ -239,7 +239,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 else { // move does not put current player in check
 
                     // display move message
-                    String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);
+                    String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + MoveLogic.pos_to_AN[ChessGame.getMovingFrom()] + " - " + MoveLogic.pos_to_AN[position];
                     parent.getChessGameFrame().appendTextArea(msg);
 
                     // lazy solution, set color back to default
