@@ -1,11 +1,6 @@
 import java.awt.Color;
-
 import javax.swing.*;
-
-import java.awt.event.KeyEvent;
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.awt.event.*;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -25,33 +20,45 @@ public class ChessGame {
 
     public static void main( String args[] ) {
 
-        frame = new ChessGameFrame("Chess - Assignment X"); 
+        frame = new ChessGameFrame("Chess - Assignment X");
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.setBackground( Color.WHITE );     // set frame background color
-        frame.setSize( 900, 900 );             // set frame size
+        frame.setSize( 900, 900 );   // set frame size
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
 
-        //TODO need to implement functions and fix Mnemonics
-        // MENU BAR
+        // START FRAME MENU BAR
         JMenuBar menu = new JMenuBar();
-        JMenu file = new JMenu("File");
-        file.setMnemonic(KeyEvent.VK_F);
-        JMenuItem load = new JMenuItem("Load");
-        //load.setMnemonic(KeyEvent.VK_B);
-        file.add(load);
-        JMenuItem save = new JMenuItem("Save");
-        //save.setMnemonic(KeyEvent.VK_S);
-        file.add(save);
-        JMenuItem exit = new JMenuItem("Exit");
-        //exit.setMnemonic(KeyEvent.VK_E);
-        file.add(exit);
+        JMenu file_menu = new JMenu("File");
+        file_menu.setMnemonic('F');
 
-        JMenu options = new JMenu("Options");
-        file.setMnemonic(KeyEvent.VK_O);
-        menu.add(file);
-        menu.add(options);
+        JMenuItem new_item = new JMenuItem("New");
+        new_item.setMnemonic('N');
+        file_menu.add(new_item);
+
+        JMenuItem load_item = new JMenuItem("Load");
+        load_item.setMnemonic('L');
+        file_menu.add(load_item);
+
+        JMenuItem save_item = new JMenuItem("Save");
+        save_item.setMnemonic('S');
+        file_menu.add(save_item);
+
+        JMenuItem exit_item = new JMenuItem("Exit");
+        exit_item.setMnemonic('x');
+        file_menu.add(exit_item);
+        exit_item.addActionListener(
+            new ActionListener() // anonymous inner class
+            {
+                public void actionPerformed( ActionEvent event )
+                {
+                    System.exit( 0 );
+                }
+            }
+        );
+        menu.add(file_menu);
         frame.setJMenuBar(menu);
+        // END FRAME MENU BAR
 
         // set current player
         setCurrentPlayer("White");

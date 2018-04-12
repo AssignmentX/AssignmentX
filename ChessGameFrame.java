@@ -1,6 +1,4 @@
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -21,10 +19,8 @@ public class ChessGameFrame extends JFrame {
    // set up GUI and event handling
    public ChessGameFrame(String s) {
       super(s); // pass title for window to parent constructor
-
       layout = new BorderLayout( 5, 5 ); // 5 pixel gaps
       setLayout( layout ); // set frame layout
-
 
       // EAST - SHOWS MOVE HISTORY FOR BOTH PLAYERS IN ALGEBRAIC NOTATION NOTATION
       textArea = new JTextArea(0, 12);
@@ -59,7 +55,6 @@ public class ChessGameFrame extends JFrame {
        }
        west_sub_panel.setBorder(new EmptyBorder(0,8,0,1));
        add(west_sub_panel,BorderLayout.WEST);
-
 
       // SOUTH - DISPLAYS ALGEBRAIC NOTATION LABELS a-h
       JPanel south_sub_panel = new JPanel();
