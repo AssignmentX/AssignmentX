@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
+import javax.swing.border.EmptyBorder;
 
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JFrame implements serializable
@@ -56,9 +57,10 @@ public class ChessGameFrame extends JFrame {
            label.setText(String.valueOf(i));
            west_sub_panel.add(label);
        }
+       west_sub_panel.setBorder(new EmptyBorder(0,8,0,1));
        add(west_sub_panel,BorderLayout.WEST);
 
-       // TODO NEED TO ALIGN SOUTH WITH THE BOARD GRID, may need to swap to GridBagLayout
+
       // SOUTH - DISPLAYS ALGEBRAIC NOTATION LABELS a-h
       JPanel south_sub_panel = new JPanel();
       south_sub_panel.setLayout(new GridLayout(1, 9, 3, 3));
@@ -67,10 +69,11 @@ public class ChessGameFrame extends JFrame {
           label.setFont(font);
           label.setEditable(false);
           label.setText(String.valueOf(alphabet));
-          //label.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+          label.setBorder(javax.swing.BorderFactory.createEmptyBorder());
           label.setHorizontalAlignment(JTextField.CENTER);
           south_sub_panel.add(label);
       }
+      south_sub_panel.setBorder(BorderFactory.createEmptyBorder(1, 25, 8, 140));
       add(south_sub_panel,BorderLayout.SOUTH);
    }
 
