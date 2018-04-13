@@ -1,12 +1,6 @@
 import java.awt.Color;
-
-import javax.swing.JPanel;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.Arrays;
+import javax.swing.*;
+import java.awt.event.*;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -26,12 +20,45 @@ public class ChessGame {
 
     public static void main( String args[] ) {
 
-        frame = new ChessGameFrame("Chess - Assignment X"); 
+        frame = new ChessGameFrame("Chess - Assignment X");
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.setBackground( Color.WHITE );     // set frame background color
-        frame.setSize( 900, 900 );             // set frame size
+        frame.setSize( 900, 900 );   // set frame size
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
+
+        // START FRAME MENU BAR
+        JMenuBar menu = new JMenuBar();
+        JMenu file_menu = new JMenu("File");
+        file_menu.setMnemonic('F');
+
+        JMenuItem new_item = new JMenuItem("New");
+        new_item.setMnemonic('N');
+        file_menu.add(new_item);
+
+        JMenuItem load_item = new JMenuItem("Load");
+        load_item.setMnemonic('L');
+        file_menu.add(load_item);
+
+        JMenuItem save_item = new JMenuItem("Save");
+        save_item.setMnemonic('S');
+        file_menu.add(save_item);
+
+        JMenuItem exit_item = new JMenuItem("Exit");
+        exit_item.setMnemonic('x');
+        file_menu.add(exit_item);
+        exit_item.addActionListener(
+            new ActionListener() // anonymous inner class
+            {
+                public void actionPerformed( ActionEvent event )
+                {
+                    System.exit( 0 );
+                }
+            }
+        );
+        menu.add(file_menu);
+        frame.setJMenuBar(menu);
+        // END FRAME MENU BAR
 
         // set current player
         setCurrentPlayer("White");

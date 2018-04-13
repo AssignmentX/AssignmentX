@@ -4,22 +4,13 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
-import java.awt.Dimension;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.OverlayLayout;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import java.util.concurrent.TimeUnit;
 import javax.swing.Timer;
-
 import java.awt.event.*;
 
 
@@ -257,7 +248,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 else { // move does not put current player in check
 
                     // display move message
-                    String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + Integer.toString(ChessGame.getMovingFrom()) + " - " + Integer.toString(position);
+                    String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + MoveLogic.pos_to_AN[ChessGame.getMovingFrom()] + " - " + MoveLogic.pos_to_AN[position];
                     parent.getChessGameFrame().appendTextArea(msg);
 
                     // lazy solution, set color back to default
