@@ -39,8 +39,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         addMouseListener(this); // adds mouse listener to panel 
         timer = new Timer(delay, this); // creates timer for flashing a square
         // default size of height and width of chess pieces at default width/height of window frame
-        currentWidth = 60;
-        currentHeight = 60;
+        currentWidth = 89;
+        currentHeight = 86;
     }
 
     public void setPiece(String piece, String player, int pos) {
@@ -188,13 +188,19 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 currentPosition.remove(currentPosition.getPieceLabel());
                 currentPosition.setPiece(null, null, ChessGame.getMovingFrom());
 
+                // save clicked positions piece and player
+                //if(piece != null && player != null) {
+                    enemyPiece = piece;//new String(piece);
+                    enemyPlayer = player;//new String(player);
+                //}
+                //else {
+                //    enemyPiece = null;
+                //    enemyPlayer = null;
+                //}
+
                 // if there is an enemy piece in clicked position, remove it
                 if(pieceLabel != null)
                     remove(pieceLabel);
-
-                // save clicked positions piece and player
-                enemyPiece = piece;
-                enemyPlayer = player;
 
                 // move piece to clicked position
                 setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), position);
@@ -239,8 +245,16 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 // put piece back if it can cause check (do not allow player to put his/herself in check)
                 if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) || (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked())) {
                     currentPosition.setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), ChessGame.getMovingFrom());
-                    remove(pieceLabel);
-                    setPiece(enemyPiece, enemyPlayer, position);
+                    //if(enemyPiece != null && enemyPlayer != null) {
+                        //if(enemyPlayer != null && enemyPlayer == ChessGame.getCurrentPlayer()) {
+                            remove(pieceLabel);
+                        //System.out.println(enemyPiece);
+                        
+                        //}
+                        setPiece(enemyPiece, enemyPlayer, position);
+                        
+                    //}
+                    
 
                     // update king's position if the king moved
                     if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king"))
