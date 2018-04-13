@@ -38,6 +38,9 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         this.hasMoved = false; // keeps track of if piece has moved from starting position
         addMouseListener(this); // adds mouse listener to panel 
         timer = new Timer(delay, this); // creates timer for flashing a square
+        // default size of height and width of chess pieces at default width/height of window frame
+        currentWidth = 80;
+        currentHeight = 80;
     }
 
     public void setPiece(String piece, String player, int pos) {
@@ -47,7 +50,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
         if(piece != null && player != null) {
             image = "./images/png/" + player.toLowerCase() + "_" + piece + ".png";
-            pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
+            pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
             add(pieceLabel);
         }
         else{
