@@ -17,6 +17,8 @@ public class ChessGame {
     private static boolean whiteIsChecked;
     private static boolean canBlackBeChecked;
     private static boolean canWhiteBeChecked;
+    private static boolean canWhiteBeCheckMated;
+    private static boolean canBlackBeCheckMated;
 
     public static void main( String args[] ) {
 
@@ -64,9 +66,11 @@ public class ChessGame {
         setCurrentPlayer("White");
         frame.setNorthTextField("White's Move");
 
-        // initialize both players to be not in check
+        // initialize both players to be not in check, checkmate
         blackIsChecked = false;
         whiteIsChecked = false;
+        canWhiteBeCheckMated = false;
+        canBlackBeCheckMated = false;
 
         // tracks which piece is currently making a move
         currentlyMoving = false;
@@ -110,6 +114,9 @@ public class ChessGame {
     // bool that determines if a move can lead to check
     public static boolean canWhiteBeChecked() { return canWhiteBeChecked; }
     public static boolean canBlackBeChecked() { return canBlackBeChecked; }
+    // bools that determine if players are checkmated
+    public static boolean canWhiteBeCheckMated() { return canWhiteBeCheckMated; }
+    public static boolean canBlackBeCheckMated() { return canBlackBeCheckMated; }
 
 
     // mutators
@@ -133,4 +140,9 @@ public class ChessGame {
     // set the bool indicating if a player detects check on a move
     public static void canWhiteBeChecked(boolean b){ canWhiteBeChecked = b; }
     public static void canBlackBeChecked(boolean b){ canBlackBeChecked = b; }
+    // checkmate accessors
+    public static void whiteIsCheckMated() { canWhiteBeCheckMated = true; }
+    public static void blackIsCheckMated() { canBlackBeCheckMated = true; }
+    public static void whiteIsNotCheckMated() { canWhiteBeCheckMated = false; }
+    public static void blackIsNotCheckMated() { canBlackBeCheckMated = false; }
 }
