@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.Timer;
@@ -15,7 +16,7 @@ import java.awt.event.*;
 
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
-public class ChessSquarePanel extends JPanel implements MouseListener, ActionListener {
+public class ChessSquarePanel extends JPanel implements MouseListener, ActionListener, Serializable {
     private String piece;
     private String player;
     private int position;
