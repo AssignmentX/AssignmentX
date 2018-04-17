@@ -8,8 +8,6 @@ import javax.swing.JTextField;
 import javax.swing.BorderFactory;
 import javax.swing.border.EmptyBorder;
 
-
-@SuppressWarnings("serial") // this is used to suppress a serializable warning because JFrame implements serializable
 public class ChessGameFrame extends JFrame implements Serializable {
    private JButton buttons[]; // array of buttons to hide portions
    private JTextArea textArea;
@@ -77,10 +75,11 @@ public class ChessGameFrame extends JFrame implements Serializable {
    public void appendTextArea(String s) { textArea.append(s + "\n"); }
    public void setNorthTextField(String s) { textFieldNorth.setText(s); }
    public void clearTextArea(){textArea.setText("");}
+   public String getTextArea(){return textArea.getText();}
    public void resetBoard(){
        remove(chessBoard);
-       chessBoard = new ChessBoardPanel(this); // create a panel for the chess board
-       add(chessBoard, BorderLayout.CENTER); // add chess board to center
+       chessBoard = new ChessBoardPanel(this);
+       add(chessBoard, BorderLayout.CENTER);
    }
    public void setChessBoard(ChessBoardPanel new_board){
        remove(chessBoard);

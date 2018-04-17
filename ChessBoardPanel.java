@@ -73,17 +73,8 @@ public class ChessBoardPanel extends JPanel implements Serializable {
     public ChessGameFrame getChessGameFrame() {
         return parent;
     }
-
-    public ChessSquarePanel squareAt(int pos) {
-        return squares[pos];
-    }
-
+    public ChessSquarePanel squareAt(int pos) { return squares[pos]; }
     public ChessSquarePanel[] getSquares(){ return squares; }
-    public void setSquares(ChessSquarePanel[] new_squares){
-
-        // TODO need to remove existing squares?
-
-        squares = new_squares;
-    }
+    public void setSquares(ChessSquarePanel[] new_squares){ squares = new_squares; }
 
 }

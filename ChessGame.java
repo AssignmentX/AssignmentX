@@ -237,16 +237,19 @@ public class ChessGame {
             ChessGameFrame loaded_frame = (ChessGameFrame)saved[64];
             ChessBoardPanel loaded_panel = (ChessBoardPanel)saved[65];
 
-            // remove existing objects
+            // clear text area and replace with saved game text
+            frame.clearTextArea();
+            frame.appendTextArea(loaded_frame.getTextArea());
+            //setFrame(loaded_frame);
 
-            // replaces existing objects with loaded ones
-            setFrame(loaded_frame);
+            // replaces existing chessboard with saved chessboard
             frame.setChessBoard(loaded_panel);
+
+            //replaces existing square data array with saved squares array
             frame.getBoard().setSquares(loaded_squares);
 
             System.out.println("LOAD COMPLETE");
         }
-
         catch(IOException ex)
         {
             System.out.println("IOException is caught");
