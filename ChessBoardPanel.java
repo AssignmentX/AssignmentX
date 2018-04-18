@@ -3,10 +3,11 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+import java.io.Serializable;
 import javax.swing.BorderFactory;
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
-public class ChessBoardPanel extends JPanel {
+public class ChessBoardPanel extends JPanel implements Serializable {
     private ChessSquarePanel squares[];
     private ChessGameFrame parent;
     public ChessBoardPanel(ChessGameFrame parent) {
@@ -72,9 +73,8 @@ public class ChessBoardPanel extends JPanel {
     public ChessGameFrame getChessGameFrame() {
         return parent;
     }
-
-    public ChessSquarePanel squareAt(int pos) {
-        return squares[pos];
-    }
+    public ChessSquarePanel squareAt(int pos) { return squares[pos]; }
+    public ChessSquarePanel[] getSquares(){ return squares; }
+    public void setSquares(ChessSquarePanel[] new_squares){ squares = new_squares; }
 
 }
