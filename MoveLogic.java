@@ -412,7 +412,7 @@ public class MoveLogic {
         }*/
         return my_moves;
     }
-
+    /*
     public static void doMovesPutPlayerInCheck(ArrayList<Integer> moves, String currpiece, int pos) {
         String enemyPiece;
         String enemyPlayer;
@@ -503,5 +503,6 @@ public class MoveLogic {
         if(checked)
             moves.clear();
     }
+    */
 
 }

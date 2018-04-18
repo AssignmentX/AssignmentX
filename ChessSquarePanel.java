@@ -224,10 +224,20 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 else if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king"))
                     ChessGame.setBlackKingPos(position);
 
+                int currking;
                 String currplayer = ChessGame.getCurrentPlayer();
+                
+                if(currplayer.equals("White"))
+                    currking = ChessGame.getWhiteKingPos();
+                else
+                    currking = ChessGame.getBlackKingPos();
+
+                
 
 
 
+
+                /*
                 // check for checkmate
                 if(checked){
                     // these will be set to false in the next code block if there exists a valid move that gets player out of check
@@ -257,6 +267,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 else{
 
                 }
+
+                */
 
                 if((currplayer.equals("White") && !ChessGame.canWhiteBeCheckMated()) || (currplayer.equals("Black") && !ChessGame.canBlackBeCheckMated())) {
 
