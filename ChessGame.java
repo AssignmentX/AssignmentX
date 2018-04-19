@@ -184,13 +184,29 @@ public class ChessGame {
     }
 
     public static void save_game(ChessGameFrame game_frame, ChessBoardPanel board_panel, ChessSquarePanel[] square_panel){
-        Object[] save_file = new Object[square_panel.length+2];
+        Object[] save_file = new Object[82];
 
         for(int i = 0; i < square_panel.length; i++){
             save_file[i] = square_panel[i];
         }
-        save_file[square_panel.length] = game_frame;
-        save_file[square_panel.length+1] = board_panel;
+        save_file[64] = game_frame;
+        save_file[65] = board_panel;
+        save_file[66] = currentPlayer;
+        save_file[67] = currentlyMoving;
+        save_file[68] = movingFrom;
+        save_file[69] = selectedPiece;
+        save_file[70] = frame;
+        save_file[71] = selectedSquaresColor;
+        save_file[72] = validMoveColors;
+        save_file[73] = validMovePositions;
+        save_file[74] = whiteKing;
+        save_file[75] = blackKing;
+        save_file[76] = blackIsChecked;
+        save_file[77] = whiteIsChecked;
+        save_file[78] = canBlackBeChecked;
+        save_file[79] = canWhiteBeChecked;
+        save_file[80] = canWhiteBeCheckMated;
+        save_file[81] = canBlackBeCheckMated;
 
         String filename = "file.ser";
         // Serialization
@@ -247,7 +263,26 @@ public class ChessGame {
 
             //replaces existing square data array with saved squares array
             frame.getBoard().setSquares(loaded_squares);
+            
+            //ChessGame data
+            currentPlayer = (String)saved[66];
+            currentlyMoving = (boolean)saved[67];
+            movingFrom = (int)saved[68];
+            selectedPiece = (String)saved[69];
+            //frame = (ChessGameFrame)saved[70];
+            selectedSquaresColor = (Color)saved[71];
+            validMoveColors = (Color[])saved[72];
+            validMovePositions = (boolean[])saved[73];
+            whiteKing = (int)saved[74];
+            blackKing = (int)saved[75];
+            blackIsChecked = (boolean)saved[76];
+            whiteIsChecked = (boolean)saved[77];
+            canBlackBeChecked = (boolean)saved[78];
+            canWhiteBeChecked = (boolean)saved[79];
+            canWhiteBeCheckMated = (boolean)saved[80];
+            canBlackBeCheckMated = (boolean)saved[81];
 
+            frame.setNorthTextField(currentPlayer + "'s Move");
             System.out.println("LOAD COMPLETE");
         }
         catch(IOException ex)

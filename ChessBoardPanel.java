@@ -77,4 +77,19 @@ public class ChessBoardPanel extends JPanel implements Serializable {
     public ChessSquarePanel[] getSquares(){ return squares; }
     public void setSquares(ChessSquarePanel[] new_squares){ squares = new_squares; }
 
+    // helpers
+    // checks to see if any moves have been made, before creating new game
+    public boolean fresh_board(){
+        for(int i = 0; i !=16; i++){
+            if(squares[i].hasPieceMoved()){
+                return false;
+            }
+        }
+        for(int i = 48; i !=63; i++){
+            if(squares[i].hasPieceMoved()){
+                return false;
+            }
+        }
+        return true;
+    }
 }

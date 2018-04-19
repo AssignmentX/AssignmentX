@@ -77,9 +77,11 @@ public class ChessGameFrame extends JFrame implements Serializable {
    public void clearTextArea(){textArea.setText("");}
    public String getTextArea(){return textArea.getText();}
    public void resetBoard(){
-       remove(chessBoard);
-       chessBoard = new ChessBoardPanel(this);
-       add(chessBoard, BorderLayout.CENTER);
+       if(!chessBoard.fresh_board()) {
+           remove(chessBoard);
+           chessBoard = new ChessBoardPanel(this);
+           add(chessBoard, BorderLayout.CENTER);
+       }
    }
    public void setChessBoard(ChessBoardPanel new_board){
        remove(chessBoard);
