@@ -349,7 +349,7 @@ public class MoveLogic {
     }
 
     // returns ArrayList of valid positions to choose from
-    public static ArrayList<Integer> get_valid_moves(String player, String piece, int curr_pos, boolean recurse){
+    public static ArrayList<Integer> get_valid_moves(String player, String piece, int curr_pos){
         ArrayList<Integer> my_moves = new ArrayList<>();
         boolean pieceHasMoved = ChessGame.getFrame().getBoard().squareAt(curr_pos).hasPieceMoved();
         int[] new_move = position_to_coord(curr_pos);
@@ -365,53 +365,9 @@ public class MoveLogic {
             moveQueen(new_move, my_moves, curr_pos);
         else if(piece.equals("king"))
             moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
-        /*
-        if(!recurse)
-            return my_moves;
-
-        // TODO: prune moves that put you in check
-        for(int move : my_moves){
-            // save piece and player in desired location
-            String tmpPiece = ChessGame.getFrame().getBoard().squareAt(move).getPiece();
-            String tmpPlayer = ChessGame.getFrame().getBoard().squareAt(move).getPlayer();
-            // move piece to desired location
-            ChessGame.getFrame().getBoard().squareAt(curr_pos).setPiece(null, null, curr_pos);
-            ChessGame.getFrame().getBoard().squareAt(move).setPiece(piece, player, move);
-            // check if move puts player in check
-
-            if(player.equals("White")){
-                for(int i = 0; i < 64; i++) {
-                    if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() == "Black") {
-                        // for every piece on the board, get its valid moves
-                        ArrayList<Integer> moves = get_valid_moves("Black", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i, true);
-                        if(moves.contains(ChessGame.getWhiteKingPos()) || (piece == "King" && moves.contains(move))){
-                            my_moves.remove(Integer.valueOf(i));
-                            // white king is in check
-                        }
-                    }
-                }
-            }
-            else{
-                for(int i = 0; i < 64; i++) {
-                    if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() == "White") {
-                        // for every piece on the board, get its valid moves
-                        ArrayList<Integer> moves = get_valid_moves("White", ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i, true);
-                        if(moves.contains(ChessGame.getBlackKingPos()) || (piece == "King" && moves.contains(move))) {
-                            // black king is in check
-                            my_moves.remove(Integer.valueOf(i));
-                        }
-                    }
-                }
-            }
-
-            // put piece back to where it was moved from
-            ChessGame.getFrame().getBoard().squareAt(curr_pos).setPiece(piece, player, move);
-            ChessGame.getFrame().getBoard().squareAt(move).setPiece(tmpPiece, tmpPlayer, curr_pos);
-
-            
-        }*/
         return my_moves;
     }
+
     /*
     public static void doMovesPutPlayerInCheck(ArrayList<Integer> moves, String currpiece, int pos) {
         String enemyPiece;
@@ -472,7 +428,7 @@ public class MoveLogic {
                 if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer().equals(notcurrplayer)) {
                     // get their valid moves
                     ChessGame.setCurrentPlayer(notcurrplayer); // this is a janky fix, don't worry about it ;)
-                    movelist = MoveLogic.get_valid_moves(notcurrplayer, ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i, false);
+                    movelist = MoveLogic.get_valid_moves(notcurrplayer, ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
                     ChessGame.setCurrentPlayer(currplayer); // this is a janky fix, don't worry about it ;)
                     
                     // if there exists a valid move, user is not checkmated

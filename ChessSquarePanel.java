@@ -111,8 +111,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         if(parent.squareAt(i).getBackground() != Color.RED)
                             parent.squareAt(i).setBackground(ChessGame.getValidMoveColors()[i]);
                     }
-                    //else if(ChessGame.getValidMovePositions()[i])
-                    //    parent.squareAt(i).setBackground(ChessGame.getValidMoveColors()[i]);
                 }
             }
 
@@ -128,7 +126,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 setBackground(Color.GREEN);
 
             // get list of valid moves
-            ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom(), false);
+            ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
             for(int x : valid_moves) {
                 // save position of square we are highlighting
                 if(parent.squareAt(x).getBackground() != Color.RED) {
@@ -149,12 +147,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
             ChessSquarePanel currentPosition = parent.squareAt(ChessGame.getMovingFrom());
 
             // get list of valid moves
-            ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom(), false);
-            //System.out.print("Valid moves: ");
-            //for (int x : valid_moves) {
-            //    System.out.print(" " + x);
-            //}
-            //System.out.println();
+            ArrayList<Integer> valid_moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), ChessGame.getMovingFrom());
 
             // validate move
             if(valid_moves.contains(position)){
@@ -252,7 +245,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     if(parent.squareAt(i).getPlayer() != null && parent.squareAt(i).getPlayer().equals(currplayer)){
 
                         // make a move for this piece and then see if it puts king in check
-                        ArrayList<Integer> validmoves = new ArrayList<>(MoveLogic.get_valid_moves(parent.squareAt(i).getPiece(), parent.squareAt(i).getPlayer(), i, false));
+                        ArrayList<Integer> validmoves = new ArrayList<>(MoveLogic.get_valid_moves(parent.squareAt(i).getPiece(), parent.squareAt(i).getPlayer(), i));
                         for(int newmove : validmoves) {
                             // remove piece from its current position
                             parent.squareAt(i).remove(parent.squareAt(i).getPieceLabel());
@@ -280,8 +273,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             //    ChessGame.setBlackKingPos(move);
 
                             // find squares that can potentially put the enemy king in checkmate
-                            moves = MoveLogic.get_valid_moves(currplayer, "queen", currking, false);
-                            moves.addAll(MoveLogic.get_valid_moves(currplayer, "knight", currking, false));
+                            moves = MoveLogic.get_valid_moves(currplayer, "queen", currking);
+                            moves.addAll(MoveLogic.get_valid_moves(currplayer, "knight", currking));
 
                             // undo janky fix for move predicate
                             if(ChessGame.getCurrentPlayer().equals("White"))
@@ -293,7 +286,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             for(int move : moves) {
                                 // if square has a piece, get its valid moves
                                 if(parent.squareAt(move).getPlayer() != null && parent.squareAt(move).getPlayer().equals(ChessGame.getCurrentPlayer())){
-                                    //ArrayList<Integer> movelist = new ArrayList<>(MoveLogic.get_valid_moves(parent.squareAt(move).getPiece(), ChessGame.getCurrentPlayer(), move, false));
+                                    //ArrayList<Integer> movelist = new ArrayList<>(MoveLogic.get_valid_moves(parent.squareAt(move).getPiece(), ChessGame.getCurrentPlayer(), move));
 
                                 }
                             }
@@ -335,7 +328,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         // if piece is current player's piece
                         if(parent.squareAt(i).getPlayer() != null && parent.squareAt(i).getPlayer().equals(currplayer)) {
                             // get valid moves for that piece
-                            moves = MoveLogic.get_valid_moves(currplayer, parent.squareAt(i).getPiece(), i, false);
+                            moves = MoveLogic.get_valid_moves(currplayer, parent.squareAt(i).getPiece(), i);
                             // prune moves that put current player in check
                             MoveLogic.doMovesPutPlayerInCheck(moves, parent.squareAt(i).getPiece(), i);
                             // if moves is not empty, then player cannot be checkmated and break
@@ -371,7 +364,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                        if(ChessGame.getCurrentPlayer().equals("White")) {
                            if(parent.squareAt(i).getPlayer() != null && parent.squareAt(i).getPlayer().equals("Black")) {
                                ChessGame.setCurrentPlayer("Black"); // this is a janky fix, don't worry about it ;)
-                               moves = MoveLogic.get_valid_moves("Black", parent.squareAt(i).getPiece(), i, false);
+                               moves = MoveLogic.get_valid_moves("Black", parent.squareAt(i).getPiece(), i);
                                ChessGame.setCurrentPlayer("White"); // this is a janky fix, don't worry about it ;)
                                if(moves.contains(ChessGame.getWhiteKingPos())){
                                    ChessGame.canWhiteBeChecked(true);
@@ -383,7 +376,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                        else{
                            if(parent.squareAt(i).getPlayer() != null && parent.squareAt(i).getPlayer().equals("White")) {
                                ChessGame.setCurrentPlayer("White"); // this is a janky fix, don't worry about it ;)
-                               moves = MoveLogic.get_valid_moves("White", parent.squareAt(i).getPiece(), i, false);
+                               moves = MoveLogic.get_valid_moves("White", parent.squareAt(i).getPiece(), i);
                                ChessGame.setCurrentPlayer("Black"); // this is a janky fix, don't worry about it ;)
                                if(moves.contains(ChessGame.getBlackKingPos())){
                                    ChessGame.canBlackBeChecked(true);
@@ -415,17 +408,10 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     
                     else { // move does not put current player in check
 
-
-                        //System.out.println("HIT");
                         // move piece to clicked position
                         if(enemyPieceLabel != null) {
                             remove(enemyPieceLabel);
                         }
-                        //    setPiece(enemyPiece, enemyPlayer, position);
-                        //    pieceLabel = enemyPieceLabel;
-                        //    piece = enemyPiece;
-                        //    player = enemyPlayer;
-                        //}
 
                         // display move message
                         String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + MoveLogic.pos_to_AN[ChessGame.getMovingFrom()] + " - " + MoveLogic.pos_to_AN[position];
@@ -443,16 +429,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             }
                         }
 
-                        // unhighlight red squares if we were previously in check
-                        //for(int i = 0; i < 64; i++) {
-                        //    if(ChessGame.getValidMovePositions()[i]){
-                        //        parent.squareAt(i).setBackground(ChessGame.getValidMoveColors()[i]);
-                        //        ChessGame.getValidMovePositions()[i] = false;
-                        //    }
-                        //}
-
                         // get moves to see if other player is in check
-                        moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), position, false);
+                        moves = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getSelectedPiece(), position);
 
                         ChessGame.blackIsChecked(false);
                         ChessGame.whiteIsChecked(false);
@@ -565,7 +543,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 System.out.printf("Invalid move: %d\n", position);
 
         } // player is not moving
-    } /// end of mouseclicked()   BENS COMMENT
+    } /// end of mouseclicked()
 
     // used to flash a square if a move can put you in check
     public void actionPerformed(ActionEvent e) {
@@ -577,13 +555,10 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 setBackground(Color.RED);
             else
                 setBackground(new Color(0, 200, 0));
-            
-            //repaint();
         }
         else {
             flashCount = 0;
             timer.stop();
-            //setPiece(piece, player, position);
         }
     }
 
