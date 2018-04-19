@@ -3,19 +3,23 @@
 ### Coded by: Zach Sirotto and Ben Cook
 
 
-#### _*Any details regarding instructions for the game that are not obvious from the set of standard known instructions*_
+#### *Any details regarding instructions for the game that are not obvious from the set of standard known instructions*
+<br>
 ##### n/a
 
-#### _*A description of how to use the interface*_
+#### *A description of how to use the interface*
+<br>
 ##### Click squares to select pieces, click squares to move.
 
-#### _*Any other important details about your implementation, how to run the program, etc*_
+#### *Any other important details about your implementation, how to run the program, etc*
+<br>
 ##### The jar file can be ran with the command:
     java -jar hwx.jar
+<br>
 ##### Or if you unjar `hwx.jar` then you can run the game with the command:
     java ChessGame
 
-#### _*Descriptions of any extra features implemented*_
+#### *Descriptions of any extra features implemented*
  * New game
  * Save game
  * Load game
@@ -23,7 +27,7 @@
  * Make invalid moves flash red
  * Sounds
 
-#### _*A description of the separation of work between partners (who was responsible for what pieces of the program).*_
+#### *A description of the separation of work between partners (who was responsible for what pieces of the program).*
 _*Ben*_
  * Move logic for pieces (most of the work)
  * ChessFrame GUI
