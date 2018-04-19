@@ -161,7 +161,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 boolean disengageEnPassant[] = new boolean[64];
                 Arrays.fill(disengageEnPassant, false);
 
-                // TODO
+                // TODO!!
                 // should we disengage en passant?
                 //for(int i = 0; i < 64; i++){
                 //    if(parent.squareAt(i).getPawnWasHere()) {
@@ -247,6 +247,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                 enemyPieceLabel = null;
                             }
 
+                            // TODO!!
+
                             // make the move
                             //newsquare.setPiece(currpiece, currplayer, move);
 
@@ -275,6 +277,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                 }
                             }
 
+                            // TODO
                             // undo the move
                             //newsquare.remove(newsquare.getPieceLabel());
                             //newsquare.setPieceLabel(enemyPieceLabel);
@@ -296,9 +299,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 }
 
-
-
-
+                // THIS BLOCK OF CODE WILL EVENTUALLY BE REMOVED / IT IS HERE FOR SAFE KEEPING
                 // check for checkmate
                 /*
                 if(checked){
@@ -418,7 +419,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         // check if other player is in check
                         if(ChessGame.getCurrentPlayer().equals("White")){
                             if(moves.contains(ChessGame.getBlackKingPos())){
-                                //System.out.println("CHECK");
                                 ChessGame.blackIsChecked(true);
                                 // store color of squares that are being highlighted red
                                 if(parent.squareAt(position).getBackground() != Color.RED) {
@@ -434,7 +434,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
                         else{
                             if(moves.contains(ChessGame.getWhiteKingPos())) {
-                                //System.out.println("CHECK");
                                 ChessGame.whiteIsChecked(true);
                                 // store color of squares that are being highlighted red
                                 if(parent.squareAt(position).getBackground() != Color.RED) {
@@ -456,17 +455,18 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         else if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king"))
                             ChessGame.setBlackKingPos(position);
 
+                        // TODO!!
                         // pawn's first move, trigger possibility for en passant immediately
-                        if(!parent.squareAt(ChessGame.getMovingFrom()).hasPieceMoved()) {
-                            // pawn moved down 2 squares (white), engage en passant rule
-                            if(position == 16 + ChessGame.getMovingFrom()) {
-                                parent.squareAt(ChessGame.getMovingFrom() + 8).setPawnWasHere(true);
-                            }
-                            // pawn moved up 2 squares (black), engage en passant rule
-                            else if(position == ChessGame.getMovingFrom() - 16) {
-                                parent.squareAt(ChessGame.getMovingFrom() - 8).setPawnWasHere(true);
-                            }
-                        }
+                        //if(!parent.squareAt(ChessGame.getMovingFrom()).hasPieceMoved()) {
+                        //    // pawn moved down 2 squares (white), engage en passant rule
+                        //    if(position == 16 + ChessGame.getMovingFrom()) {
+                        //        parent.squareAt(ChessGame.getMovingFrom() + 8).setPawnWasHere(true);
+                        //    }
+                        //    // pawn moved up 2 squares (black), engage en passant rule
+                        //    else if(position == ChessGame.getMovingFrom() - 16) {
+                        //        parent.squareAt(ChessGame.getMovingFrom() - 8).setPawnWasHere(true);
+                        //    }
+                        //}
 
                         // piece has been moved (used for pawns first move, and kings+rooks for castling)
                         parent.squareAt(ChessGame.getMovingFrom()).pieceHasMoved();
@@ -478,7 +478,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             checked = ChessGame.isBlackChecked();
 
                         for(int i = 0; i < 64; i++){
-                            // TODO
+                            // TODO!!
                             // disengage en passant
                             //if(disengageEnPassant[i]) {
                             //    parent.squareAt(i).setPawnWasHere(false);
