@@ -3,16 +3,16 @@
 ### Coded by: Zach Sirotto and Ben Cook
 
 
-#### **Any details regarding instructions for the game that are not obvious from the set of standard known instructions**
-##### n/a
+#### **ANY DETAILS REGARDING INSTRUCTIONS FOR THE GAME THAT ARE NOT OBVIOUS FROM THE SET OF STANDARD KNOWN INSTRUCTIONS**
+* n/a
 
-#### **A description of how to use the interface**
-##### Click squares to select pieces, click squares to move.
+#### **A DESCRIPTION OF HOW TO USE THE INTERFACE**
+* Click squares to select pieces, click squares to move.
 
-#### Any other important details about your implementation, how to run the program, etc
-##### The jar file can be ran with the command:
+#### **Any other important details about your implementation, how to run the program, etc**
+* The jar file can be ran with the command:
     java -jar hwx.jar
-##### Or if you unjar `hwx.jar` then you can run the game with the command:
+* Or if you unjar `hwx.jar` then you can run the game with the command:
     java ChessGame
 
 #### **Descriptions of any extra features implemented**
@@ -24,7 +24,7 @@
  * Sounds
 
 #### **A description of the separation of work between partners (who was responsible for what pieces of the program).**
-_*Ben*_
+### **Ben**
  * Move logic for pieces (most of the work)
  * ChessFrame GUI
  * ChessBoard Border GUI
@@ -35,7 +35,7 @@ _*Ben*_
  * Valid move predicates (split between both of us)
  * Code refactoring
 
-_*Zach*_
+### **Zach**
  * Move logic for pieces (some of the work)
  * ChessBoard setup and GUI
  * ChessSquare GUI
@@ -48,7 +48,7 @@ _*Zach*_
  * En passant rule
  * Code refactoring
 
-_*Un-assigned Work*_ _(This will eventually be removed once the work is delegated)_
+### **Un-assigned Work** _(This will eventually be removed once the work is delegated)_
  * Castling
  * Threefold repitition rule
  * Stalemate
