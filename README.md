@@ -9,8 +9,8 @@
 #### **A DESCRIPTION OF HOW TO USE THE INTERFACE**
 * Click squares to select pieces, click squares to move.
 
-#### **Any other important details about your implementation, how to run the program, etc**
-* The jar file can be ran with the command: `java -jar` hwx.jar
+#### **ANY OTHER IMPORTANT DETAILS ABOUT YOUR IMPLEMENTATION, HOW TO RUN THE PROGRAM, ETC**
+* The jar file can be ran with the command: `java -jar hwx.jar`
 * Or if you unjar `hwx.jar` then you can run the game with the command: `java ChessGame`
 
 #### **DESCRIPTIONS OF ANY EXTRA FEATURES IMPLEMENTED**
