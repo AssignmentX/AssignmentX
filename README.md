@@ -10,12 +10,10 @@
 * Click squares to select pieces, click squares to move.
 
 #### **Any other important details about your implementation, how to run the program, etc**
-* The jar file can be ran with the command:
-    java -jar hwx.jar
-* Or if you unjar `hwx.jar` then you can run the game with the command:
-    java ChessGame
+* The jar file can be ran with the command: `java -jar` hwx.jar
+* Or if you unjar `hwx.jar` then you can run the game with the command: `java ChessGame`
 
-#### **Descriptions of any extra features implemented**
+#### **DESCRIPTIONS OF ANY EXTRA FEATURES IMPLEMENTED**
  * New game
  * Save game
  * Load game
@@ -23,7 +21,7 @@
  * Make invalid moves flash red
  * Sounds
 
-#### **A description of the separation of work between partners (who was responsible for what pieces of the program).**
+#### **A DESCRIPTION OF THE SEPARATION OF WORK BETWEEN PARTNERS (WHO WAS RESPONSIBLE FOR WHAT PIECES OF THE PROGRAM).**
 ### **Ben**
  * Move logic for pieces (most of the work)
  * ChessFrame GUI
