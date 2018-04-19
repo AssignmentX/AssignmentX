@@ -261,7 +261,8 @@ public class ChessGame {
 
             // clear text area and replace with saved game text
             frame.clearTextArea();
-            frame.appendTextArea(loaded_frame.getTextArea());
+            //frame.setTextArea(loaded_frame.getTextArea());
+            frame.appendTextArea(loaded_frame.getTextAreaText());
             //setFrame(loaded_frame);
 
             // replaces existing chessboard with saved chessboard
