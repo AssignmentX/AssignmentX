@@ -40,6 +40,8 @@ public class ChessGame {
                         frame.clearTextArea();
                         frame.resetBoard();
                         init_players();
+                        String msg = "Game has been reset.";
+                        JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
                     }
                 }
         );
@@ -82,6 +84,7 @@ public class ChessGame {
         );
         menu.add(file_menu);
         frame.setJMenuBar(menu);
+        frame.validate();
 
         // sets initial player states
         init_players();
@@ -221,6 +224,9 @@ public class ChessGame {
             out.close();
             file.close();
 
+
+            String msg = "Game saved.";
+            JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
             System.out.println("Object has been serialized");
 
         }
@@ -283,11 +289,15 @@ public class ChessGame {
             canBlackBeCheckMated = (boolean)saved[81];
 
             frame.setNorthTextField(currentPlayer + "'s Move");
+            String msg = "Game loaded.";
+            JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
             System.out.println("LOAD COMPLETE");
         }
         catch(IOException ex)
         {
             System.out.println("IOException is caught");
+            String msg = "Unable to load game.";
+            JOptionPane.showMessageDialog(frame, msg, "Error", JOptionPane.WARNING_MESSAGE);
         }
         catch(ClassNotFoundException ex)
         {
