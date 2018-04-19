@@ -1,20 +1,21 @@
 # COP3252: Java
-## AssignmentX: Zach Sirotto and Ben Cook
+## AssignmentX
+### Coded by: Zach Sirotto and Ben Cook
 
 
-### _*Any details regarding instructions for the game that are not obvious from the set of standard known instructions*_
-#### n/a
+#### _*Any details regarding instructions for the game that are not obvious from the set of standard known instructions*_
+##### n/a
 
-### _*A description of how to use the interface*_
-#### Click squares to select pieces, click squares to move.
+#### _*A description of how to use the interface*_
+##### Click squares to select pieces, click squares to move.
 
-### _*Any other important details about your implementation, how to run the program, etc*_
-#### The jar file can be ran with the command:
+#### _*Any other important details about your implementation, how to run the program, etc*_
+##### The jar file can be ran with the command:
     java -jar hwx.jar
-#### Or if you unjar `hwx.jar` then you can run the game with the command:
+##### Or if you unjar `hwx.jar` then you can run the game with the command:
     java ChessGame
 
-### _*Descriptions of any extra features implemented*_
+#### _*Descriptions of any extra features implemented*_
  * New game
  * Save game
  * Load game
@@ -22,8 +23,8 @@
  * Make invalid moves flash red
  * Sounds
 
-### _*A description of the separation of work between partners (who was responsible for what pieces of the program).*_
-*Ben*
+#### _*A description of the separation of work between partners (who was responsible for what pieces of the program).*_
+_*Ben*_
  * Move logic for pieces (most of the work)
  * ChessFrame GUI
  * ChessBoard Border GUI
@@ -34,7 +35,7 @@
  * Valid move predicates (split between both of us)
  * Code refactoring
 
-*Zach*
+_*Zach*_
  * Move logic for pieces (some of the work)
  * ChessBoard setup and GUI
  * ChessSquare GUI
@@ -47,7 +48,7 @@
  * En passant rule
  * Code refactoring
 
-*Un-assigned Work* _(This will eventually be removed once the work is delegated)_
+_*Un-assigned Work*_ _(This will eventually be removed once the work is delegated)_
  * Castling
  * Threefold repitition rule
  * Stalemate
