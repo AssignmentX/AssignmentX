@@ -207,39 +207,47 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 
                 // CHECKMATE DETECTION!!!!!!!!!!!!!
-
+                /*
                 int currking;
                 String currplayer;
 
+                // janky fix for move predicate
+                if(ChessGame.getCurrentPlayer().equals("White")) {
+                    currplayer = "Black";
+                    currking = ChessGame.getBlackKingPos();
+                    ChessGame.setCurrentPlayer("Black");
+                }
+                    
+                else {
+                    currplayer = "White";
+                    currking = ChessGame.getWhiteKingPos();
+                    ChessGame.setCurrentPlayer("White");
+                }
+
+                boolean checkmated = true;
                 for(int i = 0; i < 64; i++) {
 
-                    // janky fix for move predicate
-                    if(ChessGame.getCurrentPlayer().equals("White")) {
-                        currplayer = "Black";
-                        currking = ChessGame.getBlackKingPos();
-                        ChessGame.setCurrentPlayer("Black");
-                    }
-                        
-                    else {
-                        currplayer = "White";
-                        currking = ChessGame.getWhiteKingPos();
-                        ChessGame.setCurrentPlayer("White");
-                    }
+                    // if we found out player is not checkmated early, break out (saves time complexity)
+                    if(!checkmated)
+                        break;
 
-                    if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() != null && ChessGame.getFrame().getBoard().squareAt(i).getPlayer().equals(currplayer)){
+                    // save current square
+                    ChessSquarePanel currentsquare = ChessGame.getFrame().getBoard().squareAt(i);
+
+                    // for each of the current player's pieces
+                    if(currentsquare.getPlayer() != null && currentsquare.getPlayer().equals(currplayer)){
 
                         // make a move for this piece and then see if it puts king in check
-                        ArrayList<Integer> validmoves = new ArrayList<>(MoveLogic.get_valid_moves(ChessGame.getFrame().getBoard().squareAt(i).getPiece(), ChessGame.getFrame().getBoard().squareAt(i).getPlayer(), i));
+                        ArrayList<Integer> validmoves = new ArrayList<>(MoveLogic.get_valid_moves(currentsquare.getPiece(), currentsquare.getPlayer(), i));
                         for(int newmove : validmoves) {
-                            // remove piece from its current position
-                            ChessGame.getFrame().getBoard().squareAt(i).remove(ChessGame.getFrame().getBoard().squareAt(i).getPieceLabel());
-                            ChessGame.getFrame().getBoard().squareAt(i).setPiece(null, null, i);
+                            // save square for the newmove
+                            ChessSquarePanel newsquare = ChessGame.getFrame().getBoard().squareAt(newmove);
 
                             // save moved square's piece and player
-                            if(ChessGame.getFrame().getBoard().squareAt(newmove).getPiece() != null && ChessGame.getFrame().getBoard().squareAt(newmove).getPlayer() != null) {
-                                enemyPiece = new String(ChessGame.getFrame().getBoard().squareAt(newmove).getPiece());
-                                enemyPlayer = new String(ChessGame.getFrame().getBoard().squareAt(newmove).getPlayer());
-                                enemyPieceLabel = ChessGame.getFrame().getBoard().squareAt(newmove).getPieceLabel();
+                            if(newsquare.getPiece() != null && newsquare.getPlayer() != null) {
+                                enemyPiece = new String(newsquare.getPiece());
+                                enemyPlayer = new String(newsquare.getPlayer());
+                                enemyPieceLabel = newsquare.getPieceLabel();
                             }
                             else {
                                 enemyPiece = null;
@@ -247,89 +255,91 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                 enemyPieceLabel = null;
                             }
 
-                            // TODO!!
-
                             // make the move
-                            //newsquare.setPiece(currpiece, currplayer, move);
+                            newsquare.setPiece(currentsquare.getPiece(), currplayer, newmove);
 
-                            //// update king's position if the king moved
-                            //if(currplayer.equals("White") && currpiece.equals("king"))
-                            //    ChessGame.setWhiteKingPos(move);
-                            //else if(currplayer.equals("Black") && currpiece.equals("king"))
-                            //    ChessGame.setBlackKingPos(move);
+                            // update king's position if the king moved
+                            if(currplayer.equals("White") && currentsquare.getPiece().equals("king")){
+                                ChessGame.setWhiteKingPos(newmove);
+                                currking = newmove;
+                            }
+                            else if(currplayer.equals("Black") && currentsquare.getPiece().equals("king")){
+                                ChessGame.setBlackKingPos(newmove);
+                                currking = newmove;
+                            }
+
+                            // remove piece from its current position
+                            currentsquare.remove(currentsquare.getPieceLabel());
+                            currentsquare.setPiece(null, null, i);
 
                             // find squares that can potentially put the enemy king in checkmate
                             moves = MoveLogic.get_valid_moves(currplayer, "queen", currking);
                             moves.addAll(MoveLogic.get_valid_moves(currplayer, "knight", currking));
 
                             // undo janky fix for move predicate
-                            if(ChessGame.getCurrentPlayer().equals("White"))
+                            if(currplayer.equals("White"))
                                 ChessGame.setCurrentPlayer("Black");
                             else
                                 ChessGame.setCurrentPlayer("White");
 
                             // go thru squares, and see if any piece can put the player in check
+                            boolean checkPossiblyMated = true;
                             for(int move : moves) {
-                                // if square has a piece, get its valid moves
-                                if(ChessGame.getFrame().getBoard().squareAt(move).getPlayer() != null && ChessGame.getFrame().getBoard().squareAt(move).getPlayer().equals(ChessGame.getCurrentPlayer())){
-                                    //ArrayList<Integer> movelist = new ArrayList<>(MoveLogic.get_valid_moves(ChessGame.getFrame().getBoard().squareAt(move).getPiece(), ChessGame.getCurrentPlayer(), move));
 
+                                if(!checkPossiblyMated) // break early if we know we are not checked
+                                    break;
+
+                                ChessSquarePanel possiblechecksquare = ChessGame.getFrame().getBoard().squareAt(move);
+                                // if square has a piece, get its valid moves
+                                if(possiblechecksquare.getPlayer() != null && possiblechecksquare.getPlayer().equals(ChessGame.getCurrentPlayer())){
+                                    ArrayList<Integer> movelist = new ArrayList<>(MoveLogic.get_valid_moves(possiblechecksquare.getPiece(), ChessGame.getCurrentPlayer(), move));
+                                    // if piece does not put player in check, there is no checkmate
+                                    if(!movelist.contains(currking))
+                                        checkPossiblyMated = false;
                                 }
                             }
 
-                            // TODO
+                            // undo janky fix for move predicate
+                            if(currplayer.equals("White"))
+                                ChessGame.setCurrentPlayer("White");
+                            else
+                                ChessGame.setCurrentPlayer("Black");
+
+                            // put piece back
+                            currentsquare.setPiece(newsquare.getPiece(), currplayer, i);
+
                             // undo the move
-                            //newsquare.remove(newsquare.getPieceLabel());
-                            //newsquare.setPieceLabel(enemyPieceLabel);
-                            //newsquare.setCurrentPiece(enemyPiece);
-                            //newsquare.setCurrentPlayer(enemyPlayer);
+                            newsquare.remove(newsquare.getPieceLabel());
+                            newsquare.setPieceLabel(enemyPieceLabel);
+                            newsquare.setCurrentPiece(enemyPiece);
+                            newsquare.setCurrentPlayer(enemyPlayer);
 
                             // update king's position if the king moved
-                            //if(currplayer.equals("White") && currpiece.equals("king"))
-                            //    ChessGame.setWhiteKingPos(pos);
-                            //else if(currplayer.equals("Black") && currpiece.equals("king"))
-                            //    ChessGame.setBlackKingPos(pos);
+                            if(currplayer.equals("White") && currentsquare.getPiece().equals("king"))
+                                ChessGame.setWhiteKingPos(i);
+                            else if(currplayer.equals("Black") && currentsquare.getPiece().equals("king"))
+                                ChessGame.setBlackKingPos(i);
 
-                        }
-                        
-
-
-
-                    }
-
-                }
-
-                // THIS BLOCK OF CODE WILL EVENTUALLY BE REMOVED / IT IS HERE FOR SAFE KEEPING
-                // check for checkmate
-                /*
-                if(checked){
-                    // these will be set to false in the next code block if there exists a valid move that gets player out of check
-                    if(currplayer.equals("White"))
-                        ChessGame.whiteIsCheckMated();
-                    else
-                        ChessGame.blackIsCheckMated();
-
-                    for(int i = 0; i < 64; i++) {
-                        // if piece is current player's piece
-                        if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer() != null && ChessGame.getFrame().getBoard().squareAt(i).getPlayer().equals(currplayer)) {
-                            // get valid moves for that piece
-                            moves = MoveLogic.get_valid_moves(currplayer, ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
-                            // prune moves that put current player in check
-                            MoveLogic.doMovesPutPlayerInCheck(moves, ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
-                            // if moves is not empty, then player cannot be checkmated and break
-                            if(!moves.isEmpty()){
-                                if(currplayer.equals("White"))
-                                    ChessGame.whiteIsNotCheckMated();
-                                else
-                                    ChessGame.blackIsNotCheckMated();
+                            // if player is not in check, then player is obviously not checkmated
+                            if(!checkPossiblyMated){
+                                checkmated = false;
+                                break;
                             }
                         }
                     }
                 }
-                // check for stalemate
-                else{
 
-                }
+                // handle updating the appropriate variables if player is checkmated
+                if(currplayer.equals("White") && checkmated)
+                    ChessGame.whiteIsCheckMated();
+                else if(currplayer.equals("Black") && checkmated)
+                    ChessGame.blackIsCheckMated();
+
+                // set player back to normal
+                if(currplayer.equals("White"))
+                    ChessGame.setCurrentPlayer("Black");
+                else
+                    ChessGame.setCurrentPlayer("White");
                 */
 
                 if((ChessGame.getCurrentPlayer().equals("White") && !ChessGame.canWhiteBeCheckMated()) || (ChessGame.getCurrentPlayer().equals("Black") && !ChessGame.canBlackBeCheckMated())) {
