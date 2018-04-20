@@ -265,7 +265,7 @@ public class ChessGame {
 
             String msg = "Game saved.";
             JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
-            System.out.println("Object has been serialized");
+            //System.out.println("Object has been serialized");
 
         }
         catch(IOException ex)
@@ -332,11 +332,11 @@ public class ChessGame {
             frame.setNorthTextField(currentPlayer + "'s Move");
             String msg = "Game loaded.";
             JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
-            System.out.println("LOAD COMPLETE");
+            //System.out.println("LOAD COMPLETE");
         }
         catch(IOException ex)
         {
-            System.out.println("IOException is caught");
+            //System.out.println("IOException is caught");
             String msg = "Unable to load game.";
             JOptionPane.showMessageDialog(frame, msg, "Error", JOptionPane.WARNING_MESSAGE);
         }

@@ -81,16 +81,8 @@ public class MoveLogic {
             }
 
             // EN PASSANT (IN PASSING)
-            if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) {
-                //System.out.print("pawn was at: ");
-                //System.out.println(coord_to_position(new_move));
-                //System.out.println("en passant left");
-                //ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
-                //if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
-                //    if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
-                        my_moves.add(coord_to_position(new_move));
-                //}
-            }
+            if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere())
+                my_moves.add(coord_to_position(new_move));
 
             // diagnol right
             new_move[1] += 2;
@@ -103,14 +95,8 @@ public class MoveLogic {
             }
 
             // EN PASSANT (IN PASSING)
-            if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) {
-                //System.out.println("en passant right");
-                //ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
-                //if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
-                    //if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
-                        my_moves.add(coord_to_position(new_move));
-                //}
-            }
+            if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere())
+                my_moves.add(coord_to_position(new_move));
         }
         else {
             // diagnol left
@@ -124,6 +110,7 @@ public class MoveLogic {
                     my_moves.add(coord_to_position(new_move));
             }
 
+            // EN PASSANT (IN PASSING)
             if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) 
                 my_moves.add(coord_to_position(new_move));
 
@@ -137,6 +124,7 @@ public class MoveLogic {
                     my_moves.add(coord_to_position(new_move));
             }
 
+            // EN PASSANT (IN PASSING)
             if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) 
                 my_moves.add(coord_to_position(new_move));
         }

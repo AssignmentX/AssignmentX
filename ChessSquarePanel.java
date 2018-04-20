@@ -100,18 +100,12 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
             for(int i = 0; i < 64; i++){
                 if(ChessGame.getFrame().getBoard().squareAt(i).getPawnWasHere()) {
                     if( i+8 < 64 && ChessGame.getFrame().getBoard().squareAt(i+8).getPlayer() != null && ChessGame.getFrame().getBoard().squareAt(i+8).getPlayer().equals("White")){
-                        if(ChessGame.getFrame().getBoard().squareAt(i+8).getPiece() != null && ChessGame.getFrame().getBoard().squareAt(i+8).getPiece().equals("pawn")) {
-                            //if(ChessGame.getFrame().getBoard().squareAt(i+8).getPawnWasHere())
-                            System.out.println("disengaged at" + Integer.toString(i));
-                                ChessGame.setEnPassant(i, true);
-                        }
+                        if(ChessGame.getFrame().getBoard().squareAt(i+8).getPiece() != null && ChessGame.getFrame().getBoard().squareAt(i+8).getPiece().equals("pawn"))
+                            ChessGame.setEnPassant(i, true);
                     }
                     else if( i-8 >= 0 && ChessGame.getFrame().getBoard().squareAt(i-8).getPlayer() != null && ChessGame.getFrame().getBoard().squareAt(i-8).getPlayer().equals("Black")){
-                        if(ChessGame.getFrame().getBoard().squareAt(i-8).getPiece() != null && ChessGame.getFrame().getBoard().squareAt(i-8).getPiece().equals("pawn")) {
-                            //if(ChessGame.getFrame().getBoard().squareAt(i-8).getPawnWasHere())
-                                ChessGame.setEnPassant(i, true);
-                                System.out.println("disengaged at" + Integer.toString(i));
-                        }
+                        if(ChessGame.getFrame().getBoard().squareAt(i-8).getPiece() != null && ChessGame.getFrame().getBoard().squareAt(i-8).getPiece().equals("pawn"))
+                            ChessGame.setEnPassant(i, true);
                     }
                 }
             }
@@ -160,8 +154,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
         }
         else if(ChessGame.isMoving()){
-
-            //System.out.println(ChessGame.getValidMoveColors()[position]);
             ChessSquarePanel currentPosition = ChessGame.getFrame().getBoard().squareAt(ChessGame.getMovingFrom());
 
             // get list of valid moves
@@ -478,15 +470,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         // pawn's first move, trigger possibility for en passant immediately
                         if(!ChessGame.getFrame().getBoard().squareAt(ChessGame.getMovingFrom()).hasPieceMoved()) {
                             // pawn moved down 2 squares (white), engage en passant rule
-                            if(position == 16 + ChessGame.getMovingFrom()) {
+                            if(position == 16 + ChessGame.getMovingFrom())
                                 ChessGame.getFrame().getBoard().squareAt(ChessGame.getMovingFrom() + 8).setPawnWasHere(true);
-                                System.out.println("moved down 2");
-                            }
                             // pawn moved up 2 squares (black), engage en passant rule
-                            else if(position == ChessGame.getMovingFrom() - 16) {
+                            else if(position == ChessGame.getMovingFrom() - 16)
                                 ChessGame.getFrame().getBoard().squareAt(ChessGame.getMovingFrom() - 8).setPawnWasHere(true);
-                                System.out.println("moved up 2");
-                            }
                         }
 
                         // piece has been moved (used for pawns first move, and kings+rooks for castling)
