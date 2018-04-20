@@ -74,7 +74,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         Graphics2D g2d = ( Graphics2D ) g;
 
         // RESIZE CHESS PIECES WHEN THE BOARD RESIZES
-        if(player != null && piece != null && (currentHeight != getHeight() || currentWidth != getWidth())) {
+        if(player != null && piece != null && (currentHeight != getHeight() || currentWidth != getWidth()) && (getWidth() != 0 || getHeight() != 0)) {
             // save current height & width
             currentHeight = getHeight();
             currentWidth = getWidth();
@@ -359,7 +359,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 if((ChessGame.getCurrentPlayer().equals("White") && !ChessGame.canWhiteBeCheckMated()) || (ChessGame.getCurrentPlayer().equals("Black") && !ChessGame.canBlackBeCheckMated())) {
 
-                    System.out.println("Not checkmated");
+                    //System.out.println("Not checkmated");
 
                     // set these to false, if they are true after the next block of code, then the move is invalid
                     // since it can put the current player in check

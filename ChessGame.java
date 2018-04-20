@@ -20,6 +20,7 @@ public class ChessGame {
     private static boolean canWhiteBeChecked;
     private static boolean canWhiteBeCheckMated;
     private static boolean canBlackBeCheckMated;
+    private static int[] threeFoldRepitition;
 
     public static void main( String args[] ) {
         //creates game frame
@@ -27,8 +28,8 @@ public class ChessGame {
 
         // frame menu bar
         JMenuBar menu = new JMenuBar();
-        JMenu file_menu = new JMenu("Game");
-        file_menu.setMnemonic('G');
+        JMenu file_menu = new JMenu("File");
+        file_menu.setMnemonic('F');
         JMenuItem new_item = new JMenuItem("New");
         new_item.setMnemonic('N');
         file_menu.add(new_item);
@@ -37,9 +38,7 @@ public class ChessGame {
                 {
                     public void actionPerformed( ActionEvent event )
                     {
-                        frame.clearTextArea();
-                        frame.resetBoard();
-                        init_players();
+                        new_game();
                         String msg = "Game has been reset.";
                         JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
                     }
@@ -83,6 +82,20 @@ public class ChessGame {
             }
         );
         menu.add(file_menu);
+        JMenu game_menu = new JMenu("Game");
+        game_menu.setMnemonic('G');
+        new_item = new JMenuItem("Offer Draw");
+        new_item.setMnemonic('D');
+        game_menu.add(new_item);
+        new_item.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent event){
+                    JOptionPane.showMessageDialog(frame, "The game was a draw.", "Draw", JOptionPane.PLAIN_MESSAGE);
+                    new_game();
+                }
+            }
+        );
+        menu.add(game_menu);
         frame.setJMenuBar(menu);
         frame.validate();
 
@@ -123,6 +136,8 @@ public class ChessGame {
     // bools that determine if players are checkmated
     public static boolean canWhiteBeCheckMated() { return canWhiteBeCheckMated; }
     public static boolean canBlackBeCheckMated() { return canBlackBeCheckMated; }
+    // returns threefoldrepitition array
+    public static int[] getThreeFoldRepitition() { return threeFoldRepitition; }
 
 
     // mutators
@@ -175,6 +190,11 @@ public class ChessGame {
         validMovePositions = new boolean[64];
         for(boolean x : validMovePositions)
             x = false;
+
+        // init threefold repitition array
+        threeFoldRepitition = new int[6];
+        for(int x : threeFoldRepitition)
+            x = -1;
     }
 
     public static void init_frame(){
@@ -186,8 +206,14 @@ public class ChessGame {
         frame.setVisible( true );               // display frame
     }
 
+    public static void new_game(){
+        frame.clearTextArea();
+        frame.resetBoard();
+        init_players();
+    }
+
     public static void save_game(ChessGameFrame game_frame, ChessBoardPanel board_panel, ChessSquarePanel[] square_panel){
-        Object[] save_file = new Object[82];
+        Object[] save_file = new Object[83];
 
         for(int i = 0; i < square_panel.length; i++){
             save_file[i] = square_panel[i];
@@ -210,6 +236,7 @@ public class ChessGame {
         save_file[79] = canWhiteBeChecked;
         save_file[80] = canWhiteBeCheckMated;
         save_file[81] = canBlackBeCheckMated;
+        save_file[82] = threeFoldRepitition;
 
         String filename = "file.ser";
         // Serialization
@@ -288,6 +315,7 @@ public class ChessGame {
             canWhiteBeChecked = (boolean)saved[79];
             canWhiteBeCheckMated = (boolean)saved[80];
             canBlackBeCheckMated = (boolean)saved[81];
+            threeFoldRepitition = (int[])saved[82];
 
             frame.setNorthTextField(currentPlayer + "'s Move");
             String msg = "Game loaded.";
