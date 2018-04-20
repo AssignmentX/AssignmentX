@@ -351,7 +351,6 @@ public class ChessGame {
     }
 
     public static void playSound(String soundFile) {
-        boolean playCompleted = false;
         File audioFile = new File(soundFile);
         try {
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
@@ -361,15 +360,8 @@ public class ChessGame {
             audioClip.open(audioStream);
             audioClip.start();
 
-            while (!playCompleted) {
-                // wait for the playback completes
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-                playCompleted = true;
-            }
+            // wait for the playback to finish
+            try { Thread.sleep(59); } catch (InterruptedException ex) {}
 
             audioClip.close();
             audioStream.close();
