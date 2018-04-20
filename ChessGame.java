@@ -2,6 +2,7 @@ import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.Arrays;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -21,6 +22,7 @@ public class ChessGame {
     private static boolean canWhiteBeCheckMated;
     private static boolean canBlackBeCheckMated;
     private static int[] threeFoldRepitition;
+    private static boolean disengageEnPassant[];
 
     public static void main( String args[] ) {
         //creates game frame
@@ -138,6 +140,8 @@ public class ChessGame {
     public static boolean canBlackBeCheckMated() { return canBlackBeCheckMated; }
     // returns threefoldrepitition array
     public static int[] getThreeFoldRepitition() { return threeFoldRepitition; }
+    // accessor for en passant
+    public static boolean getEnPassant(int i) { return disengageEnPassant[i]; }
 
 
     // mutators
@@ -162,11 +166,13 @@ public class ChessGame {
     // set the bool indicating if a player detects check on a move
     public static void canWhiteBeChecked(boolean b){ canWhiteBeChecked = b; }
     public static void canBlackBeChecked(boolean b){ canBlackBeChecked = b; }
-    // checkmate accessors
+    // checkmate mutators
     public static void whiteIsCheckMated() { canWhiteBeCheckMated = true; }
     public static void blackIsCheckMated() { canBlackBeCheckMated = true; }
     public static void whiteIsNotCheckMated() { canWhiteBeCheckMated = false; }
     public static void blackIsNotCheckMated() { canBlackBeCheckMated = false; }
+    // en passant mutator
+    public static void setEnPassant(int i, boolean b) { disengageEnPassant[i] = b; }
 
     //helpers
     public static void init_players(){
@@ -195,6 +201,10 @@ public class ChessGame {
         threeFoldRepitition = new int[6];
         for(int x : threeFoldRepitition)
             x = -1;
+
+        // init all values of array to false for determining if we should disengage en passant
+        disengageEnPassant = new boolean[64];
+        Arrays.fill(disengageEnPassant, false);
     }
 
     public static void init_frame(){
@@ -213,7 +223,7 @@ public class ChessGame {
     }
 
     public static void save_game(ChessGameFrame game_frame, ChessBoardPanel board_panel, ChessSquarePanel[] square_panel){
-        Object[] save_file = new Object[83];
+        Object[] save_file = new Object[84];
 
         for(int i = 0; i < square_panel.length; i++){
             save_file[i] = square_panel[i];
@@ -237,6 +247,7 @@ public class ChessGame {
         save_file[80] = canWhiteBeCheckMated;
         save_file[81] = canBlackBeCheckMated;
         save_file[82] = threeFoldRepitition;
+        save_file[83] = disengageEnPassant;
 
         String filename = "file.ser";
         // Serialization
@@ -316,6 +327,7 @@ public class ChessGame {
             canWhiteBeCheckMated = (boolean)saved[80];
             canBlackBeCheckMated = (boolean)saved[81];
             threeFoldRepitition = (int[])saved[82];
+            disengageEnPassant = (boolean[])saved[83];
 
             frame.setNorthTextField(currentPlayer + "'s Move");
             String msg = "Game loaded.";

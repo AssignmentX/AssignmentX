@@ -82,13 +82,14 @@ public class MoveLogic {
 
             // EN PASSANT (IN PASSING)
             if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) {
-                System.out.print("pawn was at: ");
-                System.out.println(coord_to_position(new_move));
-                ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
-                if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
-                    if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
+                //System.out.print("pawn was at: ");
+                //System.out.println(coord_to_position(new_move));
+                //System.out.println("en passant left");
+                //ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
+                //if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
+                //    if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
                         my_moves.add(coord_to_position(new_move));
-                }
+                //}
             }
 
             // diagnol right
@@ -103,11 +104,12 @@ public class MoveLogic {
 
             // EN PASSANT (IN PASSING)
             if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) {
-                ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
-                if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
-                    if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
+                //System.out.println("en passant right");
+                //ChessSquarePanel sq = ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move) - 8);
+                //if(ChessGame.isSpaceEmpty(coord_to_position(new_move)) && sq.getPiece() != null) {
+                    //if(sq.getPiece().equals("pawn") && sq.getPlayer().equals("Black"))
                         my_moves.add(coord_to_position(new_move));
-                }
+                //}
             }
         }
         else {
@@ -122,6 +124,9 @@ public class MoveLogic {
                     my_moves.add(coord_to_position(new_move));
             }
 
+            if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) 
+                my_moves.add(coord_to_position(new_move));
+
             // diagnol right
             new_move[1] += 2;
 
@@ -131,6 +136,9 @@ public class MoveLogic {
                 if(player != null && !player.equals(ChessGame.getCurrentPlayer()))
                     my_moves.add(coord_to_position(new_move));
             }
+
+            if(coords_valid_check(new_move) && ChessGame.getFrame().getBoard().squareAt(coord_to_position(new_move)).getPawnWasHere()) 
+                my_moves.add(coord_to_position(new_move));
         }
     }
 
@@ -367,98 +375,4 @@ public class MoveLogic {
             moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
         return my_moves;
     }
-
-    /*
-    public static void doMovesPutPlayerInCheck(ArrayList<Integer> moves, String currpiece, int pos) {
-        String enemyPiece;
-        String enemyPlayer;
-        JLabel enemyPieceLabel;
-        String currplayer = ChessGame.getCurrentPlayer();
-        String notcurrplayer;
-        int kingpos;
-        ChessSquarePanel currsquare = ChessGame.getFrame().getBoard().squareAt(pos);
-        if(currplayer.equals("White"))
-            kingpos = ChessGame.getWhiteKingPos();
-        else
-            kingpos = ChessGame.getBlackKingPos();
-
-        ArrayList<Integer> movelist = new ArrayList<>();
-        if(currplayer.equals("White"))
-            notcurrplayer = new String("Black");
-        else
-            notcurrplayer = new String("White");
-
-        boolean checked = true; // used to determine if player is checkmated
-
-        // check to see if any one of the moves puts the player in check
-        for(Integer move : moves) {
-            ChessSquarePanel newsquare = ChessGame.getFrame().getBoard().squareAt(move);
-            
-            // remove piece from its current position
-            currsquare.remove(currsquare.getPieceLabel());
-            currsquare.setPiece(null, null, pos);
-
-            // save moved square's piece and player
-            String piece = newsquare.getPiece();
-            String player = newsquare.getPlayer();
-            if(piece != null && player != null) {
-                enemyPiece = new String(piece);
-                enemyPlayer = new String(player);
-                enemyPieceLabel = newsquare.getPieceLabel();
-            }
-            else {
-                enemyPiece = null;
-                enemyPlayer = null;
-                enemyPieceLabel = null;
-            }
-
-            // make the move
-            newsquare.setPiece(currpiece, currplayer, move);
-
-            // update king's position if the king moved
-            if(currplayer.equals("White") && currpiece.equals("king"))
-                ChessGame.setWhiteKingPos(move);
-            else if(currplayer.equals("Black") && currpiece.equals("king"))
-                ChessGame.setBlackKingPos(move);
-
-
-            // check the board to see if the enemy can put current player in check
-            for(int i = 0; i < 64; i++){
-                // for each enemy piece
-                if(ChessGame.getFrame().getBoard().squareAt(i).getPlayer().equals(notcurrplayer)) {
-                    // get their valid moves
-                    ChessGame.setCurrentPlayer(notcurrplayer); // this is a janky fix, don't worry about it ;)
-                    movelist = MoveLogic.get_valid_moves(notcurrplayer, ChessGame.getFrame().getBoard().squareAt(i).getPiece(), i);
-                    ChessGame.setCurrentPlayer(currplayer); // this is a janky fix, don't worry about it ;)
-                    
-                    // if there exists a valid move, user is not checkmated
-                    if(!movelist.contains(kingpos))
-                        checked = false;
-
-                    currsquare.setPiece(currpiece, currplayer, pos); // put piece back
-
-                    // undo the move
-                    newsquare.remove(newsquare.getPieceLabel());
-                    newsquare.setPieceLabel(enemyPieceLabel);
-                    newsquare.setCurrentPiece(enemyPiece);
-                    newsquare.setCurrentPlayer(enemyPlayer);
-
-                    // update king's position if the king moved
-                    if(currplayer.equals("White") && currpiece.equals("king"))
-                        ChessGame.setWhiteKingPos(pos);
-                    else if(currplayer.equals("Black") && currpiece.equals("king"))
-                        ChessGame.setBlackKingPos(pos);
-
-                    if(!checked)
-                        break; // end the looping early since we KNOW player is not in checkmate
-                }
-            }
-        }
-
-        // if checked is still true, then player has no valid moves, and is checkmated
-        if(checked)
-            moves.clear();
-    }
-    */
-
 }
