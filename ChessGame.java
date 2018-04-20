@@ -3,6 +3,15 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.Arrays;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -265,7 +274,6 @@ public class ChessGame {
 
             String msg = "Game saved.";
             JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
-            //System.out.println("Object has been serialized");
 
         }
         catch(IOException ex)
@@ -299,9 +307,7 @@ public class ChessGame {
 
             // clear text area and replace with saved game text
             frame.clearTextArea();
-            //frame.setTextArea(loaded_frame.getTextArea());
             frame.appendTextArea(loaded_frame.getTextAreaText());
-            //setFrame(loaded_frame);
 
             // replaces existing chessboard with saved chessboard
             frame.setChessBoard(loaded_panel);
@@ -332,11 +338,9 @@ public class ChessGame {
             frame.setNorthTextField(currentPlayer + "'s Move");
             String msg = "Game loaded.";
             JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
-            //System.out.println("LOAD COMPLETE");
         }
         catch(IOException ex)
         {
-            //System.out.println("IOException is caught");
             String msg = "Unable to load game.";
             JOptionPane.showMessageDialog(frame, msg, "Error", JOptionPane.WARNING_MESSAGE);
         }
@@ -345,4 +349,40 @@ public class ChessGame {
             System.out.println("ClassNotFoundException is caught");
         }
     }
+
+    public static void playSound(String soundFile) {
+        boolean playCompleted = false;
+        File audioFile = new File(soundFile);
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+            AudioFormat format = audioStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+            Clip audioClip = (Clip) AudioSystem.getLine(info);
+            audioClip.open(audioStream);
+            audioClip.start();
+
+            while (!playCompleted) {
+                // wait for the playback completes
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+                playCompleted = true;
+            }
+
+            audioClip.close();
+            audioStream.close();
+        } catch (UnsupportedAudioFileException ex) {
+            System.out.println("The specified audio file is not supported.");
+            ex.printStackTrace();
+        } catch (LineUnavailableException ex) {
+            System.out.println("Audio line for playing back is unavailable.");
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.out.println("Error playing the audio file.");
+            ex.printStackTrace();
+        }
+    }
+
 }

@@ -504,7 +504,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                     else {
                                         ChessGame.getFrame().getBoard().squareAt(i+8).remove(ChessGame.getFrame().getBoard().squareAt(i+8).getPieceLabel());
                                         ChessGame.getFrame().getBoard().squareAt(i+8).setPiece(null,  null, i+8);
-                                        ChessGame.getFrame().getBoard().squareAt(i-8).repaint();
+                                        ChessGame.getFrame().getBoard().squareAt(i+8).repaint();
                                     }
                                     
 
@@ -522,6 +522,9 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         ChessGame.setCurrentlyMoving(false);
                         ChessGame.setMovingFrom(-1);
                         ChessGame.setSelectedPiece(null);
+
+                        // play sound for a successful move
+                        ChessGame.playSound("assets/click_sound.wav");
 
                         // change turn to other player
                         if(ChessGame.getCurrentPlayer().equals("White")) {
