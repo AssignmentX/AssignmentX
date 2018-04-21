@@ -3,15 +3,6 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.Arrays;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -32,13 +23,7 @@ public class ChessGame {
     private static boolean canBlackBeCheckMated;
     private static int[] threeFoldRepitition;
     private static boolean disengageEnPassant[];
-    private static File audioFile;
-    private static AudioInputStream audioStream;
-    private static AudioFormat format;
-    private static DataLine.Info info;
-    private static Clip audioClip;
-    private static byte[] audio;
-    private static int audioSize;
+    private static Sound click_sound;
 
     public static void main( String args[] ) {
         //creates game frame
@@ -158,6 +143,8 @@ public class ChessGame {
     public static int[] getThreeFoldRepitition() { return threeFoldRepitition; }
     // accessor for en passant
     public static boolean getEnPassant(int i) { return disengageEnPassant[i]; }
+    // get sound objects
+    public static Sound getClickSound(){ return click_sound; }
 
 
     // mutators
@@ -231,23 +218,8 @@ public class ChessGame {
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
 
-        // init audio
-        try{
-            audioFile = new File("assets/click_sound.wav");
-            audioStream = AudioSystem.getAudioInputStream(audioFile);
-            format = audioStream.getFormat();
-            audioSize = (int) (format.getFrameSize() * audioStream.getFrameLength());
-            audio = new byte[audioSize];
-            info = new DataLine.Info(Clip.class, format);
-            audioStream.read(audio, 0, audioSize);
-        } catch (UnsupportedAudioFileException ex) {
-            System.out.println("The specified audio file is not supported.");
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            System.out.println("Error playing the audio file.");
-            ex.printStackTrace();
-        }
-       
+        // init sounds
+        click_sound = new Sound("assets/click_sound.wav");
     }
 
     public static void new_game(){
@@ -373,21 +345,6 @@ public class ChessGame {
         {
             System.out.println("ClassNotFoundException is caught");
         }
-    }
-
-    public static void playSound() {
-        // play sound clip
-        try {
-            audioClip = (Clip) AudioSystem.getLine(info);
-            audioClip.open(format, audio, 0, audioSize);
-            audioClip.start();
-        } catch (LineUnavailableException ex) {
-            System.out.println("Audio line for playing back is unavailable.");
-            ex.printStackTrace();
-        }
-        
-        // wait for the playback to finish
-        try { Thread.sleep(59); } catch (InterruptedException ex) {}
     }
 
 }

@@ -2,6 +2,7 @@ import java.io.Serializable;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
@@ -45,35 +46,39 @@ public class PieceSelectionScreen extends JFrame implements Serializable {
 
         image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "rook" + ".png";
         JLabel rook = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
-        JPanel rookPanel = new JPanel();
-        rookPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
+        JButton rookButton = new JButton();
+        //rookPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         rook.setVerticalAlignment(JLabel.CENTER);
-        rookPanel.add(rook);
-        panel.add(rookPanel);
+        rook.setHorizontalAlignment(JLabel.CENTER);
+        rookButton.add(rook);
+        panel.add(rookButton);
 
         image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "knight" + ".png";
         JLabel knight = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
-        JPanel knightPanel = new JPanel();
-        knightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
+        JButton knightButton = new JButton();
+        //knightPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         knight.setVerticalAlignment(JLabel.CENTER);
-        knightPanel.add(knight);
-        panel.add(knightPanel);
+        knight.setHorizontalAlignment(JLabel.CENTER);
+        knightButton.add(knight);
+        panel.add(knightButton);
 
         image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "bishop" + ".png";
         JLabel bishop = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
-        JPanel bishopPanel = new JPanel();
-        bishopPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
+        JButton bishopButton = new JButton();
+        //bishopButton.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         bishop.setVerticalAlignment(JLabel.CENTER);
-        bishopPanel.add(bishop);
-        panel.add(bishopPanel);
+        bishop.setHorizontalAlignment(JLabel.CENTER);
+        bishopButton.add(bishop);
+        panel.add(bishopButton);
 
         image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "queen" + ".png";
         JLabel queen = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(80, 80, Image.SCALE_DEFAULT)));
-        JPanel queenPanel = new JPanel();
-        queenPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
+        JButton queenButton = new JButton();
+        //queenButton.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
         queen.setVerticalAlignment(JLabel.CENTER);
-        queenPanel.add(queen);
-        panel.add(queenPanel);
+        queen.setHorizontalAlignment(JLabel.CENTER);
+        queenButton.add(queen);
+        panel.add(queenButton);
         
         
         

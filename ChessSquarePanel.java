@@ -526,7 +526,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         ChessGame.setSelectedPiece(null);
 
                         // play sound for a successful move
-                        ChessGame.playSound();
+                        ChessGame.getClickSound().play();
 
                         // if pawn made it to end of board, allow current player to exchange it
                         PieceSelectionScreen pieceSelectionScreen = new PieceSelectionScreen();
