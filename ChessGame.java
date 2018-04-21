@@ -32,6 +32,13 @@ public class ChessGame {
     private static boolean canBlackBeCheckMated;
     private static int[] threeFoldRepitition;
     private static boolean disengageEnPassant[];
+    private static File audioFile;
+    private static AudioInputStream audioStream;
+    private static AudioFormat format;
+    private static DataLine.Info info;
+    private static Clip audioClip;
+    private static byte[] audio;
+    private static int audioSize;
 
     public static void main( String args[] ) {
         //creates game frame
@@ -223,6 +230,24 @@ public class ChessGame {
         frame.setSize( 900, 900 );   // set frame size
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
+
+        // init audio
+        try{
+            audioFile = new File("assets/click_sound.wav");
+            audioStream = AudioSystem.getAudioInputStream(audioFile);
+            format = audioStream.getFormat();
+            audioSize = (int) (format.getFrameSize() * audioStream.getFrameLength());
+            audio = new byte[audioSize];
+            info = new DataLine.Info(Clip.class, format);
+            audioStream.read(audio, 0, audioSize);
+        } catch (UnsupportedAudioFileException ex) {
+            System.out.println("The specified audio file is not supported.");
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            System.out.println("Error playing the audio file.");
+            ex.printStackTrace();
+        }
+       
     }
 
     public static void new_game(){
@@ -350,31 +375,18 @@ public class ChessGame {
         }
     }
 
-    public static void playSound(String soundFile) {
-        File audioFile = new File(soundFile);
-        try {
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
-            AudioFormat format = audioStream.getFormat();
-            DataLine.Info info = new DataLine.Info(Clip.class, format);
-            Clip audioClip = (Clip) AudioSystem.getLine(info);
-            audioClip.open(audioStream);
-            audioClip.start();
-
+    public static void playSound() {
+            try {
+                audioClip = (Clip) AudioSystem.getLine(info);
+                audioClip.open(format, audio, 0, audioSize);
+                audioClip.start();
+            } catch (LineUnavailableException ex) {
+                System.out.println("Audio line for playing back is unavailable.");
+                ex.printStackTrace();
+            }
+            
             // wait for the playback to finish
             try { Thread.sleep(59); } catch (InterruptedException ex) {}
-
-            audioClip.close();
-            audioStream.close();
-        } catch (UnsupportedAudioFileException ex) {
-            System.out.println("The specified audio file is not supported.");
-            ex.printStackTrace();
-        } catch (LineUnavailableException ex) {
-            System.out.println("Audio line for playing back is unavailable.");
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            System.out.println("Error playing the audio file.");
-            ex.printStackTrace();
-        }
     }
 
 }
