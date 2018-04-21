@@ -20,6 +20,7 @@
  * Highlight valid moves
  * Make invalid moves flash red
  * Sounds
+ * Timer
 
 #### **A DESCRIPTION OF THE SEPARATION OF WORK BETWEEN PARTNERS (WHO WAS RESPONSIBLE FOR WHAT PIECES OF THE PROGRAM).**
 ### **Ben**
@@ -27,7 +28,7 @@
  * ChessFrame GUI
  * ChessBoard Border GUI
  * Translation between 1d-2d array and vise-versa
- * Validation of move (split between the both of us)
+ * Validation of move (most of the work)
  * Serialization of objects for Saving / Loading
  * Menu Options
  * Valid move predicates (split between both of us)
@@ -36,17 +37,19 @@
 ### **Zach**
  * Move logic for pieces (some of the work)
  * ChessBoard setup and GUI
- * ChessSquare GUI
- * Chess Pieces GUI
+ * ChessSquare w/ Chess Piece GUI
  * Check detection
- * Validation of move (split between the both of us)
- * Checkmate detection
+ * Validation of move (some of the work)
  * Valid move predicates (split between both of us)
  * Coloring of squares / re-coloring
  * En passant rule
  * Code refactoring
+ * Sound class
+ * Piece selection when pawn makes it to the other side of the board
 
 ### **Un-assigned Work** _(This will eventually be removed once the work is delegated)_
  * Castling
- * Threefold repitition rule
  * Stalemate
+ * Checkmate detection
+ * Timer
+ * Keep track of captured pieces
