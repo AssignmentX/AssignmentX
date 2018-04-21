@@ -376,17 +376,18 @@ public class ChessGame {
     }
 
     public static void playSound() {
-            try {
-                audioClip = (Clip) AudioSystem.getLine(info);
-                audioClip.open(format, audio, 0, audioSize);
-                audioClip.start();
-            } catch (LineUnavailableException ex) {
-                System.out.println("Audio line for playing back is unavailable.");
-                ex.printStackTrace();
-            }
-            
-            // wait for the playback to finish
-            try { Thread.sleep(59); } catch (InterruptedException ex) {}
+        // play sound clip
+        try {
+            audioClip = (Clip) AudioSystem.getLine(info);
+            audioClip.open(format, audio, 0, audioSize);
+            audioClip.start();
+        } catch (LineUnavailableException ex) {
+            System.out.println("Audio line for playing back is unavailable.");
+            ex.printStackTrace();
+        }
+        
+        // wait for the playback to finish
+        try { Thread.sleep(59); } catch (InterruptedException ex) {}
     }
 
 }

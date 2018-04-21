@@ -5,6 +5,8 @@ import java.awt.Image;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.JRootPane;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -525,6 +527,9 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                         // play sound for a successful move
                         ChessGame.playSound();
+
+                        // if pawn made it to end of board, allow current player to exchange it
+                        PieceSelectionScreen pieceSelectionScreen = new PieceSelectionScreen();
 
                         // change turn to other player
                         if(ChessGame.getCurrentPlayer().equals("White")) {
