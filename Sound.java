@@ -50,6 +50,6 @@ public class Sound {
         }
         
         // wait for the playback to finish
-        try { Thread.sleep(59); } catch (InterruptedException ex) {}
+        //try { Thread.sleep(59); } catch (InterruptedException ex) {}
     }
 }

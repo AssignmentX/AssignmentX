@@ -94,9 +94,12 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         else
             checked = ChessGame.isBlackChecked();
 
+        if(ChessGame.isPlayerSelectingAPiece()){
+
+        }
 
         // validate the correct player is clicking the square
-        if(ChessGame.getCurrentPlayer().equals(player)) {// && (!checked || piece.equals("king"))) {
+        else if(ChessGame.getCurrentPlayer().equals(player)) {// && (!checked || piece.equals("king"))) {
 
             // should we disengage en passant?
             for(int i = 0; i < 64; i++){
@@ -529,7 +532,12 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         ChessGame.getClickSound().play();
 
                         // if pawn made it to end of board, allow current player to exchange it
+                     if(ChessGame.getFrame().getBoard().squareAt(position).getPiece().equals("pawn") &&
+                        ChessGame.getEndPos().contains(position)) {
                         PieceSelectionScreen pieceSelectionScreen = new PieceSelectionScreen();
+                        ChessGame.setSuperPawn(position);
+                     }
+                        
 
                         // change turn to other player
                         if(ChessGame.getCurrentPlayer().equals("White")) {

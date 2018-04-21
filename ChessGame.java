@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -23,7 +24,12 @@ public class ChessGame {
     private static boolean canBlackBeCheckMated;
     private static int[] threeFoldRepitition;
     private static boolean disengageEnPassant[];
+    // used for upgrading a pawn to a selected piece
+    private static boolean playerIsSelectingAPiece;
+    private static int superPawn;
+
     private static Sound click_sound;
+
 
     public static void main( String args[] ) {
         //creates game frame
@@ -145,13 +151,28 @@ public class ChessGame {
     public static boolean getEnPassant(int i) { return disengageEnPassant[i]; }
     // get sound objects
     public static Sound getClickSound(){ return click_sound; }
-
-
+    // is player selecting a piece?
+    public static boolean isPlayerSelectingAPiece() { return playerIsSelectingAPiece; }
+    // get pawns pos
+    public static int getSuperPawn() { return superPawn; }
+    // get positions on the end of the board
+    public static ArrayList<Integer> getEndPos() {
+        ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 56, 57, 58, 59, 60, 61, 62, 63));
+        return list;
+    }
+   
     // mutators
 
     public static void setFrame(ChessGameFrame new_frame){ frame = new_frame; }
     // set the current player
     public static void setCurrentPlayer(String player){ currentPlayer = player; }
+    // change the player
+    public static void changeCurrentPlayer(){
+        if(currentPlayer.equals("White"))
+            currentPlayer = "Black";
+        else
+            currentPlayer = "White";
+    }
     // set the selected piece
     public static void setSelectedPiece(String piece){ selectedPiece = piece; }
     // set the bool indicating a piece is selected
@@ -176,6 +197,10 @@ public class ChessGame {
     public static void blackIsNotCheckMated() { canBlackBeCheckMated = false; }
     // en passant mutator
     public static void setEnPassant(int i, boolean b) { disengageEnPassant[i] = b; }
+    // piece selecting when pawn makes it to other side of the board
+    public static void playerIsSelectingAPiece(boolean b) { playerIsSelectingAPiece = b; }
+    //set pawns pos
+    public static void setSuperPawn(int pos) { superPawn = pos; }
 
     //helpers
     public static void init_players(){
@@ -229,7 +254,7 @@ public class ChessGame {
     }
 
     public static void save_game(ChessGameFrame game_frame, ChessBoardPanel board_panel, ChessSquarePanel[] square_panel){
-        Object[] save_file = new Object[84];
+        Object[] save_file = new Object[86];
 
         for(int i = 0; i < square_panel.length; i++){
             save_file[i] = square_panel[i];
@@ -254,6 +279,8 @@ public class ChessGame {
         save_file[81] = canBlackBeCheckMated;
         save_file[82] = threeFoldRepitition;
         save_file[83] = disengageEnPassant;
+        save_file[84] = playerIsSelectingAPiece;
+        save_file[85] = superPawn;
 
         String filename = "file.ser";
         // Serialization
@@ -331,6 +358,8 @@ public class ChessGame {
             canBlackBeCheckMated = (boolean)saved[81];
             threeFoldRepitition = (int[])saved[82];
             disengageEnPassant = (boolean[])saved[83];
+            playerIsSelectingAPiece = (boolean)saved[84];
+            superPawn = (int)saved[85];
 
             frame.setNorthTextField(currentPlayer + "'s Move");
             String msg = "Game loaded.";
