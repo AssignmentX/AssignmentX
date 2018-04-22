@@ -95,9 +95,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         else
             checked = ChessGame.isBlackChecked();
 
-        if(ChessGame.isPlayerSelectingAPiece()){
-
-        }
+        // leave this block to do nothing while playing is selecting a piece
+        if(ChessGame.isPlayerSelectingAPiece()){}
 
         // validate the correct player is clicking the square
         else if(ChessGame.getCurrentPlayer().equals(player)) {// && (!checked || piece.equals("king"))) {
@@ -200,7 +199,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 
                 // CHECKMATE DETECTION!!!!!!!!!!!!!
-                // /*
+                /*
                 int currking;
                 String currplayer;
 
@@ -356,7 +355,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     ChessGame.setCurrentPlayer("Black");
                 else
                     ChessGame.setCurrentPlayer("White");
-                // */
+                 */
 
                 if((ChessGame.getCurrentPlayer().equals("White") && !ChessGame.canWhiteBeCheckMated()) || (ChessGame.getCurrentPlayer().equals("Black") && !ChessGame.canBlackBeCheckMated())) {
 

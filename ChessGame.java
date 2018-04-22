@@ -126,7 +126,7 @@ public class ChessGame {
     // get array storing the valid move positions
     public static boolean[] getValidMovePositions(){ return validMovePositions; }
     // returns true or false if a space is empty
-    public static boolean isSpaceEmpty(int pos) { return (frame.getBoard().squareAt(pos).getPiece() != null); }
+    public static boolean isSpaceEmpty(int pos) { return (ChessGame.getFrame().getBoard().squareAt(pos).getPiece() != null); }
     // get the pos of the white king
     public static int getWhiteKingPos() { return whiteKing; }
     // get the pos of the black king
