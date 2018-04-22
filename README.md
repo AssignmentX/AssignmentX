@@ -10,6 +10,7 @@
 * Click squares to select pieces, click squares to move.
 
 #### **ANY OTHER IMPORTANT DETAILS ABOUT YOUR IMPLEMENTATION, HOW TO RUN THE PROGRAM, ETC**
+**For best rendering and scaling performance, instead of double clicking the jar:**
 * The jar file can be ran with the command: `java -jar hwx.jar`
 * Or if you unjar `hwx.jar` then you can run the game with the command: `java ChessGame`
 
