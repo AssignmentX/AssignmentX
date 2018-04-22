@@ -22,7 +22,7 @@ public class Sound {
         // init audio
         try{
             audioFile = new File(ChessGame.class.getResourceAsStream(filename));
-            audioFile = new File(filename);
+            //audioFile = new File(filename);
             audioStream = AudioSystem.getAudioInputStream(audioFile);
             format = audioStream.getFormat();
             audioSize = (int) (format.getFrameSize() * audioStream.getFrameLength());
@@ -31,10 +31,10 @@ public class Sound {
             audioStream.read(audio, 0, audioSize);
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
-            ex.printStackTrace();
+            //ex.printStackTrace();
         } catch (IOException ex) {
             System.out.println("Error playing the audio file.");
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
     }
 
@@ -46,7 +46,7 @@ public class Sound {
             audioClip.start();
         } catch (LineUnavailableException ex) {
             System.out.println("Audio line for playing back is unavailable.");
-            ex.printStackTrace();
+            //ex.printStackTrace();
         }
         
         // wait for the playback to finish

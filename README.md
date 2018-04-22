@@ -54,4 +54,4 @@
  * Keep track of captured pieces
 
 ##### **HOW TO COMPILE JAR FILE**
-Run the build script: `./build.sh`
+`jar -cvfm hwx.jar MANIFEST.MF *.java *.class README.md assets images`
