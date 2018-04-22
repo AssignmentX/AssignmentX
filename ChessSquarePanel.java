@@ -531,14 +531,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         // play sound for a successful move
                         ChessGame.getClickSound().play();
 
-                        // if pawn made it to end of board, allow current player to exchange it
-                     if(ChessGame.getFrame().getBoard().squareAt(position).getPiece().equals("pawn") &&
-                        ChessGame.getEndPos().contains(position)) {
-                        PieceSelectionScreen pieceSelectionScreen = new PieceSelectionScreen();
-                        ChessGame.setSuperPawn(position);
-                     }
-                        
-
                         // change turn to other player
                         if(ChessGame.getCurrentPlayer().equals("White")) {
                             ChessGame.setCurrentPlayer("Black");
@@ -548,6 +540,14 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             ChessGame.setCurrentPlayer("White");
                             ChessGame.getFrame().setNorthTextField("White's Move");
                         }
+
+                        // if pawn made it to end of board, allow current player to exchange it
+                        if(ChessGame.getFrame().getBoard().squareAt(position).getPiece().equals("pawn") &&
+                           ChessGame.getEndPos().contains(position)) {
+                           PieceSelectionScreen pieceSelectionScreen = new PieceSelectionScreen();
+                           ChessGame.setSuperPawn(position);
+                        }
+
                     }//end of else for move does not put player in check
 
                 } // end of not checkmated

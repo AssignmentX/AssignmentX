@@ -91,7 +91,6 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
         queenButton.add(queen);
         panel.add(queenButton);
 
-
         // player is selecting a piece
         ChessGame.playerIsSelectingAPiece(true);
     }
@@ -110,6 +109,7 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
             currKingPos = ChessGame.getBlackKingPos();
         }
 
+        // save current square for referencing
         currSquare = ChessGame.getFrame().getBoard().squareAt(ChessGame.getSuperPawn());
 
         // replace super pawn with selected piece
@@ -122,11 +122,9 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
 
         // get valid moves for piece
         ArrayList<Integer> moves = new ArrayList<>();
-        //ChessGame.changeCurrentPlayer();
-        moves = MoveLogic.get_valid_moves(selectedPiece, currentPlayer, ChessGame.getSuperPawn());
-        //ChessGame.changeCurrentPlayer();
-
-        System.out.println(moves);
+        ChessGame.changeCurrentPlayer();
+        moves = MoveLogic.get_valid_moves(currentPlayer, selectedPiece, ChessGame.getSuperPawn());
+        ChessGame.changeCurrentPlayer();
 
         // check for check
         if(moves.contains(currKingPos)){
@@ -152,6 +150,7 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
         ChessGame.playerIsSelectingAPiece(false);
         ChessGame.setSuperPawn(-1);
 
+        // close window
         dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
     }
     
