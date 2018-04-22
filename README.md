@@ -34,6 +34,7 @@
  * Menu Options
  * Valid move predicates (split between both of us)
  * Code refactoring
+  * Castling
 
 ## **Zach**
  * Move logic for pieces (some of the work)
@@ -49,7 +50,6 @@
  * Piece selection when pawn makes it to the other side of the board
 
 ## **Un-assigned Work** _(This will eventually be removed once the work is delegated)_
- * Castling
  * Stalemate
  * Checkmate detection
  * Timer
