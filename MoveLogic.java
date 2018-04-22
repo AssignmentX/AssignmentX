@@ -342,6 +342,46 @@ public class MoveLogic {
         new_move[1]--;
         if(coords_valid_check(new_move))
             my_moves.add(coord_to_position(new_move));
+
+
+        if(!hasMoved && ChessGame.getCurrentPlayer().equals("White")){
+            // white left
+            if(!ChessGame.getFrame().getBoard().squareAt(0).hasPieceMoved() &&
+                    ChessGame.getFrame().getBoard().squareAt(1).getPiece() == null &&
+                    ChessGame.getFrame().getBoard().squareAt(2).getPiece() == null &&
+                    ChessGame.getFrame().getBoard().squareAt(3).getPiece() == null) {
+                new_move = position_to_coord(2);
+                if(coords_valid_check(new_move))
+                    my_moves.add(coord_to_position(new_move));
+            }
+            // white right
+            if(!ChessGame.getFrame().getBoard().squareAt(7).hasPieceMoved() &&
+                    ChessGame.getFrame().getBoard().squareAt(6).getPiece() == null &&
+                    ChessGame.getFrame().getBoard().squareAt(5).getPiece() == null) {
+                new_move = position_to_coord(6);
+                if(coords_valid_check(new_move))
+                    my_moves.add(coord_to_position(new_move));
+            }
+        }
+        if(!hasMoved && ChessGame.getCurrentPlayer().equals("Black")){
+            // black left
+            if(!ChessGame.getFrame().getBoard().squareAt(56).hasPieceMoved() &&
+                    ChessGame.getFrame().getBoard().squareAt(57).getPiece() == null &&
+                    ChessGame.getFrame().getBoard().squareAt(58).getPiece() == null &&
+                    ChessGame.getFrame().getBoard().squareAt(59).getPiece() == null) {
+                new_move = position_to_coord(58);
+                if(coords_valid_check(new_move))
+                    my_moves.add(coord_to_position(new_move));
+            }
+            // black right
+            if(!ChessGame.getFrame().getBoard().squareAt(63).hasPieceMoved() &&
+                    ChessGame.getFrame().getBoard().squareAt(62).getPiece() == null &&
+                    ChessGame.getFrame().getBoard().squareAt(61).getPiece() == null) {
+                new_move = position_to_coord(62);
+                if(coords_valid_check(new_move))
+                    my_moves.add(coord_to_position(new_move));
+            }
+        }
     }
 
     // returns ArrayList of valid positions to choose from

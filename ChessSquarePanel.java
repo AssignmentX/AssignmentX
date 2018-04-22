@@ -260,6 +260,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             // make the move
                             newsquare.setPiece(currentsquare.getPiece(), currplayer, newmove);
 
+
                             // update king's position if the king moved
                             if(currplayer.equals("White") && currentsquare.getPiece().equals("king")){
                                 ChessGame.setWhiteKingPos(newmove);
@@ -410,6 +411,26 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         // move piece to clicked position
                         if(enemyPieceLabel != null) {
                             remove(enemyPieceLabel);
+                        }
+
+                        // CASTlING
+                        // castling white
+                        // left
+                        if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king") && position == 2 ){
+                            castle(0,3, ChessGame.getCurrentPlayer());
+                        }
+                        // right
+                        if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king") && position == 6 ){
+                            castle(7,5, ChessGame.getCurrentPlayer());
+                        }
+                        // castling black
+                        // left
+                        if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king") && position == 58 ){
+                            castle(56,59, ChessGame.getCurrentPlayer());
+                        }
+                        // right
+                        if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king") && position == 62 ){
+                            castle(63,61, ChessGame.getCurrentPlayer());
                         }
 
                         // display move message
@@ -602,5 +623,16 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
     // used for en passant (in passing)
     public boolean getPawnWasHere() { return pawnWasHere; }
     public void setPawnWasHere(boolean b) { pawnWasHere = b; }
+
+    //castling
+    public void castle(int rook_starting_pos, int rook_ending_pos, String currplayer){
+        ChessSquarePanel rook_starting = ChessGame.getFrame().getBoard().squareAt(rook_starting_pos);
+        rook_starting.remove(rook_starting.getPieceLabel());
+        rook_starting.setPiece(null, null, rook_starting_pos);
+        rook_starting.repaint();
+        ChessSquarePanel newpos = ChessGame.getFrame().getBoard().squareAt(rook_ending_pos);
+        newpos.setPiece("rook", currplayer, rook_ending_pos);
+        newpos.repaint();
+    }
 
 }
