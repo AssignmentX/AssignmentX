@@ -54,4 +54,4 @@
  * Keep track of captured pieces
 
 ##### **HOW TO COMPILE JAR FILE**
-`jar -cvfm hwx.jar MANIFEST.MF *.java *.class README.md assets/* images/*`
+`jar -cvfm hwx.jar MANIFEST.MF *.java *.class README.md assets images`

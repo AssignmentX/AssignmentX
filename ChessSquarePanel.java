@@ -52,7 +52,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         this.position = pos;
 
         if(piece != null && player != null) {
-            url = ClassLoader.getSystemResource("./images/png/" + player.toLowerCase() + "_" + piece + ".png");
+            url = ClassLoader.getSystemResource("images/png/" + player.toLowerCase() + "_" + piece + ".png");
             pieceLabel = new JLabel(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
             add(pieceLabel);
         }
@@ -81,7 +81,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
             currentHeight = getHeight();
             currentWidth = getWidth();
 
-            url = getClass().getResource("./images/png/" + player.toLowerCase() + "_" + piece + ".png");
+            url = getClass().getResource("images/png/" + player.toLowerCase() + "_" + piece + ".png");
             pieceLabel.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
         }
     }
