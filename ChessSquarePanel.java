@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.Timer;
 import java.awt.event.*;
+import java.net.URL;
 
 
 @SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
@@ -22,7 +23,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
     private String player;
     private int position;
     private JLabel pieceLabel;
-    private String image;
+    private URL url;
     private ChessBoardPanel parent;
     private boolean hasMoved;
     private boolean pawnWasHere = false; // used for en passant (in passing)
@@ -51,8 +52,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         this.position = pos;
 
         if(piece != null && player != null) {
-            image = "./images/png/" + player.toLowerCase() + "_" + piece + ".png";
-            pieceLabel = new JLabel(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
+            url = ClassLoader.getSystemResource("./images/png/" + player.toLowerCase() + "_" + piece + ".png");
+            pieceLabel = new JLabel(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
             add(pieceLabel);
         }
         else{
@@ -80,8 +81,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
             currentHeight = getHeight();
             currentWidth = getWidth();
 
-            image = "./images/png/" + player.toLowerCase() + "_" + piece + ".png";
-            pieceLabel.setIcon(new ImageIcon(new ImageIcon(getClass().getResource(image)).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
+            url = getClass().getResource("./images/png/" + player.toLowerCase() + "_" + piece + ".png");
+            pieceLabel.setIcon(new ImageIcon(new ImageIcon(url).getImage().getScaledInstance(currentWidth*3/4+currentWidth/8, currentHeight*3/4+currentHeight/10, Image.SCALE_DEFAULT)));
         }
     }
 

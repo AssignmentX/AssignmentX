@@ -20,7 +20,6 @@
  * Highlight valid moves
  * Make invalid moves flash red
  * Sounds
- * Timer
 
 #### **A DESCRIPTION OF THE SEPARATION OF WORK BETWEEN PARTNERS (WHO WAS RESPONSIBLE FOR WHAT PIECES OF THE PROGRAM).**
 ### **Ben**
@@ -53,3 +52,6 @@
  * Checkmate detection
  * Timer
  * Keep track of captured pieces
+
+##### **HOW TO COMPILE JAR FILE**
+`jar -cvfm hwx.jar MANIFEST.MF *.java *.class README.md assets/* images/*`
