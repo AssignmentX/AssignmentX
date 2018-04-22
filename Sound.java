@@ -21,9 +21,9 @@ public class Sound {
     public Sound(String filename) {
         // init audio
         try{
-            audioFile = new File(ChessGame.class.getResourceAsStream(filename));
+            audioFile = new File(filename);
             //audioFile = new File(filename);
-            audioStream = AudioSystem.getAudioInputStream(audioFile);
+            audioStream = AudioSystem.getAudioInputStream(audioFile.toURI().toURL());
             format = audioStream.getFormat();
             audioSize = (int) (format.getFrameSize() * audioStream.getFrameLength());
             audio = new byte[audioSize];

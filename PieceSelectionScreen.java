@@ -50,8 +50,14 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
         setVisible( true );               // display frame
 
         String image;
+        String currentPlayer;
 
-        image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "rook" + ".png";
+        if(ChessGame.getCurrentPlayer().equals("White"))
+            currentPlayer = "black";
+        else
+            currentPlayer = "white";
+
+        image = "images/png/" + currentPlayer + "_" + "rook" + ".png";
         JLabel rook = new JLabel(new ImageIcon(new ImageIcon(ChessGame.class.getResource(image)).getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)));
         JButton rookButton = new JButton();
         rookButton.addActionListener(this);
@@ -61,7 +67,7 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
         rookButton.add(rook);
         panel.add(rookButton);
 
-        image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "knight" + ".png";
+        image = "images/png/" + currentPlayer + "_" + "knight" + ".png";
         JLabel knight = new JLabel(new ImageIcon(new ImageIcon(ChessGame.class.getResource(image)).getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)));
         JButton knightButton = new JButton();
         knightButton.addActionListener(this);
@@ -71,7 +77,7 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
         knightButton.add(knight);
         panel.add(knightButton);
 
-        image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "bishop" + ".png";
+        image = "images/png/" + currentPlayer + "_" + "bishop" + ".png";
         JLabel bishop = new JLabel(new ImageIcon(new ImageIcon(ChessGame.class.getResource(image)).getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)));
         JButton bishopButton = new JButton();
         bishopButton.addActionListener(this);
@@ -81,7 +87,7 @@ public class PieceSelectionScreen extends JFrame implements Serializable, Action
         bishopButton.add(bishop);
         panel.add(bishopButton);
 
-        image = "./images/png/" + ChessGame.getCurrentPlayer().toLowerCase() + "_" + "queen" + ".png";
+        image = "images/png/" + currentPlayer + "_" + "queen" + ".png";
         JLabel queen = new JLabel(new ImageIcon(new ImageIcon(ChessGame.class.getResource(image)).getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT)));
         JButton queenButton = new JButton();
         queenButton.addActionListener(this);
