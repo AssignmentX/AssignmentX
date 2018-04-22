@@ -199,7 +199,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 
                 // CHECKMATE DETECTION!!!!!!!!!!!!!
-                /*
+                // /*
                 int currking;
                 String currplayer;
 
@@ -300,7 +300,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                 ChessSquarePanel possiblechecksquare = ChessGame.getFrame().getBoard().squareAt(move);
                                 // if square has a piece, get its valid moves
                                 if(possiblechecksquare.getPlayer() != null && possiblechecksquare.getPlayer().equals(ChessGame.getCurrentPlayer())){
-                                    ArrayList<Integer> movelist = new ArrayList<>(MoveLogic.get_valid_moves(possiblechecksquare.getPiece(), ChessGame.getCurrentPlayer(), move));
+                                    ArrayList<Integer> movelist = new ArrayList<>(MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), possiblechecksquare.getPiece(), move));
                                     // if piece does not put player in check, there is no checkmate
                                     if(!movelist.contains(currking)){
                                         System.out.println("NOT IN CHECK");
@@ -341,8 +341,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
                     }
                 }
-                if(!foundValidMove)
-                    checkmated = false;
+                //if(!foundValidMove)
+                //    checkmated = false;
 
                 // handle updating the appropriate variables if player is checkmated
                 if(currplayer.equals("White") && checkmated)
@@ -351,11 +351,12 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     ChessGame.blackIsCheckMated();
 
                 // set player back to normal
-                if(currplayer.equals("White"))
-                    ChessGame.setCurrentPlayer("Black");
-                else
-                    ChessGame.setCurrentPlayer("White");
-                 */
+                ChessGame.changeCurrentPlayer();
+                //if(currplayer.equals("White"))
+                //    ChessGame.setCurrentPlayer("Black");
+                //else
+                //    ChessGame.setCurrentPlayer("White");
+                // */
 
                 if((ChessGame.getCurrentPlayer().equals("White") && !ChessGame.canWhiteBeCheckMated()) || (ChessGame.getCurrentPlayer().equals("Black") && !ChessGame.canBlackBeCheckMated())) {
 
