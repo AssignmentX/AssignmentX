@@ -199,7 +199,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 
                 // CHECKMATE DETECTION!!!!!!!!!!!!!
-                // /*
+                 /*
                 int currking;
                 String currplayer;
 
@@ -356,7 +356,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 //    ChessGame.setCurrentPlayer("Black");
                 //else
                 //    ChessGame.setCurrentPlayer("White");
-                // */
+                 */
 
                 if((ChessGame.getCurrentPlayer().equals("White") && !ChessGame.canWhiteBeCheckMated()) || (ChessGame.getCurrentPlayer().equals("Black") && !ChessGame.canBlackBeCheckMated())) {
 

@@ -329,6 +329,8 @@ public class ChessGame {
             ChessGameFrame loaded_frame = (ChessGameFrame)saved[64];
             ChessBoardPanel loaded_panel = (ChessBoardPanel)saved[65];
 
+            //frame = loaded_frame;
+
             // clear text area and replace with saved game text
             frame.clearTextArea();
             frame.appendTextArea(loaded_frame.getTextAreaText());
@@ -345,6 +347,7 @@ public class ChessGame {
             movingFrom = (int)saved[68];
             selectedPiece = (String)saved[69];
             //frame = (ChessGameFrame)saved[70];
+            //frame = loaded_frame;
             selectedSquaresColor = (Color)saved[71];
             validMoveColors = (Color[])saved[72];
             validMovePositions = (boolean[])saved[73];

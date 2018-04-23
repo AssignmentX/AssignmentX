@@ -15,7 +15,8 @@ public class MoveLogic {
     // check to see if coordinates are a valid move on the board
     public static boolean coords_valid_check(int[] coords){
         if(coords[0] >= 0 && coords[0] <= 7 && coords[1] >= 0 && coords[1] <= 7) {
-            if(ChessGame.getFrame().getBoard().squareAt(coords[0] * 8 + coords[1]).getPlayer() != ChessGame.getCurrentPlayer())
+            if(ChessGame.getFrame().getBoard().squareAt(coords[0] * 8 + coords[1]).getPlayer() == null ||
+            !ChessGame.getFrame().getBoard().squareAt(coords[0] * 8 + coords[1]).getPlayer().equals(ChessGame.getCurrentPlayer()))
                 return true;
         }
         return false;
