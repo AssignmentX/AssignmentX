@@ -22,7 +22,6 @@ public class Sound {
         // init audio
         try{
             audioFile = new File(filename);
-            //audioFile = new File(filename);
             audioStream = AudioSystem.getAudioInputStream(audioFile.toURI().toURL());
             format = audioStream.getFormat();
             audioSize = (int) (format.getFrameSize() * audioStream.getFrameLength());
@@ -48,8 +47,5 @@ public class Sound {
             System.out.println("Audio line for playing back is unavailable.");
             //ex.printStackTrace();
         }
-        
-        // wait for the playback to finish
-        //try { Thread.sleep(59); } catch (InterruptedException ex) {}
     }
 }

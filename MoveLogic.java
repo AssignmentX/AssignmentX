@@ -344,8 +344,7 @@ public class MoveLogic {
         if(coords_valid_check(new_move))
             my_moves.add(coord_to_position(new_move));
 
-
-        if(!hasMoved && ChessGame.getCurrentPlayer().equals("White")){
+        if(!ChessGame.isWhiteChecked() && !hasMoved && ChessGame.getCurrentPlayer().equals("White")){
             // white left
             if(!ChessGame.getFrame().getBoard().squareAt(0).hasPieceMoved() &&
                     ChessGame.getFrame().getBoard().squareAt(1).getPiece() == null &&
@@ -364,7 +363,7 @@ public class MoveLogic {
                     my_moves.add(coord_to_position(new_move));
             }
         }
-        if(!hasMoved && ChessGame.getCurrentPlayer().equals("Black")){
+        if(!ChessGame.isBlackChecked() && !hasMoved && ChessGame.getCurrentPlayer().equals("Black")){
             // black left
             if(!ChessGame.getFrame().getBoard().squareAt(56).hasPieceMoved() &&
                     ChessGame.getFrame().getBoard().squareAt(57).getPiece() == null &&

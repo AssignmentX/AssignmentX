@@ -22,12 +22,15 @@ public class ChessGame {
     private static boolean canWhiteBeChecked;
     private static boolean canWhiteBeCheckMated;
     private static boolean canBlackBeCheckMated;
+    private static boolean whiteIsStaleMated;
+    private static boolean blackIsStaleMated;
     private static int[] threeFoldRepitition;
     private static boolean disengageEnPassant[];
     // used for upgrading a pawn to a selected piece
     private static boolean playerIsSelectingAPiece;
     private static int superPawn;
 
+    // sounds
     private static Sound click_sound;
 
 
@@ -195,6 +198,11 @@ public class ChessGame {
     public static void blackIsCheckMated() { canBlackBeCheckMated = true; }
     public static void whiteIsNotCheckMated() { canWhiteBeCheckMated = false; }
     public static void blackIsNotCheckMated() { canBlackBeCheckMated = false; }
+    // stalemate mutators
+    public static void whiteIsStaleMated() { whiteIsStaleMated = true; }
+    public static void blackIsStaleMated() { blackIsStaleMated = true; }
+    public static void whiteIsNotStaleMated() { whiteIsStaleMated = false; }
+    public static void blackIsNotStaleMated() { blackIsStaleMated = false; }
     // en passant mutator
     public static void setEnPassant(int i, boolean b) { disengageEnPassant[i] = b; }
     // piece selecting when pawn makes it to other side of the board
@@ -254,7 +262,7 @@ public class ChessGame {
     }
 
     public static void save_game(ChessGameFrame game_frame, ChessBoardPanel board_panel, ChessSquarePanel[] square_panel){
-        Object[] save_file = new Object[86];
+        Object[] save_file = new Object[88];
 
         for(int i = 0; i < square_panel.length; i++){
             save_file[i] = square_panel[i];
@@ -281,6 +289,8 @@ public class ChessGame {
         save_file[83] = disengageEnPassant;
         save_file[84] = playerIsSelectingAPiece;
         save_file[85] = superPawn;
+        save_file[86] = whiteIsStaleMated;
+        save_file[87] = blackIsStaleMated;
 
         String filename = "file.ser";
         // Serialization
@@ -346,8 +356,6 @@ public class ChessGame {
             currentlyMoving = (boolean)saved[67];
             movingFrom = (int)saved[68];
             selectedPiece = (String)saved[69];
-            //frame = (ChessGameFrame)saved[70];
-            //frame = loaded_frame;
             selectedSquaresColor = (Color)saved[71];
             validMoveColors = (Color[])saved[72];
             validMovePositions = (boolean[])saved[73];
@@ -363,6 +371,8 @@ public class ChessGame {
             disengageEnPassant = (boolean[])saved[83];
             playerIsSelectingAPiece = (boolean)saved[84];
             superPawn = (int)saved[85];
+            whiteIsStaleMated = (boolean)saved[86];
+            blackIsStaleMated = (boolean)saved[87];
 
             frame.setNorthTextField(currentPlayer + "'s Move");
             String msg = "Game loaded.";
