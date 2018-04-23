@@ -329,10 +329,33 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                 if(possiblechecksquare.getPlayer() != null && possiblechecksquare.getPlayer().equals(ChessGame.getCurrentPlayer())){
                                     //System.out.println("HIT");
                                     validEnemyMoves = true;
+
                                     ArrayList<Integer> movelist = MoveLogic.get_valid_moves(possiblechecksquare.getPlayer(), possiblechecksquare.getPiece(), move);
+                                    System.out.println(movelist);
+                                    if(newsquare.getPiece().equals("king")){
+                                        // prune moves that would put the king in check
+                                        ChessGame.changeCurrentPlayer();
+                                        ArrayList<Integer> placesThatCanPutKingInCheck = MoveLogic.get_valid_moves(currplayer, "queen", newmove);
+                                        placesThatCanPutKingInCheck.addAll(MoveLogic.get_valid_moves(currplayer, "knight", newmove));
+                                        ChessGame.changeCurrentPlayer();
+                                        for(int badMove : placesThatCanPutKingInCheck) {
+                                            if(ChessGame.getFrame().getBoard().squareAt(badMove).getPlayer() != null &&
+                                                ChessGame.getFrame().getBoard().squareAt(badMove).getPlayer().equals(ChessGame.getCurrentPlayer())){
+                                                // get moves that could put king in check
+                                                ArrayList<Integer> movesThatCanPutKingInCheck = MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), ChessGame.getFrame().getBoard().squareAt(badMove).getPiece(), badMove);
+                                                if(movesThatCanPutKingInCheck.contains(currking)){
+                                                    movelist.remove(new Integer(badMove));
+                                                }
+                                            }
+                                        }
+                                    }
+
                                     // if piece does not put player in check, there is no checkmate
                                     if(!movelist.contains(currking)){
                                         System.out.println("POSSIBLY NOT IN CHECK");
+                                        System.out.println(newsquare.getPiece());
+                                        System.out.print(possiblechecksquare.getPiece() + " does not contain ");
+                                        System.out.println(currking);
                                         checkPossiblyMated = false;
                                     }
                                     else {
