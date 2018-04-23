@@ -148,6 +148,9 @@ public class ChessGame {
     // bools that determine if players are checkmated
     public static boolean canWhiteBeCheckMated() { return canWhiteBeCheckMated; }
     public static boolean canBlackBeCheckMated() { return canBlackBeCheckMated; }
+    // is player stalemated?
+    public static boolean isWhiteStaleMated() { return whiteIsStaleMated; }
+    public static boolean isBlackStaleMated() { return blackIsStaleMated; }
     // returns threefoldrepitition array
     public static int[] getThreeFoldRepitition() { return threeFoldRepitition; }
     // accessor for en passant

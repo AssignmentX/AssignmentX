@@ -98,6 +98,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         // leave this block to do nothing while playing is selecting a piece
         if(ChessGame.isPlayerSelectingAPiece()){}
 
+        // player is checkmated
         else if(ChessGame.canBlackBeCheckMated() || ChessGame.canWhiteBeCheckMated()) {
             // player is checkmated
             System.out.print(ChessGame.getCurrentPlayer());
@@ -113,6 +114,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
             ChessGame.getValidMoveColors()[currKingPos] = ChessGame.getFrame().getBoard().squareAt(currKingPos).getBackground();
             // highlight king square red
             ChessGame.getFrame().getBoard().squareAt(currKingPos).setBackground(Color.RED);
+        }
+
+        // player is stalemated
+        else if(ChessGame.isWhiteStaleMated() || ChessGame.isBlackStaleMated()) {
+            System.out.println("stalemated");
         }
 
         // validate the correct player is clicking the square
@@ -220,6 +226,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 int currking;
                 String currplayer;
 
+                //System.out.println(ChessGame.getCurrentPlayer());
+
                 // keep track of the last player who went as the current player
                 if(ChessGame.getCurrentPlayer().equals("White")) {
                     currplayer = "Black";
@@ -255,8 +263,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         ArrayList<Integer> validmoves = new ArrayList<>(MoveLogic.get_valid_moves(currentsquare.getPlayer(), currentsquare.getPiece(), i));
 
                         // no valid moves
-                        //if(validmoves.isEmpty())
-                        //    foundValidMove = false;
+                        //if(!validmoves.isEmpty())
+                        //    foundValidMove = true;
 
                         // make a move for this piece and then see if it puts king in check
                         for(int newmove : validmoves) {
@@ -293,33 +301,48 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             currentsquare.setPiece(null, null, i);
 
                             boolean checkPossiblyMated = true;
+                            boolean validEnemyMoves = false;
 
                             // find squares that can potentially put the enemy king in checkmate
                             moves = MoveLogic.get_valid_moves(currplayer, "queen", currking);
                             moves.addAll(MoveLogic.get_valid_moves(currplayer, "knight", currking));
 
-                            // if no valid moves, then king is obviously not in check
-                            if(moves.isEmpty())
+                            // if no places to put king in check, then king is obviously not in check
+                            if(moves.isEmpty()){
+                                //System.out.println("HIT");
                                 checkPossiblyMated = false;
+                            }
 
                             // change player
                             ChessGame.changeCurrentPlayer();
 
                             // go thru squares, and see if any piece can put the player in check
                             for(int move : moves) {
-
-                                if(!checkPossiblyMated) // break early if we know we are not checked
+                                //System.out.println(ChessGame.getCurrentPlayer());
+                                if(!checkPossiblyMated) { // break early if we know we are not checked
+                                    //System.out.println("HIT");
                                     break;
+                                }
 
                                 ChessSquarePanel possiblechecksquare = ChessGame.getFrame().getBoard().squareAt(move);
                                 // if square has a piece, get its valid moves
                                 if(possiblechecksquare.getPlayer() != null && possiblechecksquare.getPlayer().equals(ChessGame.getCurrentPlayer())){
-                                    ArrayList<Integer> movelist = new ArrayList<>(MoveLogic.get_valid_moves(ChessGame.getCurrentPlayer(), possiblechecksquare.getPiece(), move));
+                                    //System.out.println("HIT");
+                                    validEnemyMoves = true;
+                                    ArrayList<Integer> movelist = MoveLogic.get_valid_moves(possiblechecksquare.getPlayer(), possiblechecksquare.getPiece(), move);
                                     // if piece does not put player in check, there is no checkmate
                                     if(!movelist.contains(currking)){
-                                        //System.out.println("NOT IN CHECK");
+                                        System.out.println("POSSIBLY NOT IN CHECK");
                                         checkPossiblyMated = false;
                                     }
+                                    else {
+                                        System.out.print(possiblechecksquare.getPiece() + " can check king at ");
+                                        System.out.println(currking);
+                                    }
+                                }
+                                // no enemy pieces
+                                else {
+
                                 }
                             }
 
@@ -336,14 +359,18 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             newsquare.setCurrentPlayer(enemyPlayer2);
 
                             // update king's position if the king moved
-                            if(currplayer.equals("White") && currentsquare.getPiece().equals("king"))
+                            if(currplayer.equals("White") && currentsquare.getPiece().equals("king")){
+                                currking = i;
                                 ChessGame.setWhiteKingPos(i);
-                            else if(currplayer.equals("Black") && currentsquare.getPiece().equals("king"))
+                            }
+                            else if(currplayer.equals("Black") && currentsquare.getPiece().equals("king")) {
+                                currking = i;
                                 ChessGame.setBlackKingPos(i);
+                            }
 
                             // if player is not in check, then player is obviously not checkmated
-                            if(!checkPossiblyMated){
-                                //System.out.println("not checkmated");
+                            if(!checkPossiblyMated || !validEnemyMoves){
+                                System.out.println("not checkmated");
                                 checkmated = false;
                                 break;
                             }
@@ -351,22 +378,30 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     }
                 }
 
-                // do we have a checkmate?
+                // no valid moves
                 //if(!foundValidMove)
                 //    checkmated = false;
 
                 // handle updating the appropriate variables if player is checkmated or stalemated
                 if(currplayer.equals("White") && checkmated){
-                    if(checked)
+                    if(checked){
+                        System.out.println("we got a checkmate sonny boy");
                         ChessGame.whiteIsCheckMated();
-                    else
+                    }
+                    else{
+                        System.out.println("we got a stalemate sonny boy");
                         ChessGame.whiteIsStaleMated();
+                    }
                 }
                 else if(currplayer.equals("Black") && checkmated){
-                    if(checked)
+                    if(checked){
+                        System.out.println("we got a checkmate sonny boy");
                         ChessGame.blackIsCheckMated();
-                    else
+                    }
+                    else{
+                        System.out.println("we got a stalemate sonny boy");
                         ChessGame.whiteIsStaleMated();
+                    }
                 }
 
                 // set player back to normal
@@ -374,9 +409,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 if((ChessGame.getCurrentPlayer().equals("White") && !ChessGame.canWhiteBeCheckMated()) || (ChessGame.getCurrentPlayer().equals("Black") && !ChessGame.canBlackBeCheckMated())) {
 
-                    System.out.println("Not checkmated");
+                    //System.out.println("Not checkmated");
 
                     // CHECK DETECTION!!!!!!!!!!!!!!
+
+                    // TODO: might be a good place to add detection if a king is castling through check
 
                     // set these to false, if they are true after the next block of code, then the move is invalid
                     // since it can put the current player in check
