@@ -481,24 +481,26 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             remove(enemyPieceLabel);
                         }
 
-                        // CASTlING
-                        // castling white
-                        // left
-                        if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king") && position == 2 )
-                            castle(0,3, ChessGame.getCurrentPlayer());
-                        
-                        // right
-                        if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king") && position == 6 )
-                            castle(7,5, ChessGame.getCurrentPlayer());
-                        
-                        // castling black
-                        // left
-                        if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king") && position == 58 )
-                            castle(56,59, ChessGame.getCurrentPlayer());
-                        
-                        // right
-                        if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king") && position == 62 )
-                            castle(63,61, ChessGame.getCurrentPlayer());
+                        // CASTlING if player is moving 2 squares
+                        if(Math.abs(position - ChessGame.getMovingFrom()) == 2) {
+                            // castling white
+                            // left
+                            if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king") && position == 2 )
+                                castle(0,3, ChessGame.getCurrentPlayer());
+                            
+                            // right
+                            if(ChessGame.getCurrentPlayer().equals("White") && ChessGame.getSelectedPiece().equals("king") && position == 6 )
+                                castle(7,5, ChessGame.getCurrentPlayer());
+                            
+                            // castling black
+                            // left
+                            if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king") && position == 58 )
+                                castle(56,59, ChessGame.getCurrentPlayer());
+                            
+                            // right
+                            if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king") && position == 62 )
+                                castle(63,61, ChessGame.getCurrentPlayer());
+                        }
                         
 
                         // display move message
