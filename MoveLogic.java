@@ -405,8 +405,63 @@ public class MoveLogic {
         return my_moves;
     }
 
-    // does move put player in check?
-    public static boolean doesMoveCauseCheck(ChessSquarePanel currentSquare, boolean remove) {
+    // does move cause check?
+    public static boolean doesMoveCauseCheck(int currpos, int newpos, String piece) {
+        ArrayList<Integer> moves;
+        boolean retval;
+        // get current player and king position
+        String player = ChessGame.getCurrentPlayer();
+        int kingPos = ChessGame.getCurrentKingPos();
+        // get current square and new square
+        ChessSquarePanel currsq = ChessGame.getFrame().getBoard().squareAt(currpos);
+        ChessSquarePanel newsq = ChessGame.getFrame().getBoard().squareAt(newpos);
+        // get new square's piece, player, and piecelabel
+        String enemyPiece = newsq.getPiece();
+        String enemyPlayer = newsq.getPlayer();
+        JLabel enemyPieceLabel = newsq.getPieceLabel();
+
+        // move the piece to its new position
+        newsq.setPiece(piece, player, newpos);
+
+        // remove piece from its current position
+        currsq.remove(currsq.getPieceLabel());
+        currsq.setPiece(null, null, currpos);
+
+        // update king's position if the king moved
+        if(player.equals("White") && piece.equals("king"))
+            ChessGame.setWhiteKingPos(newpos);
+        else if(player.equals("Black") && piece.equals("king"))
+            ChessGame.setBlackKingPos(newpos);
+
+        // if board state is now in check, then move causes check
+        if(isBoardStateInCheck(currsq, false))
+            retval = true;
+        else
+            retval = false;
+
+        // put piece back
+        currsq.setPiece(piece, player, currpos);
+
+        // reset new square
+        newsq.remove(newsq.getPieceLabel());
+        newsq.setPieceLabel(enemyPieceLabel);
+        newsq.setCurrentPiece(enemyPiece);
+        newsq.setCurrentPlayer(enemyPlayer);
+
+        // update king's position if the king moved
+        if(player.equals("White") && piece.equals("king"))
+            ChessGame.setWhiteKingPos(currpos);
+        else if(player.equals("Black") && piece.equals("king"))
+            ChessGame.setBlackKingPos(currpos);
+
+        return retval;
+
+    }
+
+    // is the state of the board currently in check?
+    public static boolean isBoardStateInCheck(ChessSquarePanel currentSquare, boolean remove) {
+        // pass in false for remove unless special circumstances
+
         // set these to false, if they are true after the next block of code, then the move is invalid
         // since it can put the current player in check
         if(remove) {

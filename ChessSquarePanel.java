@@ -244,7 +244,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 ChessGame.changeCurrentPlayer();
 
                 // see if player is checked, this is used to determine checkmate or stalemate
-                if(MoveLogic.doesMoveCauseCheck(this, false))
+                if(MoveLogic.isBoardStateInCheck(this, false))
                     checked = true;
                 else
                     checked = false;
@@ -449,7 +449,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     //System.out.println("Not checkmated");
 
                     // CHECK DETECTION!!!!!!!!!!!!!!
-                    MoveLogic.doesMoveCauseCheck(this, true);
+                    MoveLogic.isBoardStateInCheck(this, true);
 
                     // put piece back if it can cause check (do not allow player to put his/herself in check)
                     if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) || (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked())) {
