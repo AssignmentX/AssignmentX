@@ -48,10 +48,10 @@
  * Code refactoring
  * Sound class
  * Piece selection when pawn makes it to the other side of the board
+ * Stalemate and Checkmate detection
+
 
 ## **Un-assigned Work** _(This will eventually be removed once the work is delegated)_
- * Stalemate
- * Checkmate detection
  * Timer
  * Keep track of captured pieces
 
