@@ -118,6 +118,13 @@ public class ChessGame {
     // accessors
     // get current player
     public static String getCurrentPlayer(){ return currentPlayer; }
+    // get enemy player
+    public static String getEnemyPlayer(){
+        if(currentPlayer.equals("White"))
+            return "Black";
+        else
+            return "White";
+    }
     // get current clicked piece
     public static String getSelectedPiece(){ return selectedPiece; }
     // get the color of the clicked panel
@@ -134,6 +141,13 @@ public class ChessGame {
     public static int getWhiteKingPos() { return whiteKing; }
     // get the pos of the black king
     public static int getBlackKingPos() { return blackKing; }
+    // get the pos of the current player's king
+    public static int getCurrentKingPos() {
+        if(ChessGame.getCurrentPlayer().equals("White"))
+            return whiteKing;
+        else
+            return blackKing;
+    }
     // bool that represents if a piece is currently selected
     public static boolean isMoving() { return currentlyMoving; }
     // stores the pos of the selected piece
@@ -196,6 +210,12 @@ public class ChessGame {
     // set the bool indicating if a player detects check on a move
     public static void canWhiteBeChecked(boolean b){ canWhiteBeChecked = b; }
     public static void canBlackBeChecked(boolean b){ canBlackBeChecked = b; }
+    public static void canPlayerBeChecked(boolean b) {
+        if(ChessGame.getCurrentPlayer().equals("White"))
+            canWhiteBeChecked = b;
+        else
+            canBlackBeChecked = b;
+    }
     // checkmate mutators
     public static void whiteIsCheckMated() { canWhiteBeCheckMated = true; }
     public static void blackIsCheckMated() { canBlackBeCheckMated = true; }

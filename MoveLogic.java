@@ -350,6 +350,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(1).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(2).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(3).getPiece() == null) {
+                //if(doesMoveCauseCheck(new ChessSquarePanel(), false))
                 new_move = position_to_coord(2);
                 if(coords_valid_check(new_move))
                     my_moves.add(coord_to_position(new_move));
@@ -403,4 +404,42 @@ public class MoveLogic {
             moveKing(new_move, my_moves, curr_pos, pieceHasMoved);
         return my_moves;
     }
+
+    // does move put player in check?
+    public static boolean doesMoveCauseCheck(ChessSquarePanel currentSquare, boolean remove) {
+        // set these to false, if they are true after the next block of code, then the move is invalid
+        // since it can put the current player in check
+        if(remove) {
+            ChessGame.canBlackBeChecked(false);
+            ChessGame.canWhiteBeChecked(false);
+        }
+        
+        // get current player
+        String currPlayer = ChessGame.getCurrentPlayer();
+        String enemyPlayer = ChessGame.getEnemyPlayer();
+
+        // get current king position
+        int currKingPos = ChessGame.getCurrentKingPos();
+
+        ArrayList<Integer> moves;
+
+        for(int i = 0; i < 64; i++) {
+            ChessSquarePanel square = ChessGame.getFrame().getBoard().squareAt(i);
+            if(square.getPlayer() != null && square.getPlayer().equals(enemyPlayer)) {
+                ChessGame.changeCurrentPlayer();
+                moves = get_valid_moves(enemyPlayer, square.getPiece(), i);
+                ChessGame.changeCurrentPlayer();
+                if(moves.contains(currKingPos)) {
+                    if(remove) {
+                        currentSquare.remove(currentSquare.getPieceLabel());
+                        ChessGame.canPlayerBeChecked(true);
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
+    
 }
