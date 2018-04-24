@@ -296,52 +296,52 @@ public class MoveLogic {
         // allows king to move diagonally up/left
         new_move[0]--;
         new_move[1]--;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         // allows king to move diagonally up/right
         new_move = position_to_coord(curr_pos);
         new_move[0]--;
         new_move[1]++;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         // allows king to move diagonally down/right
         new_move = position_to_coord(curr_pos);
         new_move[0]++;
         new_move[1]++;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         // allows king to move diagonally down/left
         new_move = position_to_coord(curr_pos);
         new_move[0]++;
         new_move[1]--;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         // allows king to move up
         new_move = position_to_coord(curr_pos);
         new_move[0]--;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         // allows king to move down
         new_move = position_to_coord(curr_pos);
         new_move[0]++;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         // allows king to move left
         new_move = position_to_coord(curr_pos);
         new_move[1]++;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         // allows king to move right
         new_move = position_to_coord(curr_pos);
         new_move[1]--;
-        if(coords_valid_check(new_move))
+        if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, coord_to_position(new_move), "king"))
             my_moves.add(coord_to_position(new_move));
 
         if(!ChessGame.isWhiteChecked() && !hasMoved && ChessGame.getCurrentPlayer().equals("White")){
@@ -350,9 +350,8 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(1).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(2).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(3).getPiece() == null) {
-                //if(doesMoveCauseCheck(new ChessSquarePanel(), false))
                 new_move = position_to_coord(2);
-                if(coords_valid_check(new_move))
+                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 3, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
             // white right
@@ -360,7 +359,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(6).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(5).getPiece() == null) {
                 new_move = position_to_coord(6);
-                if(coords_valid_check(new_move))
+                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 5, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
         }
@@ -371,7 +370,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(58).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(59).getPiece() == null) {
                 new_move = position_to_coord(58);
-                if(coords_valid_check(new_move))
+                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 59, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
             // black right
@@ -379,7 +378,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(62).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(61).getPiece() == null) {
                 new_move = position_to_coord(62);
-                if(coords_valid_check(new_move))
+                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 61, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
         }

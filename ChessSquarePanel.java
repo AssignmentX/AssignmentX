@@ -452,7 +452,10 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     MoveLogic.isBoardStateInCheck(this, true);
 
                     // put piece back if it can cause check (do not allow player to put his/herself in check)
-                    if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) || (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked())) {
+                    // this also checks to prevent castling through check
+                    if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) ||
+                        (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked()) ){//||
+                        //() ) {
                         currentPosition.setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), ChessGame.getMovingFrom());
                         pieceLabel = enemyPieceLabel;
                         setCurrentPiece(enemyPiece);
@@ -464,6 +467,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             ChessGame.setWhiteKingPos(ChessGame.getMovingFrom());
                         else if(ChessGame.getCurrentPlayer().equals("Black") && ChessGame.getSelectedPiece().equals("king"))
                             ChessGame.setBlackKingPos(ChessGame.getMovingFrom());
+
+
 
                         // flash the square
                         timer.start();
