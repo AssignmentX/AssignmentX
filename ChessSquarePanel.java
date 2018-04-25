@@ -458,7 +458,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                     // put piece back if it can cause check (do not allow player to put his/herself in check)
                     // this also checks to prevent castling through check
-                    else if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) ||
+                    if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) ||
                         (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked())) {
 
                         if(ChessGame.getCheckSound() != null)
@@ -636,9 +636,13 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         if(ChessGame.getClickSound() != null) {
                             // add sounds if piece castles
                             if(Math.abs(position - ChessGame.getMovingFrom()) == 2 && ChessGame.getSelectedPiece().equals("king")){
-                                // if castle right
-
-                                // if castle left
+                                // if castle queen side
+                                if(position == 2 || position == 58)
+                                    soundQueue.add(ChessGame.soundMap().get("O-O-O"));
+                                
+                                // if castle king side
+                                else if(position == 6 || position == 62)
+                                    soundQueue.add(ChessGame.soundMap().get("O-O"));
                             }
                             // add sounds if piece takes piece
                             else if(enemyPiece != null){
