@@ -25,10 +25,12 @@ public class ChessGame {
     private static boolean whiteIsStaleMated;
     private static boolean blackIsStaleMated;
     private static int[] threeFoldRepitition;
-    private static boolean disengageEnPassant[];
+    private static boolean[] disengageEnPassant;
     // used for upgrading a pawn to a selected piece
     private static boolean playerIsSelectingAPiece;
     private static int superPawn;
+    // used to store squares involved in checkmate for highlighting
+    private static boolean[] checkMateHighlighting;
 
     // sounds
     private static Sound click_sound;
@@ -177,6 +179,8 @@ public class ChessGame {
     public static int[] getThreeFoldRepitition() { return threeFoldRepitition; }
     // accessor for en passant
     public static boolean getEnPassant(int i) { return disengageEnPassant[i]; }
+    // get array highlighting for checkmate
+    public static boolean[] getCheckMateHighlighting() { return checkMateHighlighting; }
     // get sound objects
     public static Sound getClickSound(){ return click_sound; }
     public static Sound getErrorSound(){ return error_sound; }
@@ -242,6 +246,9 @@ public class ChessGame {
     public static void blackIsNotStaleMated() { blackIsStaleMated = false; }
     // en passant mutator
     public static void setEnPassant(int i, boolean b) { disengageEnPassant[i] = b; }
+    // checkmate highlighting array
+    public static void setCheckMateHighlighting(int i) { checkMateHighlighting[i] = true; }
+    public static void resetCheckMateHighlighting() { for(int i = 0; i < 64; i++) checkMateHighlighting[i] = false; }
     // piece selecting when pawn makes it to other side of the board
     public static void playerIsSelectingAPiece(boolean b) { playerIsSelectingAPiece = b; }
     //set pawns pos
@@ -278,6 +285,10 @@ public class ChessGame {
         // init all values of array to false for determining if we should disengage en passant
         disengageEnPassant = new boolean[64];
         Arrays.fill(disengageEnPassant, false);
+
+        // init array that stores squares involved in a checkmate
+        checkMateHighlighting = new boolean[64];
+        Arrays.fill(checkMateHighlighting, false);
     }
 
     public static void init_frame(){
@@ -305,7 +316,7 @@ public class ChessGame {
     }
 
     public static void save_game(ChessGameFrame game_frame, ChessBoardPanel board_panel, ChessSquarePanel[] square_panel){
-        Object[] save_file = new Object[88];
+        Object[] save_file = new Object[89];
 
         for(int i = 0; i < square_panel.length; i++){
             save_file[i] = square_panel[i];
@@ -334,6 +345,7 @@ public class ChessGame {
         save_file[85] = superPawn;
         save_file[86] = whiteIsStaleMated;
         save_file[87] = blackIsStaleMated;
+        save_file[88] = checkMateHighlighting;
 
         String filename = "file.ser";
         // Serialization
@@ -416,6 +428,7 @@ public class ChessGame {
             superPawn = (int)saved[85];
             whiteIsStaleMated = (boolean)saved[86];
             blackIsStaleMated = (boolean)saved[87];
+            checkMateHighlighting = (boolean[])saved[88];
 
             frame.setNorthTextField(currentPlayer + "'s Move");
             String msg = "Game loaded.";

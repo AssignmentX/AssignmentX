@@ -101,19 +101,19 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         // player is checkmated
         else if(ChessGame.canBlackBeCheckMated() || ChessGame.canWhiteBeCheckMated()) {
             // player is checkmated
-            System.out.print(ChessGame.getCurrentPlayer());
-            System.out.println(" CHECKMATED!!!!");
+            //System.out.print(ChessGame.getCurrentPlayer());
+            //System.out.println(" CHECKMATED!!!!");
             // get king pos
-            int currKingPos;
-            if(ChessGame.getCurrentPlayer().equals("Black"))
-                currKingPos = ChessGame.getBlackKingPos();
-            else
-                currKingPos = ChessGame.getWhiteKingPos();
+            //int currKingPos;
+            //if(ChessGame.getCurrentPlayer().equals("Black"))
+            //    currKingPos = ChessGame.getBlackKingPos();
+            //else
+            //    currKingPos = ChessGame.getWhiteKingPos();
             // save color of king square
-            ChessGame.getValidMovePositions()[currKingPos] = true;
-            ChessGame.getValidMoveColors()[currKingPos] = ChessGame.getFrame().getBoard().squareAt(currKingPos).getBackground();
-            // highlight king square red
-            ChessGame.getFrame().getBoard().squareAt(currKingPos).setBackground(Color.RED);
+            //ChessGame.getValidMovePositions()[currKingPos] = true;
+            //ChessGame.getValidMoveColors()[currKingPos] = ChessGame.getFrame().getBoard().squareAt(currKingPos).getBackground();
+            //// highlight king square red
+            //ChessGame.getFrame().getBoard().squareAt(currKingPos).setBackground(Color.RED);
 
             ChessGame.getCheckMateSound().play();
 
@@ -226,6 +226,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 
                 // CHECKMATE DETECTION!!!!!!!!!!!!!
+                ChessGame.resetCheckMateHighlighting();
+
                 int currking;
                 String currplayer;
 
@@ -317,7 +319,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                             // save list of squares that king can be checked in to reduce work
                             ArrayList<Integer> savedCheckSquares = new ArrayList<Integer>();
-                            ArrayList<Integer> savedCheckPiecesSquares = new ArrayList<Integer>();
+                            //ArrayList<Integer> savedCheckPiecesSquares = new ArrayList<Integer>();
 
                             // go thru squares, and see if any piece can put the player in check
                             for(int move : moves) {
@@ -352,7 +354,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                         //System.out.print(possiblechecksquare.getPiece() + " can check king at ");
                                         //System.out.println(currking);
                                         savedCheckSquares.add(currking);
-                                        savedCheckPiecesSquares.add(move);
+                                        ChessGame.setCheckMateHighlighting(move);
+                                        //savedCheckPiecesSquares.add(move);
                                     }
                                 }
                                 // no enemy pieces
@@ -649,6 +652,26 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                 // someone got checkmated
                 else {
+                    //System.out.print(ChessGame.getCurrentPlayer());
+                    //System.out.println(" checkmated");
+                    //ChessGame.getCheckMateSound().play();
+                }
+                if(ChessGame.canWhiteBeCheckMated() || ChessGame.canBlackBeCheckMated()) {
+                    // get king pos
+                    int currKingPos;
+                    if(ChessGame.getCurrentPlayer().equals("Black"))
+                        currKingPos = ChessGame.getBlackKingPos();
+                    else
+                        currKingPos = ChessGame.getWhiteKingPos();
+                    // highlight king square red
+                    ChessGame.getFrame().getBoard().squareAt(currKingPos).setBackground(Color.RED);
+                    // highlight squares involved in checkmate
+                    boolean[] checkMateHighlighting = ChessGame.getCheckMateHighlighting();
+                    for(int i = 0; i < 64; i++) {
+                        if(checkMateHighlighting[i])
+                            ChessGame.getFrame().getBoard().squareAt(i).setBackground(Color.RED);
+                    }
+
                     System.out.print(ChessGame.getCurrentPlayer());
                     System.out.println(" checkmated");
                     ChessGame.getCheckMateSound().play();
