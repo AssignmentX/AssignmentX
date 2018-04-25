@@ -34,6 +34,10 @@ public class ChessGame {
     private static Sound click_sound;
     private static Sound error_sound;
     private static Sound check_sound;
+    private static Sound checkMate_sound;
+    private static Sound staleMate_sound;
+    private static Sound draw_sound;
+    private static Sound resign_sound;
 
 
     public static void main( String args[] ) {
@@ -52,6 +56,7 @@ public class ChessGame {
                 {
                     public void actionPerformed( ActionEvent event )
                     {
+                        resign_sound.play();
                         new_game();
                         String msg = "Game has been reset.";
                         JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -104,6 +109,7 @@ public class ChessGame {
         new_item.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent event){
+                    draw_sound.play();
                     JOptionPane.showMessageDialog(frame, "The game was a draw.", "Draw", JOptionPane.PLAIN_MESSAGE);
                     new_game();
                 }
@@ -175,6 +181,10 @@ public class ChessGame {
     public static Sound getClickSound(){ return click_sound; }
     public static Sound getErrorSound(){ return error_sound; }
     public static Sound getCheckSound(){ return check_sound; }
+    public static Sound getCheckMateSound(){ return checkMate_sound; }
+    public static Sound getStaleMateSound(){ return staleMate_sound; }
+    public static Sound getDrawSound(){ return draw_sound; }
+    public static Sound getResignSound() { return resign_sound; }
     // is player selecting a piece?
     public static boolean isPlayerSelectingAPiece() { return playerIsSelectingAPiece; }
     // get pawns pos
@@ -282,6 +292,10 @@ public class ChessGame {
         click_sound = new Sound("assets/click_sound.wav");
         error_sound = new Sound("assets/error_sound.wav");
         check_sound = new Sound("assets/check_sound.wav");
+        checkMate_sound = new Sound("assets/checkMate_sound.wav");
+        staleMate_sound = new Sound("assets/Stalemate.wav");
+        draw_sound = new Sound("assets/Drawoffer.wav");
+        resign_sound = new Sound("assets/Resign.wav");
     }
 
     public static void new_game(){

@@ -114,11 +114,15 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
             ChessGame.getValidMoveColors()[currKingPos] = ChessGame.getFrame().getBoard().squareAt(currKingPos).getBackground();
             // highlight king square red
             ChessGame.getFrame().getBoard().squareAt(currKingPos).setBackground(Color.RED);
+
+            ChessGame.getCheckMateSound().play();
+
         }
 
         // player is stalemated
         else if(ChessGame.isWhiteStaleMated() || ChessGame.isBlackStaleMated()) {
             System.out.println("stalemated");
+            ChessGame.getStaleMateSound().play();
         }
 
         // validate the correct player is clicking the square
@@ -425,7 +429,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     if(Math.abs(position - ChessGame.getMovingFrom()) == 2 && ChessGame.getSelectedPiece().equals("king")) {
                         if(MoveLogic.castleThroughCheck(castlePos, position, ChessGame.getSelectedPiece())){
                             ChessGame.getCheckSound().play();
-                            
+
                             // put piece back
                             currentPosition.setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), ChessGame.getMovingFrom());
                             // restore enemy piece
@@ -647,6 +651,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 else {
                     System.out.print(ChessGame.getCurrentPlayer());
                     System.out.println(" checkmated");
+                    ChessGame.getCheckMateSound().play();
                 }
 
             } // end of invalid move
