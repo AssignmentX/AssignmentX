@@ -33,6 +33,9 @@ public class ChessGame {
     private static int superPawn;
     // used to store squares involved in checkmate for highlighting
     private static boolean[] checkMateHighlighting;
+    // sound enable / disable
+    private static boolean voiceAssist;
+    private static boolean soundEffects;
 
     // sounds
     private static Sound click_sound;
@@ -45,6 +48,10 @@ public class ChessGame {
     private static HashMap<String, Sound> soundMap;
 
     public static void main( String args[] ) {
+        // default sound to false before sound selection
+        voiceAssist = false;
+        soundEffects = false;
+
         //creates game frame
         init_frame();
 
@@ -60,7 +67,8 @@ public class ChessGame {
             {
                 public void actionPerformed( ActionEvent event )
                 {
-                    resign_sound.play();
+                    if(voiceAssist)
+                        resign_sound.play();
                     new_game();
                     String msg = "Game has been reset.";
                     JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
@@ -113,7 +121,8 @@ public class ChessGame {
         new_item.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent event){
-                    draw_sound.play();
+                    if(voiceAssist)
+                        draw_sound.play();
                     JOptionPane.showMessageDialog(frame, "The game was a draw.", "Draw", JOptionPane.PLAIN_MESSAGE);
                     new_game();
                 }
@@ -202,6 +211,8 @@ public class ChessGame {
     public static Sound getStaleMateSound(){ return staleMate_sound; }
     public static Sound getDrawSound(){ return draw_sound; }
     public static Sound getResignSound() { return resign_sound; }
+    public static boolean voiceAssist() { return voiceAssist; }
+    public static boolean soundEffects() { return soundEffects; }
     // get sound map
     public static HashMap<String,Sound> soundMap() { return soundMap; }
     // is player selecting a piece?
@@ -268,7 +279,11 @@ public class ChessGame {
     public static void playerIsSelectingAPiece(boolean b) { playerIsSelectingAPiece = b; }
     //set pawns pos
     public static void setSuperPawn(int pos) { superPawn = pos; }
-
+    // sound mutators
+    public static void enableSoundEffects() { soundEffects = true; }
+    public static void disableSoundEffects() { soundEffects = false; }
+    public static void enableVoiceAssist() { voiceAssist = true; }
+    public static void disableVoiceAssist() { voiceAssist = false; }
     //helpers
     public static void init_players(){
 
@@ -318,43 +333,50 @@ public class ChessGame {
         soundPrompt();
     }
 
+
     public static void soundPrompt(){
         // prompt user if they want sounds
-        String msg = "Would you like to enable sounds?";
+        
+        /*String msg = "Would you like to enable sounds?";
         int dialogResult = JOptionPane.showConfirmDialog(frame, msg, "Sound", JOptionPane.YES_NO_OPTION);
 
         // if option is yes
         if(dialogResult == JOptionPane.YES_OPTION){
-            // init sounds
-            click_sound = new Sound("assets/click_sound.wav", false);
-            error_sound = new Sound("assets/error_sound.wav", false);
-            check_sound = new Sound("assets/check_sound.wav", false);
-            checkMate_sound = new Sound("assets/checkMate_sound.wav", false);
-            staleMate_sound = new Sound("assets/Stalemate.wav", false);
-            draw_sound = new Sound("assets/Drawoffer.wav", false);
-            resign_sound = new Sound("assets/Resign.wav", false);
+        */
 
-            // init sound map
-            soundMap = new HashMap<>();
-            final String[] soundFiles = {"1", "2", "3", "4", "5", "6", "7", "8",
-                                         "a", "b", "c", "d", "e", "f", "g", "h",
-                                         "bishop", "knight", "queen", "rook", "king",
-                                         "O-O", "O-O-O", "takes"};
-            for(int i = 0; i < soundFiles.length; i++) {
-                String fileName = "assets/moves/" + soundFiles[i] + ".wav";
-                soundMap.put(soundFiles[i], new Sound(fileName, true));
-            }
+        // init sounds
+        click_sound = new Sound("assets/click_sound.wav", false);
+        error_sound = new Sound("assets/error_sound.wav", false);
+        check_sound = new Sound("assets/check_sound.wav", false);
+        checkMate_sound = new Sound("assets/checkMate_sound.wav", false);
+        staleMate_sound = new Sound("assets/Stalemate.wav", false);
+        draw_sound = new Sound("assets/Drawoffer.wav", false);
+        resign_sound = new Sound("assets/Resign.wav", false);
+
+        // init sound map
+        soundMap = new HashMap<>();
+        final String[] soundFiles = {"1", "2", "3", "4", "5", "6", "7", "8",
+                                     "a", "b", "c", "d", "e", "f", "g", "h",
+                                     "bishop", "knight", "queen", "rook", "king",
+                                     "O-O", "O-O-O", "takes"};
+        for(int i = 0; i < soundFiles.length; i++) {
+            String fileName = "assets/moves/" + soundFiles[i] + ".wav";
+            soundMap.put(soundFiles[i], new Sound(fileName, true));
         }
+
+        //}
         // if option is no
-        else {
-            click_sound = null;
-            error_sound = null;
-            check_sound = null;
-            checkMate_sound = null;
-            draw_sound = null;
-            resign_sound = null;
-            soundMap = null;
-        }
+        //else {
+        //    click_sound = null;
+        //    error_sound = null;
+        //    check_sound = null;
+        //    checkMate_sound = null;
+        //    draw_sound = null;
+        //    resign_sound = null;
+        //    soundMap = null;
+        //}
+
+        SoundSelection soundSelectionScreen = new SoundSelection();
     }
 
     public static void new_game(){

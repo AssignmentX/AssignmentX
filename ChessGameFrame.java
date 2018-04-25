@@ -28,7 +28,6 @@ public class ChessGameFrame extends JFrame implements Serializable {
       textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
       textArea.setEditable(false);
       JScrollPane scrollPane = new JScrollPane(textArea);
-      //scrollPane.add(textArea);
       scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
       add(scrollPane, BorderLayout.EAST); // add text area to east side
 

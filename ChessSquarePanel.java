@@ -118,7 +118,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
             //// highlight king square red
             //ChessGame.getFrame().getBoard().squareAt(currKingPos).setBackground(Color.RED);
 
-            if(ChessGame.getCheckMateSound() != null)
+            if(ChessGame.voiceAssist())
                 ChessGame.getCheckMateSound().play();
 
         }
@@ -126,7 +126,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         // player is stalemated
         else if(ChessGame.isWhiteStaleMated() || ChessGame.isBlackStaleMated()) {
             System.out.println("stalemated");
-            if(ChessGame.getStaleMateSound() != null) {
+            if(ChessGame.voiceAssist()) {
                 if(soundQueue.isEmpty())
                     ChessGame.getStaleMateSound().play();
                 else
@@ -439,7 +439,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     //if king is castling through check
                     if(Math.abs(position - ChessGame.getMovingFrom()) == 2 && ChessGame.getSelectedPiece().equals("king")) {
                         if(MoveLogic.castleThroughCheck(castlePos, position, ChessGame.getSelectedPiece())){
-                            if(ChessGame.getCheckSound() != null)
+                            if(ChessGame.soundEffects())
                                 ChessGame.getCheckSound().play();
 
                             // put piece back
@@ -467,7 +467,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) ||
                         (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked())) {
 
-                        if(ChessGame.getCheckSound() != null)
+                        if(ChessGame.soundEffects())
                             ChessGame.getCheckSound().play();
 
                         // put piece back
@@ -518,7 +518,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         
 
                         // play sound for a successful move
-                        if(ChessGame.getClickSound() != null)
+                        if(ChessGame.soundEffects())
                             ChessGame.getClickSound().play();
 
                         // display move message
@@ -546,7 +546,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         // check if other player is in check
                         if(ChessGame.getCurrentPlayer().equals("White")){
                             if(moves.contains(ChessGame.getBlackKingPos())){
-                                if(ChessGame.getCheckSound() != null)
+                                if(ChessGame.soundEffects())
                                     ChessGame.getCheckSound().play();
                                 ChessGame.blackIsChecked(true);
                                 // store color of squares that are being highlighted red
@@ -563,7 +563,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
                         else{
                             if(moves.contains(ChessGame.getWhiteKingPos())) {
-                                if(ChessGame.getCheckSound() != null)
+                                if(ChessGame.soundEffects())
                                     ChessGame.getCheckSound().play();
                                 ChessGame.whiteIsChecked(true);
                                 // store color of squares that are being highlighted red
@@ -638,8 +638,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
 
                         // add sounds to queue if sounds are enabled
-                        //soundQueue = new ConcurrentLinkedQueue<>();
-                        if(ChessGame.getClickSound() != null) {
+                        if(ChessGame.voiceAssist()) {
                             // add sounds if piece castles
                             if(Math.abs(position - ChessGame.getMovingFrom()) == 2 && ChessGame.getSelectedPiece().equals("king")){
                                 // if castle queen side
@@ -680,14 +679,9 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                             // play sounds for move
                             new Thread(new Runnable() {
                                 public void run() {
-                                    for(Sound sound : soundQueue) {
-                                        // play sound and wait for it to finish
+                                    // play sound and wait for it to finish
+                                    for(Sound sound : soundQueue)
                                         sound.play();
-                                        // fix this for synchronization
-                                        //if(sound.isPlaying()) {
-                                            //try {} catch(InterruptedException e) {}
-                                        //}
-                                    }
                                     soundQueue.clear();
                                 }
                             }).start();
@@ -743,7 +737,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                     System.out.print(ChessGame.getCurrentPlayer());
                     System.out.println(" checkmated");
-                    if(ChessGame.getCheckSound() != null) {
+                    if(ChessGame.soundEffects()) {
                         if(soundQueue.isEmpty())
                             ChessGame.getCheckMateSound().play();
                         else
@@ -755,7 +749,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
             } // end of invalid move
             else {
-                if(ChessGame.getErrorSound() != null)
+                if(ChessGame.voiceAssist())
                     ChessGame.getErrorSound().play();
                 System.out.printf("Invalid move: %d\n", position);
             }
