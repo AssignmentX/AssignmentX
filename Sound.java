@@ -20,8 +20,10 @@ public class Sound {
     private int audioSize;
     //private LineListener listener;
     private boolean isPlaying;
+    private boolean synch;
 
-    public Sound(String filename) {
+    public Sound(String filename, boolean synchronize) {
+        synch = synchronize;
         // init audio
         try{
             audioFile = new File(filename);
@@ -41,6 +43,8 @@ public class Sound {
             //        }
             //    }
             //};
+
+
 
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
@@ -68,19 +72,42 @@ public class Sound {
         //        }
         //    }
         //}).start();
-        try { // play sound clip
-            audioClip = (Clip) AudioSystem.getLine(info);
-            audioClip.open(format, audio, 0, audioSize);
-            audioClip.start();
-            isPlaying = true;
-            while(audioClip.getMicrosecondLength() != audioClip.getMicrosecondPosition()) {}
-            isStopped();
-        } catch (LineUnavailableException ex) {
-            System.out.println("Audio line for playing back is unavailable.");
-            //ex.printStackTrace();
+        synchronized(Sound.class) {
+            try { // play sound clip
+                audioClip = (Clip) AudioSystem.getLine(info);
+                audioClip.open(format, audio, 0, audioSize);
+                audioClip.start();
+                isPlaying = true;
+                if(synch) {
+                    while(audioClip.getMicrosecondLength() != audioClip.getMicrosecondPosition()) {}
+                }
+                isStopped();
+            } catch (LineUnavailableException ex) {
+                System.out.println("Audio line for playing back is unavailable.");
+                //ex.printStackTrace();
+            }
         }
     }
 
     public boolean isPlaying() { return isPlaying; }
     public void isStopped() { isPlaying = false; }
 }
+
+/*
+class SoundThread extends Thread implements Runnable {
+    public void run() {
+        for(Sound sound : ChessGame.getSoundQueue()) {
+            // play sound and wait for it to finish
+            sound.play();
+            // fix this for synchronization
+            //while(sound.isPlaying()) {
+                //try {
+                //    Thread.sleep(10);
+                //} catch(InterruptedException e) {}
+            //}
+        }
+        // clear the sound queue
+        ChessGame.getSoundQueue().clear();
+    }
+}
+*/

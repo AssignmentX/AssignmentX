@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+//import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -43,6 +44,8 @@ public class ChessGame {
     private static Sound draw_sound;
     private static Sound resign_sound;
     private static HashMap<String, Sound> soundMap;
+    //private static SoundThread soundThread;
+    //private static ConcurrentLinkedQueue<Sound> soundQueue;
 
 
     public static void main( String args[] ) {
@@ -120,6 +123,17 @@ public class ChessGame {
                 }
             }
         );
+        
+        new_item = new JMenuItem("Sound");
+        new_item.setMnemonic('S');
+        game_menu.add(new_item);
+        new_item.addActionListener(
+            new ActionListener() {
+                public void actionPerformed(ActionEvent event){
+                    soundPrompt();
+                }
+            }
+        );
         menu.add(game_menu);
         frame.setJMenuBar(menu);
         frame.validate();
@@ -192,6 +206,8 @@ public class ChessGame {
     public static Sound getStaleMateSound(){ return staleMate_sound; }
     public static Sound getDrawSound(){ return draw_sound; }
     public static Sound getResignSound() { return resign_sound; }
+    //public static SoundThread getSoundThread() { return soundThread; }
+    //public static ConcurrentLinkedQueue<Sound> getSoundQueue() { return soundQueue; }
     // get sound map
     public static HashMap<String,Sound> soundMap() { return soundMap; }
     // is player selecting a piece?
@@ -294,6 +310,7 @@ public class ChessGame {
         // init array that stores squares involved in a checkmate
         checkMateHighlighting = new boolean[64];
         Arrays.fill(checkMateHighlighting, false);
+
     }
 
     public static void init_frame(){
@@ -304,33 +321,47 @@ public class ChessGame {
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
 
+        soundPrompt();
+    }
+
+    public static void soundPrompt(){
         // prompt user if they want sounds
         String msg = "Would you like to enable sounds?";
-        int dialogResult = JOptionPane.showConfirmDialog(frame, msg, "Enable Sounds?", JOptionPane.PLAIN_MESSAGE);
+        int dialogResult = JOptionPane.showConfirmDialog(frame, msg, "Sound", JOptionPane.YES_NO_OPTION);
 
-        //int dialogResult = JOptionPane.showConfirmDialog (frame, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
         if(dialogResult == JOptionPane.YES_OPTION){
-          // Saving code here
+            // init sound thread and queue
+            //soundQueue = new ConcurrentLinkedQueue<>();
+            //soundThread = new SoundThread();
+
+            // init sounds
+            click_sound = new Sound("assets/click_sound.wav", false);
+            error_sound = new Sound("assets/error_sound.wav", false);
+            check_sound = new Sound("assets/check_sound.wav", false);
+            checkMate_sound = new Sound("assets/checkMate_sound.wav", false);
+            staleMate_sound = new Sound("assets/Stalemate.wav", false);
+            draw_sound = new Sound("assets/Drawoffer.wav", false);
+            resign_sound = new Sound("assets/Resign.wav", false);
+
+            // init sound map
+            soundMap = new HashMap<>();
+            final String[] soundFiles = {"1", "2", "3", "4", "5", "6", "7", "8",
+                                         "a", "b", "c", "d", "e", "f", "g", "h",
+                                         "bishop", "knight", "queen", "rook", "king",
+                                         "O-O", "O-O-O", "takes"};
+            for(int i = 0; i < soundFiles.length; i++) {
+                String fileName = "assets/moves/" + soundFiles[i] + ".wav";
+                soundMap.put(soundFiles[i], new Sound(fileName, true));
+            }
         }
-
-        // init sounds
-        click_sound = new Sound("assets/click_sound.wav");
-        error_sound = new Sound("assets/error_sound.wav");
-        check_sound = new Sound("assets/check_sound.wav");
-        checkMate_sound = new Sound("assets/checkMate_sound.wav");
-        staleMate_sound = new Sound("assets/Stalemate.wav");
-        draw_sound = new Sound("assets/Drawoffer.wav");
-        resign_sound = new Sound("assets/Resign.wav");
-
-        // init sound map
-        soundMap = new HashMap<>();
-        final String[] soundFiles = {"1", "2", "3", "4", "5", "6", "7", "8",
-                                     "a", "b", "c", "d", "e", "f", "g", "h",
-                                     "bishop", "knight", "queen", "rook", "king",
-                                     "O-O", "O-O-O", "takes"};
-        for(int i = 0; i < soundFiles.length; i++) {
-            String fileName = "assets/moves/" + soundFiles[i] + ".wav";
-            soundMap.put(soundFiles[i], new Sound(fileName));
+        else {
+            click_sound = null;
+            error_sound = null;
+            check_sound = null;
+            checkMate_sound = null;
+            draw_sound = null;
+            resign_sound = null;
+            soundMap = null;
         }
     }
 
