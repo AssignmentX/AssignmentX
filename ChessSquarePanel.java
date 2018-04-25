@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import javax.swing.Timer;
 import java.awt.event.*;
 import java.net.URL;
@@ -506,21 +507,39 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
                         
 
+                        // play sound for a successful move
+                        ChessGame.getClickSound().play();
+
                         // display move message
                         String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + MoveLogic.pos_to_AN[ChessGame.getMovingFrom()] + " - " + MoveLogic.pos_to_AN[position] + "\n";
-                        
-                        // play sounds for move
+                        ChessGame.getFrame().appendTextArea(msg);
 
-                        // play sound if piece takes piece
+                        ConcurrentLinkedQueue<Sound> soundQueue = new ConcurrentLinkedQueue<>();
 
                         // play sound if piece castles
 
-                        // figure out what sound N is
-                        ChessGame.soundMap().get(ChessGame.getSelectedPiece()).play();
-                        ChessGame.soundMap().get(MoveLogic.pos_to_AN[ChessGame.getMovingFrom()).play();
-                        ChessGame.soundMap().get(MoveLogic.pos_to_AN[position]).play();
+                        // play sound if piece takes piece
 
-                        ChessGame.getFrame().appendTextArea(msg);
+                        // add sounds to queue
+                        if(!ChessGame.getSelectedPiece().equals("pawn"))
+                            soundQueue.add(ChessGame.soundMap().get(ChessGame.getSelectedPiece()));
+                        String movingFromPos = MoveLogic.pos_to_AN[ChessGame.getMovingFrom()];
+                        soundQueue.add(ChessGame.soundMap().get(Character.toString(movingFromPos.charAt(0))));
+                        soundQueue.add(ChessGame.soundMap().get(Character.toString(movingFromPos.charAt(1))));
+                        String movingToPos = MoveLogic.pos_to_AN[position];
+                        soundQueue.add(ChessGame.soundMap().get(Character.toString(movingToPos.charAt(0))));
+                        soundQueue.add(ChessGame.soundMap().get(Character.toString(movingToPos.charAt(1))));
+
+                        // play sounds for move
+                        new Thread(new Runnable() {
+                            public void run() {
+                                for(Sound sound : soundQueue) {
+                                    // play sound and wait for it to finish
+                                    sound.play();
+                                    while(sound.isPlaying()) {}
+                                }
+                            }
+                        }).start();
 
                         // lazy solution, set color back to default
                         currentPosition.setBackground(ChessGame.getSelectedSquaresColor());
@@ -636,9 +655,6 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         ChessGame.setCurrentlyMoving(false);
                         ChessGame.setMovingFrom(-1);
                         ChessGame.setSelectedPiece(null);
-
-                        // play sound for a successful move
-                        ChessGame.getClickSound().play();
 
                         // change turn to other player
                         if(ChessGame.getCurrentPlayer().equals("White")) {

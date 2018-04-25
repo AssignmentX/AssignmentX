@@ -317,8 +317,8 @@ public class ChessGame {
         soundMap = new HashMap<>();
         final String[] soundFiles = {"1", "2", "3", "4", "5", "6", "7", "8",
                                      "a", "b", "c", "d", "e", "f", "g", "h",
-                                     "bishop", "knight", "queen", "rook", //"",
-                                     "O-O", "O-O-O", "takes", "N"};
+                                     "bishop", "knight", "queen", "rook", "king",
+                                     "O-O", "O-O-O", "takes"};
         for(int i = 0; i < soundFiles.length; i++) {
             String fileName = "assets/moves/" + soundFiles[i] + ".wav";
             soundMap.put(soundFiles[i], new Sound(fileName));
