@@ -351,7 +351,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(2).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(3).getPiece() == null) {
                 new_move = position_to_coord(2);
-                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 3, "king"))
+                if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, 3, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
             // white right
@@ -359,7 +359,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(6).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(5).getPiece() == null) {
                 new_move = position_to_coord(6);
-                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 5, "king"))
+                if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, 5, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
         }
@@ -370,7 +370,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(58).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(59).getPiece() == null) {
                 new_move = position_to_coord(58);
-                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 59, "king"))
+                if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, 59, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
             // black right
@@ -378,7 +378,7 @@ public class MoveLogic {
                     ChessGame.getFrame().getBoard().squareAt(62).getPiece() == null &&
                     ChessGame.getFrame().getBoard().squareAt(61).getPiece() == null) {
                 new_move = position_to_coord(62);
-                if(coords_valid_check(new_move) && !doesMoveCauseCheck(curr_pos, 61, "king"))
+                if(coords_valid_check(new_move))// && !doesMoveCauseCheck(curr_pos, 61, "king"))
                     my_moves.add(coord_to_position(new_move));
             }
         }
@@ -495,5 +495,20 @@ public class MoveLogic {
         return false;
 
     }
-    
+
+    public static boolean castleThroughCheck(int curr_pos, int position, String piece) {
+        if(piece.equals("king")) {
+            if(position == 2)
+                 return doesMoveCauseCheck(curr_pos, 3, "king");
+            else if(position == 6)
+                 return doesMoveCauseCheck(curr_pos, 5, "king");
+            else if(position == 58)
+                return doesMoveCauseCheck(curr_pos, 59, "king");
+            else if(position == 62)
+                return doesMoveCauseCheck(curr_pos, 61, "king");
+            else
+                return false;
+        }
+        return false;
+    }
 }

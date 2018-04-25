@@ -34,13 +34,14 @@
  * Menu Options
  * Valid move predicates (split between both of us)
  * Code refactoring
-  * Castling
+ * Castling
 
 ## **Zach**
  * Move logic for pieces (some of the work)
  * ChessBoard setup and GUI
  * ChessSquare w/ Chess Piece GUI
  * Check detection
+ * Check detection for castling thru Check
  * Validation of move (some of the work)
  * Valid move predicates (split between both of us)
  * Coloring of squares / re-coloring
@@ -49,11 +50,6 @@
  * Sound class
  * Piece selection when pawn makes it to the other side of the board
  * Stalemate and Checkmate detection
-
-
-## **Un-assigned Work** _(This will eventually be removed once the work is delegated)_
- * Timer
- * Keep track of captured pieces
 
 #### **HOW TO COMPILE JAR FILE**
 `jar -cvfm hwx.jar MANIFEST.MF *.java *.class README.md assets images`
