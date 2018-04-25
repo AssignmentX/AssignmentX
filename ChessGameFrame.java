@@ -4,9 +4,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ScrollPaneConstants;
 
 public class ChessGameFrame extends JFrame implements Serializable {
    private JButton buttons[]; // array of buttons to hide portions
@@ -22,10 +24,13 @@ public class ChessGameFrame extends JFrame implements Serializable {
       setLayout( layout ); // set frame layout
 
       // EAST - SHOWS MOVE HISTORY FOR BOTH PLAYERS IN ALGEBRAIC NOTATION NOTATION
-      textArea = new JTextArea(0, 12);
+      textArea = new JTextArea(0, 11);
       textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
       textArea.setEditable(false);
-      add(textArea, BorderLayout.EAST); // add text area to east side
+      JScrollPane scrollPane = new JScrollPane(textArea);
+      //scrollPane.add(textArea);
+      scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+      add(scrollPane, BorderLayout.EAST); // add text area to east side
 
        // CENTER - CHESSBOARD
       chessBoard = new ChessBoardPanel(this); // create a panel for the chess board
@@ -67,7 +72,7 @@ public class ChessGameFrame extends JFrame implements Serializable {
           label.setHorizontalAlignment(JTextField.CENTER);
           south_sub_panel.add(label);
       }
-      south_sub_panel.setBorder(BorderFactory.createEmptyBorder(1, 25, 8, 140));
+      south_sub_panel.setBorder(BorderFactory.createEmptyBorder(1, 25, 8, 160));
       add(south_sub_panel,BorderLayout.SOUTH);
    }
 
