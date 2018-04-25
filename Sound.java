@@ -73,8 +73,6 @@ public class Sound {
             audioClip.open(format, audio, 0, audioSize);
             audioClip.start();
             isPlaying = true;
-            //audioClip.addLineListener(listener);
-            //while(audioClip.isRunning()) { System.out.println("waiting"); }
             while(audioClip.getMicrosecondLength() != audioClip.getMicrosecondPosition()) {}
             isStopped();
         } catch (LineUnavailableException ex) {

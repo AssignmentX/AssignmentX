@@ -304,6 +304,15 @@ public class ChessGame {
         frame.setLocationRelativeTo(null);      // center frame on screen
         frame.setVisible( true );               // display frame
 
+        // prompt user if they want sounds
+        String msg = "Would you like to enable sounds?";
+        int dialogResult = JOptionPane.showConfirmDialog(frame, msg, "Enable Sounds?", JOptionPane.PLAIN_MESSAGE);
+
+        //int dialogResult = JOptionPane.showConfirmDialog (frame, "Would You Like to Save your Previous Note First?","Warning",dialogButton);
+        if(dialogResult == JOptionPane.YES_OPTION){
+          // Saving code here
+        }
+
         // init sounds
         click_sound = new Sound("assets/click_sound.wav");
         error_sound = new Sound("assets/error_sound.wav");
