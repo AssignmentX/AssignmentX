@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-//import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -44,9 +43,6 @@ public class ChessGame {
     private static Sound draw_sound;
     private static Sound resign_sound;
     private static HashMap<String, Sound> soundMap;
-    //private static SoundThread soundThread;
-    //private static ConcurrentLinkedQueue<Sound> soundQueue;
-
 
     public static void main( String args[] ) {
         //creates game frame
@@ -60,41 +56,41 @@ public class ChessGame {
         new_item.setMnemonic('N');
         file_menu.add(new_item);
         new_item.addActionListener(
-                new ActionListener()
+            new ActionListener()
+            {
+                public void actionPerformed( ActionEvent event )
                 {
-                    public void actionPerformed( ActionEvent event )
-                    {
-                        resign_sound.play();
-                        new_game();
-                        String msg = "Game has been reset.";
-                        JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
-                    }
+                    resign_sound.play();
+                    new_game();
+                    String msg = "Game has been reset.";
+                    JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
                 }
+            }
         );
         JMenuItem load_item = new JMenuItem("Load");
         load_item.setMnemonic('L');
         file_menu.add(load_item);
         load_item.addActionListener(
-                new ActionListener()
+            new ActionListener()
+            {
+                public void actionPerformed( ActionEvent event )
                 {
-                    public void actionPerformed( ActionEvent event )
-                    {
-                        load_game();
-                    }
+                    load_game();
                 }
+            }
         );
         JMenuItem save_item = new JMenuItem("Save");
         save_item.setMnemonic('S');
         file_menu.add(save_item);
         save_item.addActionListener(
-                new ActionListener()
+            new ActionListener()
+            {
+                public void actionPerformed( ActionEvent event )
                 {
-                    public void actionPerformed( ActionEvent event )
-                    {
-                        save_game(frame,frame.getBoard(),frame.getBoard().getSquares());
+                    save_game(frame,frame.getBoard(),frame.getBoard().getSquares());
 
-                    }
                 }
+            }
         );
         JMenuItem exit_item = new JMenuItem("Exit");
         exit_item.setMnemonic('x');
@@ -206,8 +202,6 @@ public class ChessGame {
     public static Sound getStaleMateSound(){ return staleMate_sound; }
     public static Sound getDrawSound(){ return draw_sound; }
     public static Sound getResignSound() { return resign_sound; }
-    //public static SoundThread getSoundThread() { return soundThread; }
-    //public static ConcurrentLinkedQueue<Sound> getSoundQueue() { return soundQueue; }
     // get sound map
     public static HashMap<String,Sound> soundMap() { return soundMap; }
     // is player selecting a piece?
@@ -329,11 +323,8 @@ public class ChessGame {
         String msg = "Would you like to enable sounds?";
         int dialogResult = JOptionPane.showConfirmDialog(frame, msg, "Sound", JOptionPane.YES_NO_OPTION);
 
+        // if option is yes
         if(dialogResult == JOptionPane.YES_OPTION){
-            // init sound thread and queue
-            //soundQueue = new ConcurrentLinkedQueue<>();
-            //soundThread = new SoundThread();
-
             // init sounds
             click_sound = new Sound("assets/click_sound.wav", false);
             error_sound = new Sound("assets/error_sound.wav", false);
@@ -354,6 +345,7 @@ public class ChessGame {
                 soundMap.put(soundFiles[i], new Sound(fileName, true));
             }
         }
+        // if option is no
         else {
             click_sound = null;
             error_sound = null;

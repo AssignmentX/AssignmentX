@@ -18,14 +18,12 @@ public class Sound {
     private Clip audioClip;
     private byte[] audio;
     private int audioSize;
-    //private LineListener listener;
     private boolean isPlaying;
     private boolean synch;
 
     public Sound(String filename, boolean synchronize) {
         synch = synchronize;
-        // init audio
-        try{
+        try{ // init audio
             audioFile = new File(filename);
             audioStream = AudioSystem.getAudioInputStream(audioFile.toURI().toURL());
             format = audioStream.getFormat();
@@ -34,57 +32,25 @@ public class Sound {
             info = new DataLine.Info(Clip.class, format);
             audioStream.read(audio, 0, audioSize);
 
-            //listener = new LineListener() {
-            //    public void update(LineEvent event) {
-            //        if(audioClip.getMicrosecondLength() == audioClip.getMicrosecondPosition()) {
-            //        //if (event.getType() == Type.STOP) {
-            //            isStopped();
-            //            return;
-            //        }
-            //    }
-            //};
-
-
-
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("The specified audio file is not supported.");
-            //ex.printStackTrace();
         } catch (IOException ex) {
             System.out.println("Error reading the audio file.");
-            //ex.printStackTrace();
         }
     }
 
     public void play() {
-        //new Thread(new Runnable() {
-        //    public void run() {
-        //        synchronized(Sound.class) {
-        //            try { // play sound clip
-        //                audioClip = (Clip) AudioSystem.getLine(info);
-        //                audioClip.open(format, audio, 0, audioSize);
-        //                audioClip.start();
-        //                //while(audioClip.isRunning()) { System.out.println("waiting"); }
-        //                while(audioClip.getMicrosecondLength() != audioClip.getMicrosecondPosition()) {}
-        //            } catch (LineUnavailableException ex) {
-        //                System.out.println("Audio line for playing back is unavailable.");
-        //                //ex.printStackTrace();
-        //            }
-        //        }
-        //    }
-        //}).start();
         synchronized(Sound.class) {
             try { // play sound clip
                 audioClip = (Clip) AudioSystem.getLine(info);
                 audioClip.open(format, audio, 0, audioSize);
                 audioClip.start();
                 isPlaying = true;
-                if(synch) {
+                if(synch)
                     while(audioClip.getMicrosecondLength() != audioClip.getMicrosecondPosition()) {}
-                }
                 isStopped();
             } catch (LineUnavailableException ex) {
                 System.out.println("Audio line for playing back is unavailable.");
-                //ex.printStackTrace();
             }
         }
     }
@@ -92,22 +58,3 @@ public class Sound {
     public boolean isPlaying() { return isPlaying; }
     public void isStopped() { isPlaying = false; }
 }
-
-/*
-class SoundThread extends Thread implements Runnable {
-    public void run() {
-        for(Sound sound : ChessGame.getSoundQueue()) {
-            // play sound and wait for it to finish
-            sound.play();
-            // fix this for synchronization
-            //while(sound.isPlaying()) {
-                //try {
-                //    Thread.sleep(10);
-                //} catch(InterruptedException e) {}
-            //}
-        }
-        // clear the sound queue
-        ChessGame.getSoundQueue().clear();
-    }
-}
-*/
