@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import java.io.Serializable;
 import javax.swing.BorderFactory;
 
-@SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
+
 public class ChessBoardPanel extends JPanel implements Serializable {
     private ChessSquarePanel squares[];
     private ChessGameFrame parent;

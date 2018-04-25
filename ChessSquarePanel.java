@@ -17,7 +17,6 @@ import java.awt.event.*;
 import java.net.URL;
 
 
-@SuppressWarnings("serial") // this is used to suppress a serializable warning because JPanel implements serializable
 public class ChessSquarePanel extends JPanel implements MouseListener, ActionListener, Serializable {
     private String piece;
     private String player;
@@ -509,6 +508,18 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                         // display move message
                         String msg = ChessGame.getCurrentPlayer() + " " + ChessGame.getSelectedPiece() + ": " + MoveLogic.pos_to_AN[ChessGame.getMovingFrom()] + " - " + MoveLogic.pos_to_AN[position] + "\n";
+                        
+                        // play sounds for move
+
+                        // play sound if piece takes piece
+
+                        // play sound if piece castles
+
+                        // figure out what sound N is
+                        ChessGame.soundMap().get(ChessGame.getSelectedPiece()).play();
+                        ChessGame.soundMap().get(MoveLogic.pos_to_AN[ChessGame.getMovingFrom()).play();
+                        ChessGame.soundMap().get(MoveLogic.pos_to_AN[position]).play();
+
                         ChessGame.getFrame().appendTextArea(msg);
 
                         // lazy solution, set color back to default

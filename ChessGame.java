@@ -4,6 +4,8 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessGame {
     private static String currentPlayer;
@@ -40,6 +42,7 @@ public class ChessGame {
     private static Sound staleMate_sound;
     private static Sound draw_sound;
     private static Sound resign_sound;
+    private static HashMap<String, Sound> soundMap;
 
 
     public static void main( String args[] ) {
@@ -189,6 +192,8 @@ public class ChessGame {
     public static Sound getStaleMateSound(){ return staleMate_sound; }
     public static Sound getDrawSound(){ return draw_sound; }
     public static Sound getResignSound() { return resign_sound; }
+    // get sound map
+    public static HashMap<String,Sound> soundMap() { return soundMap; }
     // is player selecting a piece?
     public static boolean isPlayerSelectingAPiece() { return playerIsSelectingAPiece; }
     // get pawns pos
@@ -307,6 +312,17 @@ public class ChessGame {
         staleMate_sound = new Sound("assets/Stalemate.wav");
         draw_sound = new Sound("assets/Drawoffer.wav");
         resign_sound = new Sound("assets/Resign.wav");
+
+        // init sound map
+        soundMap = new HashMap<>();
+        final String[] soundFiles = {"1", "2", "3", "4", "5", "6", "7", "8",
+                                     "a", "b", "c", "d", "e", "f", "g", "h",
+                                     "bishop", "knight", "queen", "rook", //"",
+                                     "O-O", "O-O-O", "takes", "N"};
+        for(int i = 0; i < soundFiles.length; i++) {
+            String fileName = "assets/moves/" + soundFiles[i] + ".wav";
+            soundMap.put(soundFiles[i], new Sound(fileName));
+        }
     }
 
     public static void new_game(){

@@ -32,7 +32,7 @@ public class Sound {
             System.out.println("The specified audio file is not supported.");
             //ex.printStackTrace();
         } catch (IOException ex) {
-            System.out.println("Error playing the audio file.");
+            System.out.println("Error reading the audio file.");
             //ex.printStackTrace();
         }
     }
