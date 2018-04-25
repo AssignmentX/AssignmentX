@@ -33,6 +33,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
     protected Timer timer;
     private int currentHeight;
     private int currentWidth;
+    private ConcurrentLinkedQueue<Sound> soundQueue;
 
     public ChessSquarePanel(ChessBoardPanel parent) {
         super();
@@ -44,6 +45,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         // default size of height and width of chess pieces at default width/height of window frame
         currentWidth = 89;
         currentHeight = 86;
+
+        soundQueue = new ConcurrentLinkedQueue<>();
     }
 
     public void setPiece(String piece, String player, int pos) {
@@ -123,8 +126,12 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
         // player is stalemated
         else if(ChessGame.isWhiteStaleMated() || ChessGame.isBlackStaleMated()) {
             System.out.println("stalemated");
-            if(ChessGame.getStaleMateSound() != null)
-                ChessGame.getStaleMateSound().play();
+            if(ChessGame.getStaleMateSound() != null) {
+                if(soundQueue.isEmpty())
+                    ChessGame.getStaleMateSound().play();
+                else
+                    soundQueue.add(ChessGame.getCheckMateSound());
+            }
         }
 
         // validate the correct player is clicking the square
@@ -352,9 +359,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                         
                                     }
                                     else {
-                                        // TO DO: ADD THIS TO A LIST OF SQUARES TO BE HIGHLIGHTED RED
-                                        //System.out.print(possiblechecksquare.getPiece() + " can check king at ");
-                                        //System.out.println(currking);
+                                        System.out.print(possiblechecksquare.getPiece() + " can check king at ");
+                                        System.out.println(currking);
                                         savedCheckSquares.add(currking);
                                         ChessGame.setCheckMateHighlighting(move);
                                         //savedCheckPiecesSquares.add(move);
@@ -632,7 +638,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
 
                         // add sounds to queue if sounds are enabled
-                        ConcurrentLinkedQueue<Sound> soundQueue = new ConcurrentLinkedQueue<>();
+                        //soundQueue = new ConcurrentLinkedQueue<>();
                         if(ChessGame.getClickSound() != null) {
                             // add sounds if piece castles
                             if(Math.abs(position - ChessGame.getMovingFrom()) == 2 && ChessGame.getSelectedPiece().equals("king")){
@@ -654,6 +660,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                 soundQueue.add(ChessGame.soundMap().get(Character.toString(movingFromPos.charAt(1))));
                                 // add takes
                                 soundQueue.add(ChessGame.soundMap().get("takes"));
+                                if(enemyPiece != null && !enemyPiece.equals("pawn"))
+                                    soundQueue.add(ChessGame.soundMap().get(enemyPiece));
                                 String movingToPos = MoveLogic.pos_to_AN[position];
                                 soundQueue.add(ChessGame.soundMap().get(Character.toString(movingToPos.charAt(0))));
                                 soundQueue.add(ChessGame.soundMap().get(Character.toString(movingToPos.charAt(1))));
@@ -676,10 +684,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                                         // play sound and wait for it to finish
                                         sound.play();
                                         // fix this for synchronization
-                                        if(sound.isPlaying()) {
+                                        //if(sound.isPlaying()) {
                                             //try {} catch(InterruptedException e) {}
-                                        }
+                                        //}
                                     }
+                                    soundQueue.clear();
                                 }
                             }).start();
                         }
@@ -734,8 +743,14 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
 
                     System.out.print(ChessGame.getCurrentPlayer());
                     System.out.println(" checkmated");
-                    if(ChessGame.getCheckSound() != null)
-                        ChessGame.getCheckMateSound().play();
+                    if(ChessGame.getCheckSound() != null) {
+                        if(soundQueue.isEmpty())
+                            ChessGame.getCheckMateSound().play();
+                        else
+                            soundQueue.add(ChessGame.getCheckMateSound());
+                    }
+                        
+                        
                 }
 
             } // end of invalid move
