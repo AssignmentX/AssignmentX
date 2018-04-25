@@ -424,6 +424,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     //if king is castling through check
                     if(Math.abs(position - ChessGame.getMovingFrom()) == 2 && ChessGame.getSelectedPiece().equals("king")) {
                         if(MoveLogic.castleThroughCheck(castlePos, position, ChessGame.getSelectedPiece())){
+                            ChessGame.getCheckSound().play();
+                            
                             // put piece back
                             currentPosition.setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), ChessGame.getMovingFrom());
                             // restore enemy piece
@@ -448,6 +450,8 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                     // this also checks to prevent castling through check
                     else if((ChessGame.getCurrentPlayer().equals("White") && ChessGame.canWhiteBeChecked()) ||
                         (ChessGame.getCurrentPlayer().equals("Black") && ChessGame.canBlackBeChecked())) {
+
+                        ChessGame.getCheckSound().play();
 
                         // put piece back
                         currentPosition.setPiece(ChessGame.getSelectedPiece(), ChessGame.getCurrentPlayer(), ChessGame.getMovingFrom());
@@ -521,6 +525,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         // check if other player is in check
                         if(ChessGame.getCurrentPlayer().equals("White")){
                             if(moves.contains(ChessGame.getBlackKingPos())){
+                                ChessGame.getCheckSound().play();
                                 ChessGame.blackIsChecked(true);
                                 // store color of squares that are being highlighted red
                                 if(ChessGame.getFrame().getBoard().squareAt(position).getBackground() != Color.RED) {
@@ -536,6 +541,7 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                         }
                         else{
                             if(moves.contains(ChessGame.getWhiteKingPos())) {
+                                ChessGame.getCheckSound().play();
                                 ChessGame.whiteIsChecked(true);
                                 // store color of squares that are being highlighted red
                                 if(ChessGame.getFrame().getBoard().squareAt(position).getBackground() != Color.RED) {
@@ -644,8 +650,11 @@ public class ChessSquarePanel extends JPanel implements MouseListener, ActionLis
                 }
 
             } // end of invalid move
-            else
+            else {
+                ChessGame.getErrorSound().play();
                 System.out.printf("Invalid move: %d\n", position);
+            }
+
 
         } // player is not moving
     } /// end of mouseclicked()

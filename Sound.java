@@ -10,13 +10,13 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 
 public class Sound {
-    private static File audioFile;
-    private static AudioInputStream audioStream;
-    private static AudioFormat format;
-    private static DataLine.Info info;
-    private static Clip audioClip;
-    private static byte[] audio;
-    private static int audioSize;
+    private File audioFile;
+    private AudioInputStream audioStream;
+    private AudioFormat format;
+    private DataLine.Info info;
+    private Clip audioClip;
+    private byte[] audio;
+    private int audioSize;
 
     public Sound(String filename) {
         // init audio
@@ -37,7 +37,7 @@ public class Sound {
         }
     }
 
-    public static void play() {
+    public void play() {
         // play sound clip
         try {
             audioClip = (Clip) AudioSystem.getLine(info);

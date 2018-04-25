@@ -32,6 +32,8 @@ public class ChessGame {
 
     // sounds
     private static Sound click_sound;
+    private static Sound error_sound;
+    private static Sound check_sound;
 
 
     public static void main( String args[] ) {
@@ -171,6 +173,8 @@ public class ChessGame {
     public static boolean getEnPassant(int i) { return disengageEnPassant[i]; }
     // get sound objects
     public static Sound getClickSound(){ return click_sound; }
+    public static Sound getErrorSound(){ return error_sound; }
+    public static Sound getCheckSound(){ return check_sound; }
     // is player selecting a piece?
     public static boolean isPlayerSelectingAPiece() { return playerIsSelectingAPiece; }
     // get pawns pos
@@ -276,6 +280,8 @@ public class ChessGame {
 
         // init sounds
         click_sound = new Sound("assets/click_sound.wav");
+        error_sound = new Sound("assets/error_sound.wav");
+        check_sound = new Sound("assets/check_sound.wav");
     }
 
     public static void new_game(){
