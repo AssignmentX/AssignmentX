@@ -15,6 +15,8 @@
 * The jar file can be ran with the command: `java -jar hwx.jar`
 * Or if you unjar `hwx.jar` then you can run the game with the command: `java ChessGame`
 
+Note: It is recommended not to run the jar via the Ubuntu Subsystem for Windows: https://docs.microsoft.com/en-us/windows/wsl/about since it **might** lack permissions necessary to play audio files, instead you can run the jar via a native terminal such as the cmd prompt on windows.
+
 ### **DESCRIPTIONS OF ANY EXTRA FEATURES IMPLEMENTED**
  * New game
  * Save game
