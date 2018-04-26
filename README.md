@@ -17,6 +17,8 @@
 
 Note: It is recommended not to run the jar via the Ubuntu Subsystem for Windows: https://docs.microsoft.com/en-us/windows/wsl/about since it **might** lack permissions necessary to play audio files, instead you can run the jar via a native terminal such as the cmd prompt on windows.
 
+Additional Note: Upon testing on different systems, it has become apparent that the audio **might** not work if the program is ran via its runnable jar. If this is the case for you, try un-jaring the archive and running the game. Sorry we did not have enough time to figure out why this was happening.
+
 ### **DESCRIPTIONS OF ANY EXTRA FEATURES IMPLEMENTED**
  * New game
  * Save game
