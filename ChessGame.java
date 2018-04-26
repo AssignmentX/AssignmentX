@@ -1,3 +1,10 @@
+/*
+
+    Zach Sirotto and Ben Cook
+    Assignment X - Chess!!
+
+*/
+    
 import java.awt.Color;
 import javax.swing.*;
 import java.awt.event.*;

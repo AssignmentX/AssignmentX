@@ -1,3 +1,10 @@
+/*
+
+    Zach Sirotto and Ben Cook
+    Assignment X - Chess!!
+
+*/
+    
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;

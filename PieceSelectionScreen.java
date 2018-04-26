@@ -1,3 +1,10 @@
+/*
+
+    Zach Sirotto and Ben Cook
+    Assignment X - Chess!!
+
+*/
+    
 import java.io.Serializable;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
