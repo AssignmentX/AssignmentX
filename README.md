@@ -47,7 +47,7 @@
  * Coloring of squares / re-coloring
  * En passant rule
  * Code refactoring
- * Sound class
+ * Sounds
  * Piece selection when pawn makes it to the other side of the board
  * Stalemate and Checkmate detection
 

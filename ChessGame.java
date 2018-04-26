@@ -67,11 +67,14 @@ public class ChessGame {
             {
                 public void actionPerformed( ActionEvent event )
                 {
-                    if(voiceAssist)
+                    if(!ChessGame.getFrame().getBoard().fresh_board()) {
                         resign_sound.play();
-                    new_game();
-                    String msg = "Game has been reset.";
-                    JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
+                        new_game();
+                        String msg = "Game has been reset.";
+                        JOptionPane.showMessageDialog(frame, msg, "Success", JOptionPane.PLAIN_MESSAGE);
+                    }
+                    else
+                        error_sound.play();
                 }
             }
         );
@@ -121,10 +124,13 @@ public class ChessGame {
         new_item.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent event){
-                    if(voiceAssist)
+                    if(!ChessGame.getFrame().getBoard().fresh_board()) {
                         draw_sound.play();
-                    JOptionPane.showMessageDialog(frame, "The game was a draw.", "Draw", JOptionPane.PLAIN_MESSAGE);
-                    new_game();
+                        JOptionPane.showMessageDialog(frame, "The game was a draw.", "Draw", JOptionPane.PLAIN_MESSAGE);
+                        new_game();
+                    }
+                    else
+                        error_sound.play();
                 }
             }
         );
@@ -361,6 +367,7 @@ public class ChessGame {
     public static void new_game(){
         frame.clearTextArea();
         frame.resetBoard();
+        frame.revalidate();
         init_players();
     }
 
