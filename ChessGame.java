@@ -335,15 +335,6 @@ public class ChessGame {
 
 
     public static void soundPrompt(){
-        // prompt user if they want sounds
-        
-        /*String msg = "Would you like to enable sounds?";
-        int dialogResult = JOptionPane.showConfirmDialog(frame, msg, "Sound", JOptionPane.YES_NO_OPTION);
-
-        // if option is yes
-        if(dialogResult == JOptionPane.YES_OPTION){
-        */
-
         // init sounds
         click_sound = new Sound("assets/click_sound.wav", false);
         error_sound = new Sound("assets/error_sound.wav", false);
@@ -363,18 +354,6 @@ public class ChessGame {
             String fileName = "assets/moves/" + soundFiles[i] + ".wav";
             soundMap.put(soundFiles[i], new Sound(fileName, true));
         }
-
-        //}
-        // if option is no
-        //else {
-        //    click_sound = null;
-        //    error_sound = null;
-        //    check_sound = null;
-        //    checkMate_sound = null;
-        //    draw_sound = null;
-        //    resign_sound = null;
-        //    soundMap = null;
-        //}
 
         SoundSelection soundSelectionScreen = new SoundSelection();
     }
