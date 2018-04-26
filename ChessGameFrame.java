@@ -31,7 +31,7 @@ public class ChessGameFrame extends JFrame implements Serializable {
       setLayout( layout ); // set frame layout
 
       // EAST - SHOWS MOVE HISTORY FOR BOTH PLAYERS IN ALGEBRAIC NOTATION NOTATION
-      textArea = new JTextArea(0, 11);
+      textArea = new JTextArea(0, 13);
       textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // add black border
       textArea.setEditable(false);
       JScrollPane scrollPane = new JScrollPane(textArea);
